@@ -18,7 +18,7 @@ public class SrtSubtitle implements Subtitle, Comparable<SrtSubtitle> {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(final Integer number) {
         this.number = number;
     }
 
@@ -32,7 +32,7 @@ public class SrtSubtitle implements Subtitle, Comparable<SrtSubtitle> {
     }
 
     @Override
-    public void setStart(String start) {
+    public void setStart(final String start) {
         this.start = start;
     }
 
@@ -46,7 +46,7 @@ public class SrtSubtitle implements Subtitle, Comparable<SrtSubtitle> {
     }
 
     @Override
-    public void setEnd(String end) {
+    public void setEnd(final String end) {
         this.end = end;
     }
 
@@ -71,7 +71,7 @@ public class SrtSubtitle implements Subtitle, Comparable<SrtSubtitle> {
             .replace("\n", "\\N");
     }
 
-    public void addLine(String text) {
+    public void addLine(final String text) {
         this.lines.add(text);
     }
 
@@ -79,7 +79,7 @@ public class SrtSubtitle implements Subtitle, Comparable<SrtSubtitle> {
         return position;
     }
 
-    public void setPosition(SubtitlePosition position) {
+    public void setPosition(final SubtitlePosition position) {
         this.position = position;
     }
 
@@ -94,7 +94,7 @@ public class SrtSubtitle implements Subtitle, Comparable<SrtSubtitle> {
     }
 
     @Override
-    public int compareTo(SrtSubtitle o) {
+    public int compareTo(final SrtSubtitle o) {
         return this.getFromTimeForAssFormat().compareTo(o.getFromTimeForAssFormat());
     }
 
@@ -114,7 +114,7 @@ public class SrtSubtitle implements Subtitle, Comparable<SrtSubtitle> {
     }
 
     @Override
-    public void setText(String text) {
+    public void setText(final String text) {
         lines = new ArrayList<>();
         lines.add(text);
     }

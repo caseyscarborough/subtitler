@@ -12,7 +12,7 @@ public class SrtSubtitleFile implements SubtitleFile {
         return subtitles;
     }
 
-    public void setSubtitles(List<SrtSubtitle> subtitles) {
+    public void setSubtitles(final List<SrtSubtitle> subtitles) {
         this.subtitles = subtitles;
     }
 

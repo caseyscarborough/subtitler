@@ -12,19 +12,19 @@ import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
 class CondenseCommand extends BaseCommand {
 
-    public CondenseCommand(CommandLine cmd) {
+    public CondenseCommand(final CommandLine cmd) {
         super(cmd);
     }
 
     public void execute() {
-        String input = getInputFilename();
-        String output = getOutputFilename();
-        SubtitleType type = getInputFileType();
-        SubtitleReader<SubtitleFile> reader = new SubtitleReaderFactory().getInstance(type);
-        SubtitleFile subtitleFile = reader.read(input);
-        SubtitleCondenser<SubtitleFile> condenser = new SubtitleCondenserFactory().getInstance(type);
-        SubtitleFile condensed = condenser.condense(subtitleFile);
-        SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(type);
+        final String input = getInputFilename();
+        final String output = getOutputFilename();
+        final SubtitleType type = getInputFileType();
+        final SubtitleReader<SubtitleFile> reader = new SubtitleReaderFactory().getInstance(type);
+        final SubtitleFile subtitleFile = reader.read(input);
+        final SubtitleCondenser<SubtitleFile> condenser = new SubtitleCondenserFactory().getInstance(type);
+        final SubtitleFile condensed = condenser.condense(subtitleFile);
+        final SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(type);
         writer.write(condensed, output);
     }
 }

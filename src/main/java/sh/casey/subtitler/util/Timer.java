@@ -15,7 +15,7 @@ public class Timer {
         if (start == null) {
             throw new IllegalStateException("Timer must be started to stop it.");
         }
-        long elapsed = System.currentTimeMillis() - start;
+        final long elapsed = System.currentTimeMillis() - start;
         start = null;
         return elapsed;
     }

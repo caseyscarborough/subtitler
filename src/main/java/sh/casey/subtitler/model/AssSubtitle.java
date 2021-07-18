@@ -11,7 +11,7 @@ public class AssSubtitle implements Subtitle {
     public AssSubtitle() {
     }
 
-    public AssSubtitle(String start, String end, String text) {
+    public AssSubtitle(final String start, final String end, final String text) {
         this.start = start;
         this.end = end;
         this.text = text;
@@ -22,7 +22,7 @@ public class AssSubtitle implements Subtitle {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(final String start) {
         this.start = start;
     }
 
@@ -35,7 +35,7 @@ public class AssSubtitle implements Subtitle {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(final String end) {
         this.end = end;
     }
 
@@ -61,7 +61,7 @@ public class AssSubtitle implements Subtitle {
             .replaceAll("\\\\N", "\n");
     }
 
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 

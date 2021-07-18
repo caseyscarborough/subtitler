@@ -1,7 +1,7 @@
 package sh.casey.subtitler.application.exception;
 
 public class CommandNotFoundException extends RuntimeException {
-    public CommandNotFoundException(String message) {
+    public CommandNotFoundException(final String message) {
         super(message);
     }
 }

@@ -9,11 +9,11 @@ import java.util.List;
 
 public class TtmlToSrtSubtitleConverter implements SubtitleConverter<TtmlSubtitleFile, SrtSubtitleFile> {
     @Override
-    public SrtSubtitleFile convert(TtmlSubtitleFile input) {
-        SrtSubtitleFile output = new SrtSubtitleFile();
-        List<TtmlSubtitle> subtitles = input.getSubtitles();
-        for (TtmlSubtitle ttml : subtitles) {
-            SrtSubtitle srt = new SrtSubtitle();
+    public SrtSubtitleFile convert(final TtmlSubtitleFile input) {
+        final SrtSubtitleFile output = new SrtSubtitleFile();
+        final List<TtmlSubtitle> subtitles = input.getSubtitles();
+        for (final TtmlSubtitle ttml : subtitles) {
+            final SrtSubtitle srt = new SrtSubtitle();
             srt.setStart(ttml.getStart().replace(".", ","));
             srt.setEnd(ttml.getEnd().replace(".", ","));
             srt.setNumber(ttml.getNumber());

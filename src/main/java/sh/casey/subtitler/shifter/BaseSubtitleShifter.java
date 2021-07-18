@@ -30,10 +30,10 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
     public abstract String getDefaultTime();
 
     @Override
-    public void shift(ShiftConfig config) {
-        String input = config.getInput();
-        String output = config.getOutput();
-        Integer ms = config.getMs();
+    public void shift(final ShiftConfig config) {
+        final String input = config.getInput();
+        final String output = config.getOutput();
+        final Integer ms = config.getMs();
         if (StringUtils.isBlank(input)) {
             throw new SubtitleException("Input file is required.");
         }
@@ -46,12 +46,12 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
             throw new SubtitleException("You must specify a time in milliseconds to shift the subtitles.");
         }
         log.debug("Shifting subtitles in file " + input + " by " + ms + "ms. Sending output to " + output + "...");
-        SubtitleReader<T> reader = new SubtitleReaderFactory().getInstance(getSubtitleType());
-        T file = reader.read(input);
+        final SubtitleReader<T> reader = new SubtitleReaderFactory().getInstance(getSubtitleType());
+        final T file = reader.read(input);
         log.debug("Found " + file.getSubtitles().size() + " lines");
 
-        Date beforeDate = getBeforeAfterDate(config.getBefore());
-        Date afterDate = getBeforeAfterDate(config.getAfter());
+        final Date beforeDate = getBeforeAfterDate(config.getBefore());
+        final Date afterDate = getBeforeAfterDate(config.getAfter());
 
         Integer beforeNumber = null;
         Integer afterNumber = null;
@@ -81,15 +81,15 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
 
         int shiftCount = 0;
         try {
-            DateFormat format = new SimpleDateFormat(file.getType().getTimeFormat());
-            Calendar fromCal = Calendar.getInstance();
-            Calendar toCal = Calendar.getInstance();
+            final DateFormat format = new SimpleDateFormat(file.getType().getTimeFormat());
+            final Calendar fromCal = Calendar.getInstance();
+            final Calendar toCal = Calendar.getInstance();
 
-            for (Subtitle subtitle : file.getSubtitles()) {
-                String originalFrom = subtitle.getStart();
-                String originalEnd = subtitle.getEnd();
-                Date from = format.parse(subtitle.getStart());
-                Date to = format.parse(subtitle.getEnd());
+            for (final Subtitle subtitle : file.getSubtitles()) {
+                final String originalFrom = subtitle.getStart();
+                final String originalEnd = subtitle.getEnd();
+                final Date from = format.parse(subtitle.getStart());
+                final Date to = format.parse(subtitle.getEnd());
 
                 // If it's not after the "after" time, don't shift it.
                 if ((afterDate != null && !from.after(afterDate)) || (afterNumber != null && subtitle.getNumber() <= afterNumber)) {
@@ -113,9 +113,9 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
 
                 if (config.getShiftMode().equals(ShiftMode.FROM) || config.getShiftMode().equals(ShiftMode.FROM_TO)) {
                     fromCal.setTime(from);
-                    int fromDay = fromCal.get(Calendar.DAY_OF_YEAR);
+                    final int fromDay = fromCal.get(Calendar.DAY_OF_YEAR);
                     fromCal.add(MILLISECOND, ms);
-                    int newFromDay = fromCal.get(Calendar.DAY_OF_YEAR);
+                    final int newFromDay = fromCal.get(Calendar.DAY_OF_YEAR);
                     if (fromDay == newFromDay) {
                         String startTime = format.format(fromCal.getTime());
                         if (getSubtitleType().equals(SubtitleType.ASS)) {
@@ -129,9 +129,9 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
 
                 if (config.getShiftMode().equals(ShiftMode.TO) || config.getShiftMode().equals(ShiftMode.FROM_TO)) {
                     toCal.setTime(to);
-                    int toDay = toCal.get(Calendar.DAY_OF_YEAR);
+                    final int toDay = toCal.get(Calendar.DAY_OF_YEAR);
                     toCal.add(MILLISECOND, ms);
-                    int newToDay = toCal.get(Calendar.DAY_OF_YEAR);
+                    final int newToDay = toCal.get(Calendar.DAY_OF_YEAR);
                     if (toDay == newToDay) {
                         String endTime = format.format(toCal.getTime());
                         if (getSubtitleType().equals(SubtitleType.ASS)) {
@@ -146,25 +146,25 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
                 shiftCount++;
                 log.trace("Shifted ." + getSubtitleType().name().toLowerCase() + " line from " + originalFrom + " --> " + originalEnd + " to " + subtitle.getStart() + " --> " + subtitle.getEnd());
             }
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             throw new SubtitleException("An error occurred shifting subtitles", e);
         }
 
         log.debug("Shifted " + shiftCount + " subtitles.");
-        SubtitleWriterFactory factory = new SubtitleWriterFactory();
-        SubtitleWriter<T> writer = factory.getInstance(getSubtitleType());
+        final SubtitleWriterFactory factory = new SubtitleWriterFactory();
+        final SubtitleWriter<T> writer = factory.getInstance(getSubtitleType());
         writer.write(file, output);
     }
 
-    private Date getBeforeAfterDate(String time) {
+    private Date getBeforeAfterDate(final String time) {
         if (StringUtils.isBlank(time) || StringUtils.isNumeric(time)) {
             return null;
         }
 
-        DateFormat format = new SimpleDateFormat(SHIFT_BEFORE_AFTER_FORMAT);
+        final DateFormat format = new SimpleDateFormat(SHIFT_BEFORE_AFTER_FORMAT);
         try {
             return format.parse(time);
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             throw new SubtitleException("'Before' time was in the incorrect format. Please use " + SHIFT_BEFORE_AFTER_FORMAT + " format.", e);
         }
     }

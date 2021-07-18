@@ -11,7 +11,7 @@ public class ShiftConfig {
     private final String output;
     private final ShiftMode shiftMode;
 
-    ShiftConfig(String after, String before, String matches, Integer number, Integer ms, String input, String output, ShiftMode shiftMode) {
+    ShiftConfig(final String after, final String before, final String matches, final Integer number, final Integer ms, final String input, final String output, final ShiftMode shiftMode) {
         this.after = after;
         this.before = before;
         this.matches = matches;
@@ -71,42 +71,42 @@ public class ShiftConfig {
         Builder() {
         }
 
-        public Builder after(String after) {
+        public Builder after(final String after) {
             this.after = after;
             return this;
         }
 
-        public Builder before(String before) {
+        public Builder before(final String before) {
             this.before = before;
             return this;
         }
 
-        public Builder matches(String matches) {
+        public Builder matches(final String matches) {
             this.matches = matches;
             return this;
         }
 
-        public Builder number(Integer number) {
+        public Builder number(final Integer number) {
             this.number = number;
             return this;
         }
 
-        public Builder ms(Integer ms) {
+        public Builder ms(final Integer ms) {
             this.ms = ms;
             return this;
         }
 
-        public Builder input(String input) {
+        public Builder input(final String input) {
             this.input = input;
             return this;
         }
 
-        public Builder output(String output) {
+        public Builder output(final String output) {
             this.output = output;
             return this;
         }
 
-        public Builder shiftMode(ShiftMode shiftMode) {
+        public Builder shiftMode(final ShiftMode shiftMode) {
             this.shiftMode = shiftMode;
             return this;
         }

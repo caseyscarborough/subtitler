@@ -20,20 +20,20 @@ import static sh.casey.subtitler.util.TimeUtil.assTrim;
 @Slf4j
 public class DfxpToAssSubtitleConverter implements SubtitleConverter<DfxpSubtitleFile, AssSubtitleFile> {
     @Override
-    public AssSubtitleFile convert(DfxpSubtitleFile input) {
-        DateFormat dfxpFormat = new SimpleDateFormat(SubtitleType.DFXP.getTimeFormat());
-        DateFormat assFormat = new SimpleDateFormat(SubtitleType.ASS.getTimeFormat());
+    public AssSubtitleFile convert(final DfxpSubtitleFile input) {
+        final DateFormat dfxpFormat = new SimpleDateFormat(SubtitleType.DFXP.getTimeFormat());
+        final DateFormat assFormat = new SimpleDateFormat(SubtitleType.ASS.getTimeFormat());
 
-        AssSubtitleFile output = AssDefaults.getDefaultAssSubtitleFile();
+        final AssSubtitleFile output = AssDefaults.getDefaultAssSubtitleFile();
         output.getStyles().clear();
         output.getStyles().addAll(AssDefaults.getDefaultStylesWithTopAndBottom());
 
-        for (DxfpSubtitle subtitle : input.getSubtitles()) {
+        for (final DxfpSubtitle subtitle : input.getSubtitles()) {
             try {
                 final String start = assTrim(assFormat.format(dfxpFormat.parse(subtitle.getStart())));
                 final String end = assTrim(assFormat.format(dfxpFormat.parse(subtitle.getEnd())));
 
-                AssDialogue dialogue = subtitle.isItalic() ? AssDefaults.getItalicDialogue() : AssDefaults.getDefaultDialogue();
+                final AssDialogue dialogue = subtitle.isItalic() ? AssDefaults.getItalicDialogue() : AssDefaults.getDefaultDialogue();
                 dialogue.setStart(start);
                 dialogue.setEnd(end);
                 dialogue.setNumber(subtitle.getNumber());
@@ -44,7 +44,7 @@ public class DfxpToAssSubtitleConverter implements SubtitleConverter<DfxpSubtitl
                 dialogue.setText(StringEscapeUtils.unescapeHtml4(Jsoup.clean(dialogueText, Safelist.none())));
                 dialogue.setStyle(subtitle.getRegion().startsWith("top") ? "Top" : "Bottom");
                 output.getDialogues().add(dialogue);
-            } catch (ParseException e) {
+            } catch (final ParseException e) {
                 log.error("Could not parse time for input subtitle. Start time ({}) and end time ({}). Skipping subtitle.", subtitle.getStart(), subtitle.getEnd());
             }
         }

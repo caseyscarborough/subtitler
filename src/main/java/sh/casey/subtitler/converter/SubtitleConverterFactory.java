@@ -6,7 +6,7 @@ import sh.casey.subtitler.model.SubtitleType;
 public class SubtitleConverterFactory {
 
     @SuppressWarnings("unchecked")
-    public <F extends SubtitleFile, T extends SubtitleFile> SubtitleConverter<F, T> getInstance(SubtitleType from, SubtitleType to) {
+    public <F extends SubtitleFile, T extends SubtitleFile> SubtitleConverter<F, T> getInstance(final SubtitleType from, final SubtitleType to) {
         if (from == SubtitleType.SRT && to == SubtitleType.ASS) {
             return (SubtitleConverter<F, T>) new SrtToAssSubtitleConverter();
         } else if (from == SubtitleType.TTML && to == SubtitleType.SRT) {

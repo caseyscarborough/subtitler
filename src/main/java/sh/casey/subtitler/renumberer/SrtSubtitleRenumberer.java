@@ -8,10 +8,10 @@ import sh.casey.subtitler.model.SrtSubtitleFile;
 public class SrtSubtitleRenumberer implements SubtitleRenumberer<SrtSubtitleFile> {
 
     @Override
-    public void renumber(SrtSubtitleFile file) {
+    public void renumber(final SrtSubtitleFile file) {
         log.debug("Renumbering SRT subtitle file...");
         int counter = 0;
-        for (SrtSubtitle subtitle : file.getSubtitles()) {
+        for (final SrtSubtitle subtitle : file.getSubtitles()) {
             subtitle.setNumber(++counter);
         }
     }

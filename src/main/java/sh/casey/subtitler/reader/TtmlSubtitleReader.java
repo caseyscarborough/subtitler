@@ -11,14 +11,14 @@ import sh.casey.subtitler.util.FileUtils;
 public class TtmlSubtitleReader implements SubtitleReader<TtmlSubtitleFile> {
 
     @Override
-    public TtmlSubtitleFile read(String filename) {
-        String html = FileUtils.readFile(filename);
-        Document document = Jsoup.parse(html);
-        TtmlSubtitleFile file = new TtmlSubtitleFile();
-        Elements ps = document.getElementsByTag("p");
+    public TtmlSubtitleFile read(final String filename) {
+        final String html = FileUtils.readFile(filename);
+        final Document document = Jsoup.parse(html);
+        final TtmlSubtitleFile file = new TtmlSubtitleFile();
+        final Elements ps = document.getElementsByTag("p");
         int counter = 0;
-        for (Element p : ps) {
-            TtmlSubtitle subtitle = new TtmlSubtitle();
+        for (final Element p : ps) {
+            final TtmlSubtitle subtitle = new TtmlSubtitle();
             subtitle.setNumber(++counter);
             subtitle.setStart(p.attr("begin"));
             subtitle.setEnd(p.attr("end"));

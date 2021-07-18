@@ -17,7 +17,7 @@ public class TtmlSubtitle implements Subtitle {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(final Integer number) {
         this.number = number;
     }
 
@@ -27,7 +27,7 @@ public class TtmlSubtitle implements Subtitle {
     }
 
     @Override
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 
@@ -37,7 +37,7 @@ public class TtmlSubtitle implements Subtitle {
     }
 
     @Override
-    public void setStart(String start) {
+    public void setStart(final String start) {
         this.start = start;
     }
 
@@ -47,7 +47,7 @@ public class TtmlSubtitle implements Subtitle {
     }
 
     @Override
-    public void setEnd(String end) {
+    public void setEnd(final String end) {
         this.end = end;
     }
 }

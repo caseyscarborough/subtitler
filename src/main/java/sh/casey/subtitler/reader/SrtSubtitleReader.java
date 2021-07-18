@@ -16,9 +16,9 @@ import java.io.IOException;
 public class SrtSubtitleReader implements SubtitleReader<SrtSubtitleFile> {
 
     @Override
-    public SrtSubtitleFile read(String filename) {
+    public SrtSubtitleFile read(final String filename) {
         log.info("Reading subtitle file " + filename);
-        SrtSubtitleFile file = new SrtSubtitleFile();
+        final SrtSubtitleFile file = new SrtSubtitleFile();
         BufferedReader br = null;
         int lineCounter = 0;
         try {
@@ -35,15 +35,15 @@ public class SrtSubtitleReader implements SubtitleReader<SrtSubtitleFile> {
                         line = line.replace(Constants.BYTE_ORDER_MARK, "");
                         first = false;
                     }
-                    int number = Integer.parseInt(line.trim());
-                    int nextNumber = number + 1;
+                    final int number = Integer.parseInt(line.trim());
+                    final int nextNumber = number + 1;
                     lineCounter++;
-                    String timings = br.readLine().trim();
-                    String[] split = timings.split(" --> ");
-                    String start = split[0];
-                    String end = split[1];
+                    final String timings = br.readLine().trim();
+                    final String[] split = timings.split(" --> ");
+                    final String start = split[0];
+                    final String end = split[1];
 
-                    SrtSubtitle subtitle = new SrtSubtitle();
+                    final SrtSubtitle subtitle = new SrtSubtitle();
                     subtitle.setNumber(number);
                     subtitle.setStart(start);
                     subtitle.setEnd(end);
@@ -73,16 +73,16 @@ public class SrtSubtitleReader implements SubtitleReader<SrtSubtitleFile> {
                 }
             }
             log.debug("Read " + lineCounter + " lines from file " + filename);
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             throw new SubtitleException("Could not find file " + filename, e);
-        } catch (ArrayIndexOutOfBoundsException | NumberFormatException | NullPointerException | IOException e) {
+        } catch (final ArrayIndexOutOfBoundsException | NumberFormatException | NullPointerException | IOException e) {
             throw new SubtitleException("An error occurred reading lines at line " + lineCounter + " for file " + filename + ". The file might be in an invalid format", e);
         } finally {
             try {
                 if (br != null) {
                     br.close();
                 }
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 log.warn("Couldn't close stream for file " + filename, e);
             }
         }

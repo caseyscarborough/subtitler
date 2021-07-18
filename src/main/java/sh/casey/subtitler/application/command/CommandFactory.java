@@ -5,7 +5,7 @@ import sh.casey.subtitler.application.exception.CommandNotFoundException;
 
 public class CommandFactory {
 
-    public ApplicationCommand getInstance(CommandLine cmd) {
+    public ApplicationCommand getInstance(final CommandLine cmd) {
         if (cmd.hasOption("cn")) {
             return new CondenseCommand(cmd);
         } else if (cmd.hasOption("s")) {
