@@ -33,7 +33,18 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
     public void shift(ShiftConfig config) {
         String input = config.getInput();
         String output = config.getOutput();
-        int ms = config.getMs();
+        Integer ms = config.getMs();
+        if (StringUtils.isBlank(input)) {
+            throw new SubtitleException("Input file is required.");
+        }
+
+        if (StringUtils.isBlank(output)) {
+            throw new SubtitleException("Output file is required.");
+        }
+
+        if (ms == null) {
+            throw new SubtitleException("You must specify a time in milliseconds to shift the subtitles.");
+        }
         log.debug("Shifting subtitles in file " + input + " by " + ms + "ms. Sending output to " + output + "...");
         SubtitleReader<T> reader = new SubtitleReaderFactory().getInstance(getSubtitleType());
         T file = reader.read(input);
