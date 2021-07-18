@@ -27,8 +27,8 @@ Clone the repository, build using Gradle, and unzip the built `.zip` file. Add t
 ```bash
 git clone https://github.com/caseyscarborough/subtitler.git
 ./gradlew distZip
-unzip build/distributions/subtitler*.zip
-export PATH=subtitler-1.0.0/bin:$PATH
+unzip build/distributions/subtitler.zip
+export PATH="$(pwd)/subtitler/bin:$PATH"
 ```
 
 ## CLI Usage
