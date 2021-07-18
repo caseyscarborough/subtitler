@@ -1,7 +1,7 @@
 name: Publish package to GitHub Packages
 on:
   release:
-    types: [created]
+    types: [ created ]
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -29,11 +29,12 @@ jobs:
       - name: Build CLI Zip File
         run: |
           ./gradlew distZip
-      - name: Upload Binary
-        uses: svenstaro/upload-release-action@v2
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/distributions/subtitler.zip
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: build/distributions/subtitler.zip
           asset_name: subtitler.zip
-          tag: ${{ github.ref }}
-          overwrite: true
+          asset_content_type: application/json
