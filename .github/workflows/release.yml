@@ -32,6 +32,7 @@ jobs:
           export VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
           echo "Building distribution file for version ${VERSION}..."
           ./gradlew -Pversion=${VERSION} distZip
+          mv build/distributions/subtitler-${VERSION}.zip subtitler.zip
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -42,15 +43,12 @@ jobs:
           release_name: ${{ github.ref }}
           draft: false
           prerelease: false
-      - name: List Distributions Directory
-        run: |
-          ls -al ./build/distributions/
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/distributions/subtitler-*.zip
+          asset_path: subtitler.zip
           asset_name: subtitler.zip
           asset_content_type: application/octet-stream
