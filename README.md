@@ -302,6 +302,21 @@ SubtitleCondenser<SubtitleFile> condenser = new SubtitleCondenserFactory().getIn
 SubtitleFile condensed = condenser.condense(file);
 ```
 
+### Creating Dual-Sub File
+
+You can programmatically create a dual-sub file using the following method:
+
+```java
+DualSubCreator creator = DualSubCreator.builder()
+    .topFile("/path/to/top.srt")
+    .bottomFile("path/to/bottom.srt")
+    .outputFile("path/to/output.ass")
+    .build();
+
+// This will write the new file.
+creator.create();
+```
+
 ## Known Issues
 
 Not all features work with every subtitle type. Most of the functions can be performed by converting to another subtitle type first that is supported with the feature you are trying to use. For example, if you would like to shift a `.dfxp` file, then convert it to `.ass` first.
