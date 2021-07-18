@@ -6,7 +6,9 @@ import sh.casey.subtitler.application.exception.CommandNotFoundException;
 public class CommandFactory {
 
     public ApplicationCommand getInstance(final CommandLine cmd) {
-        if (cmd.hasOption("cn")) {
+        if (cmd.hasOption("v")) {
+            return new VersionCommand();
+        } else if (cmd.hasOption("cn")) {
             return new CondenseCommand(cmd);
         } else if (cmd.hasOption("s")) {
             return new ShiftCommand(cmd);
