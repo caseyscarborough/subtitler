@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'sh.casey.subtitler'
-version '1.0.0'
+version ''
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
