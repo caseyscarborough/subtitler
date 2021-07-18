@@ -58,7 +58,7 @@ public class Application {
             command.execute();
         } catch (CommandNotFoundException e) {
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("java -jar <jar-name> <options>", options);
+            formatter.printHelp("subtitler <options>", options);
             System.exit(0);
         } catch (InvalidCommandException e) {
             log.error(e.getMessage());
