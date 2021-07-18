@@ -9,14 +9,16 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v2
+      - name: Perform Checkout
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v2
         with:
           java-version: '8'
           distribution: 'adopt'
-      - name: Validate Gradle wrapper
+      - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
-      - name: Publish package
+      - name: Publish Package
         run: |
           VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
           echo "Publishing package version ${VERSION} for user ${GITHUB_ACTOR}..."
@@ -24,3 +26,14 @@ jobs:
         env:
           GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build CLI Zip File
+        run: |
+          ./gradlew distZip
+      - name: Upload Binary
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/distributions/subtitler.zip
+          asset_name: subtitler.zip
+          tag: ${{ github.ref }}
+          overwrite: true
