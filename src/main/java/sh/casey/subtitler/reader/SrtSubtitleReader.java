@@ -1,7 +1,7 @@
 package sh.casey.subtitler.reader;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import sh.casey.subtitler.config.Constants;
 import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.SrtSubtitle;
@@ -12,13 +12,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+@Slf4j
 public class SrtSubtitleReader implements SubtitleReader<SrtSubtitleFile> {
-
-    private static final Logger LOGGER = Logger.getLogger(SrtSubtitleReader.class);
 
     @Override
     public SrtSubtitleFile read(String filename) {
-        LOGGER.info("Reading subtitle file " + filename);
+        log.info("Reading subtitle file " + filename);
         SrtSubtitleFile file = new SrtSubtitleFile();
         BufferedReader br = null;
         int lineCounter = 0;
@@ -73,7 +72,7 @@ public class SrtSubtitleReader implements SubtitleReader<SrtSubtitleFile> {
                     line = br.readLine();
                 }
             }
-            LOGGER.debug("Read " + lineCounter + " lines from file " + filename);
+            log.debug("Read " + lineCounter + " lines from file " + filename);
         } catch (FileNotFoundException e) {
             throw new SubtitleException("Could not find file " + filename, e);
         } catch (ArrayIndexOutOfBoundsException | NumberFormatException | NullPointerException | IOException e) {
@@ -84,11 +83,11 @@ public class SrtSubtitleReader implements SubtitleReader<SrtSubtitleFile> {
                     br.close();
                 }
             } catch (IOException e) {
-                LOGGER.warn("Couldn't close stream for file " + filename, e);
+                log.warn("Couldn't close stream for file " + filename, e);
             }
         }
 
-        LOGGER.debug("Found " + file.getSubtitles().size() + " subtitles.");
+        log.debug("Found " + file.getSubtitles().size() + " subtitles.");
         return file;
     }
 }

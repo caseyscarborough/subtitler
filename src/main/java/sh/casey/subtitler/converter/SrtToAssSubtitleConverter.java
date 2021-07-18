@@ -1,6 +1,6 @@
 package sh.casey.subtitler.converter;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import sh.casey.subtitler.model.AssDialogue;
@@ -11,13 +11,12 @@ import sh.casey.subtitler.util.AssDefaults;
 
 import java.util.List;
 
+@Slf4j
 public class SrtToAssSubtitleConverter implements SubtitleConverter<SrtSubtitleFile, AssSubtitleFile> {
-
-    private static final Logger LOGGER = Logger.getLogger(SrtToAssSubtitleConverter.class);
 
     @Override
     public AssSubtitleFile convert(SrtSubtitleFile input) {
-        LOGGER.debug("Converting SRT file to ASS file...");
+        log.debug("Converting SRT file to ASS file...");
         AssSubtitleFile output = AssDefaults.getDefaultAssSubtitleFile();
         List<SrtSubtitle> lines = input.getSubtitles();
         for (SrtSubtitle line : lines) {

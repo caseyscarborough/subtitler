@@ -1,16 +1,15 @@
 package sh.casey.subtitler.application.command;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import sh.casey.subtitler.application.exception.InvalidCommandException;
 import sh.casey.subtitler.model.SubtitleType;
 
 import java.util.Arrays;
 
+@Slf4j
 abstract class BaseCommand implements ApplicationCommand {
-
-    private static final Logger LOGGER = Logger.getLogger(BaseCommand.class);
 
     protected final CommandLine cmd;
     private String inputFilename;
@@ -33,7 +32,7 @@ abstract class BaseCommand implements ApplicationCommand {
         } else {
             throw new InvalidCommandException("Input filename is required.");
         }
-        LOGGER.debug("Using input file " + inputFilename);
+        log.debug("Using input file " + inputFilename);
         this.inputFilename = inputFilename;
         return inputFilename;
     }
@@ -47,13 +46,13 @@ abstract class BaseCommand implements ApplicationCommand {
             }
         }
 
-        LOGGER.debug("Attempting to resolve input type based on file extension...");
+        log.debug("Attempting to resolve input type based on file extension...");
         String inputFilename = getInputFilename();
         String[] parts = inputFilename.split("\\.");
         String extension = parts[parts.length - 1];
         try {
             SubtitleType type = SubtitleType.find(extension);
-            LOGGER.debug("Resolved subtitle type to " + type.name());
+            log.debug("Resolved subtitle type to " + type.name());
             return type;
         } catch (IllegalArgumentException e) {
             throw new InvalidCommandException("Could not infer subtitle type from input file. Please use the -it <input-type> option or rename your subtitle extension to a standard format (.srt, .ass, etc).");
@@ -69,13 +68,13 @@ abstract class BaseCommand implements ApplicationCommand {
             }
         }
 
-        LOGGER.debug("Attempting to resolve output type based on file extension...");
+        log.debug("Attempting to resolve output type based on file extension...");
         String outputFilename = getOutputFilename();
         String[] parts = outputFilename.split("\\.");
         String extension = parts[parts.length - 1];
         try {
             SubtitleType type = SubtitleType.find(extension);
-            LOGGER.debug("Resolved subtitle type to " + type.name());
+            log.debug("Resolved subtitle type to " + type.name());
             return type;
         } catch (IllegalArgumentException e) {
             throw new InvalidCommandException("Could not infer subtitle type from output file. Please use the -ot <output-type> option or rename your subtitle extension to a standard format (.srt, .ass, etc).");
@@ -93,7 +92,7 @@ abstract class BaseCommand implements ApplicationCommand {
         } else {
             outputFilename = getInputFilename();
         }
-        LOGGER.debug("Using output file " + outputFilename);
+        log.debug("Using output file " + outputFilename);
         this.outputFilename = outputFilename;
         return outputFilename;
     }

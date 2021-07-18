@@ -1,7 +1,7 @@
 package sh.casey.subtitler.shifter;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.Subtitle;
 import sh.casey.subtitler.model.SubtitleFile;
@@ -20,10 +20,10 @@ import java.util.Date;
 import static java.util.Calendar.MILLISECOND;
 import static sh.casey.subtitler.util.TimeUtil.assTrim;
 
+@Slf4j
 abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleShifter<T> {
 
     private static final String SHIFT_BEFORE_AFTER_FORMAT = "HH:mm:ss,SSS";
-    private static final Logger LOGGER = Logger.getLogger(BaseSubtitleShifter.class);
 
     public abstract SubtitleType getSubtitleType();
 
@@ -34,10 +34,10 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
         String input = config.getInput();
         String output = config.getOutput();
         int ms = config.getMs();
-        LOGGER.debug("Shifting subtitles in file " + input + " by " + ms + "ms. Sending output to " + output + "...");
+        log.debug("Shifting subtitles in file " + input + " by " + ms + "ms. Sending output to " + output + "...");
         SubtitleReader<T> reader = new SubtitleReaderFactory().getInstance(getSubtitleType());
         T file = reader.read(input);
-        LOGGER.debug("Found " + file.getSubtitles().size() + " lines");
+        log.debug("Found " + file.getSubtitles().size() + " lines");
 
         Date beforeDate = getBeforeAfterDate(config.getBefore());
         Date afterDate = getBeforeAfterDate(config.getAfter());
@@ -53,19 +53,19 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
         }
 
         if (beforeDate != null || beforeNumber != null) {
-            LOGGER.debug("Only shifting subtitles before " + config.getBefore());
+            log.debug("Only shifting subtitles before " + config.getBefore());
         }
 
         if (afterDate != null || afterNumber != null) {
-            LOGGER.debug("Only shifting subtitles after " + config.getAfter());
+            log.debug("Only shifting subtitles after " + config.getAfter());
         }
 
         if (config.getNumber() != null) {
-            LOGGER.debug("Only shifting subtitle if it is number " + config.getNumber());
+            log.debug("Only shifting subtitle if it is number " + config.getNumber());
         }
 
         if (config.getMatches() != null) {
-            LOGGER.debug("Only shifting subtitle if it matches \"" + config.getMatches() + "\"");
+            log.debug("Only shifting subtitle if it matches \"" + config.getMatches() + "\"");
         }
 
         int shiftCount = 0;
@@ -133,13 +133,13 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
                 }
 
                 shiftCount++;
-                LOGGER.trace("Shifted ." + getSubtitleType().name().toLowerCase() + " line from " + originalFrom + " --> " + originalEnd + " to " + subtitle.getStart() + " --> " + subtitle.getEnd());
+                log.trace("Shifted ." + getSubtitleType().name().toLowerCase() + " line from " + originalFrom + " --> " + originalEnd + " to " + subtitle.getStart() + " --> " + subtitle.getEnd());
             }
         } catch (ParseException e) {
             throw new SubtitleException("An error occurred shifting subtitles", e);
         }
 
-        LOGGER.debug("Shifted " + shiftCount + " subtitles.");
+        log.debug("Shifted " + shiftCount + " subtitles.");
         SubtitleWriterFactory factory = new SubtitleWriterFactory();
         SubtitleWriter<T> writer = factory.getInstance(getSubtitleType());
         writer.write(file, output);
