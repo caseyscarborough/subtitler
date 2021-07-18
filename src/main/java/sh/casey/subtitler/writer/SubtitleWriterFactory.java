@@ -5,6 +5,7 @@ import sh.casey.subtitler.model.SubtitleType;
 
 public class SubtitleWriterFactory {
 
+    @SuppressWarnings("unchecked")
     public <T extends SubtitleFile> SubtitleWriter<T> getInstance(SubtitleType type) {
         if (type.equals(SubtitleType.SRT)) {
             return (SubtitleWriter<T>) new SrtSubtitleWriter();
