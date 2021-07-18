@@ -17,7 +17,7 @@ public enum SubtitleType {
 
     public static SubtitleType find(String s) {
         for (SubtitleType value : values()) {
-            if (value.name().equalsIgnoreCase(s)) {
+            if (value.name().equalsIgnoreCase(s) || value.extension.equalsIgnoreCase(s)) {
                 return value;
             }
         }
