@@ -1,8 +1,8 @@
 package sh.casey.subtitler.reader;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
-import org.apache.log4j.Logger;
 import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.AssDialogue;
 import sh.casey.subtitler.model.AssStyle;
@@ -18,13 +18,12 @@ import java.util.stream.Collectors;
 
 import static sh.casey.subtitler.config.Constants.BYTE_ORDER_MARK;
 
+@Slf4j
 public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
-
-    private static final Logger LOGGER = Logger.getLogger(AssSubtitleReader.class);
 
     @Override
     public AssSubtitleFile read(String filename) {
-        LOGGER.info("Reading subtitle file: " + filename);
+        log.info("Reading subtitle file: " + filename);
         Validate.notBlank(filename);
         AssSubtitleFile file = new AssSubtitleFile();
         int lineCounter = 0;
@@ -36,7 +35,7 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
         }
 
         try {
-            LOGGER.debug("Reading first line...");
+            log.debug("Reading first line...");
             lineCounter++;
             String line = br.readLine();
             Integer dialogueCounter = 0;
@@ -44,7 +43,7 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                 line = line.trim().replace(BYTE_ORDER_MARK, "");
                 if (line.startsWith("[")) {
                     if (line.equalsIgnoreCase("[Script Info]")) {
-                        LOGGER.debug("Found script info...");
+                        log.debug("Found script info...");
                         lineCounter++;
                         line = br.readLine();
                         while (line != null && !line.startsWith("[")) {
@@ -73,14 +72,14 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                             } else if (line.startsWith(";")) {
                                 file.getComments().add(line);
                             } else if (StringUtils.isNotBlank(line)) {
-                                LOGGER.info("Implementation has not been created for the following line in [Script Info] section: " + line);
+                                log.info("Implementation has not been created for the following line in [Script Info] section: " + line);
                             }
 
                             lineCounter++;
                             line = br.readLine();
                         }
                     } else if (line.equalsIgnoreCase("[V4+ Styles]")) {
-                        LOGGER.debug("Found styles...");
+                        log.debug("Found styles...");
                         lineCounter++;
                         line = br.readLine().trim();
 
@@ -158,7 +157,7 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                             line = br.readLine().trim();
                         }
                     } else if (line.equalsIgnoreCase("[Events]")) {
-                        LOGGER.debug("Found events...");
+                        log.debug("Found events...");
                         lineCounter++;
                         line = br.readLine().trim();
 
@@ -233,7 +232,7 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                         }
                     } else {
                         // We don't support this type.
-                        LOGGER.info("Found type " + line + " which is not supported. Skipping this section.");
+                        log.info("Found type " + line + " which is not supported. Skipping this section.");
                         lineCounter++;
                         line = br.readLine();
                     }
@@ -243,20 +242,20 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                     line = br.readLine();
                 }
             }
-            LOGGER.debug("Read " + lineCounter + " lines from file " + filename);
+            log.debug("Read " + lineCounter + " lines from file " + filename);
         } catch (NullPointerException e) {
-            LOGGER.warn("Unexpected end of file after reading " + lineCounter + " lines for file " + filename, e);
+            log.warn("Unexpected end of file after reading " + lineCounter + " lines for file " + filename, e);
         } catch (IOException e) {
             throw new SubtitleException("An error occurred reading file " + filename, e);
         } finally {
             try {
                 br.close();
             } catch (IOException e) {
-                LOGGER.error("Could not close stream", e);
+                log.error("Could not close stream", e);
             }
         }
 
-        LOGGER.debug("Found " + file.getSubtitles().size() + " subtitles.");
+        log.debug("Found " + file.getSubtitles().size() + " subtitles.");
         return file;
     }
 

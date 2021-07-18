@@ -1,9 +1,9 @@
 package sh.casey.subtitler.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,9 +29,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class FileUtils {
-
-    private static final Logger LOGGER = Logger.getLogger(FileUtils.class);
 
     public static void mkdirs(String path) {
         new File(path).mkdirs();
@@ -67,11 +66,11 @@ public class FileUtils {
     }
 
     public static void copyFile(String path1, String path2) {
-        LOGGER.info("Copying file '" + path1 + "' to '" + path2 + "'");
+        log.info("Copying file '" + path1 + "' to '" + path2 + "'");
         try {
             Files.copy(Paths.get(path1), Paths.get(path2));
         } catch (IOException e) {
-            LOGGER.error("Could not copy file from '" + path1 + "' to '" + path2 + "'");
+            log.error("Could not copy file from '" + path1 + "' to '" + path2 + "'");
         }
     }
 
@@ -119,20 +118,20 @@ public class FileUtils {
     }
 
     public static String readFile(String filePath) {
-        LOGGER.debug("Reading file " + filePath);
+        log.debug("Reading file " + filePath);
         try (FileInputStream inputStream = new FileInputStream(filePath)) {
             return IOUtils.toString(inputStream, Charset.forName("UTF-8"));
         } catch (FileNotFoundException e) {
-            LOGGER.error("Couldn't find file " + filePath, e);
+            log.error("Couldn't find file " + filePath, e);
             throw new RuntimeException("Couldn't find file " + filePath);
         } catch (IOException e) {
-            LOGGER.error("An IO error occurred reading file " + filePath, e);
+            log.error("An IO error occurred reading file " + filePath, e);
             throw new RuntimeException("Couldn't read file " + filePath);
         }
     }
 
     public static void writeFile(String filePath, String contents, OpenOption... options) {
-        LOGGER.debug("Writing file " + filePath);
+        log.debug("Writing file " + filePath);
         if (filePath.contains("/")) {
             String dir = filePath.substring(0, filePath.lastIndexOf("/"));
             new File(dir).mkdirs();
@@ -142,7 +141,7 @@ public class FileUtils {
         } catch (IOException e) {
             throw new RuntimeException("Could not write to file path " + filePath, e);
         }
-        LOGGER.debug("Done writing file " + filePath);
+        log.debug("Done writing file " + filePath);
     }
 
     public static void writeFileIfNotExists(String filePath, String contents, OpenOption... options) {
@@ -152,11 +151,11 @@ public class FileUtils {
     }
 
     public static void deleteFile(String filePath) {
-        LOGGER.debug("Deleting file " + filePath);
+        log.debug("Deleting file " + filePath);
         try {
             Files.delete(Paths.get(filePath));
         } catch (NoSuchFileException e) {
-            LOGGER.debug("File didn't exist. Continuing.");
+            log.debug("File didn't exist. Continuing.");
         } catch (IOException e) {
             throw new RuntimeException("Couldn't delete file path " + filePath, e);
         }
@@ -168,7 +167,7 @@ public class FileUtils {
         T result = callback.callback(file);
         boolean deleted = file.delete();
         if (!deleted) {
-            LOGGER.warn("Could not delete temp file " + file.getAbsolutePath());
+            log.warn("Could not delete temp file " + file.getAbsolutePath());
         }
         return result;
     }
@@ -179,7 +178,7 @@ public class FileUtils {
         callback.callback(file);
         boolean deleted = file.delete();
         if (!deleted) {
-            LOGGER.warn("Could not delete temp file " + file.getAbsolutePath());
+            log.warn("Could not delete temp file " + file.getAbsolutePath());
         }
     }
 
@@ -236,7 +235,7 @@ public class FileUtils {
         Timer timer = new Timer();
         timer.start();
 
-        LOGGER.debug("Downloading " + url + " to file " + filename);
+        log.debug("Downloading " + url + " to file " + filename);
         try {
             URL website = new URL(url);
             URLConnection connection = website.openConnection();
@@ -246,12 +245,12 @@ public class FileUtils {
             FileOutputStream fos = new FileOutputStream(filename);
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
             fos.close();
-            LOGGER.debug("Download complete for file " + filename + " in " + timer.stop() + "ms");
+            log.debug("Download complete for file " + filename + " in " + timer.stop() + "ms");
             return true;
         } catch (IOException e) {
-            LOGGER.error("Couldn't download from " + url, e);
+            log.error("Couldn't download from " + url, e);
             if (retries > 0) {
-                LOGGER.debug("Retrying...");
+                log.debug("Retrying...");
                 return downloadFile(url, filename, retries - 1);
             }
             if (ignoreErrors) {
@@ -270,12 +269,12 @@ public class FileUtils {
     }
 
     public static boolean renameFile(String start, String end) {
-        LOGGER.debug("Renaming file " + start + " to " + end);
+        log.debug("Renaming file " + start + " to " + end);
         try {
             Files.move(Paths.get(start), Paths.get(end));
             return true;
         } catch (IOException e) {
-            LOGGER.error("Couldn't rename file from " + start + " to " + end, e);
+            log.error("Couldn't rename file from " + start + " to " + end, e);
             return false;
         }
     }
@@ -302,7 +301,7 @@ public class FileUtils {
         try {
             return new File(path).createNewFile();
         } catch (IOException e) {
-            LOGGER.error("Could not create file at path " + path, e);
+            log.error("Could not create file at path " + path, e);
             throw new RuntimeException("Could not create file at path " + path, e);
         }
     }

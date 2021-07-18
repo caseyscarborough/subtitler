@@ -1,14 +1,13 @@
 package sh.casey.subtitler.renumberer;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import sh.casey.subtitler.model.AssSubtitleFile;
 
+@Slf4j
 public class AssSubtitleRenumberer implements SubtitleRenumberer<AssSubtitleFile> {
-
-    private static final Logger LOGGER = Logger.getLogger(AssSubtitleRenumberer.class);
 
     @Override
     public void renumber(AssSubtitleFile file) {
-        LOGGER.debug(".ass subtitles don't have numbers... not renumbering.");
+        log.debug(".ass subtitles don't have numbers... not renumbering.");
     }
 }

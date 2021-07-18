@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class Application {
 
-    private static final Logger LOGGER = Logger.getLogger(Application.class);
+    private static final Logger log = Logger.getLogger(Application.class);
 
     public static void main(String[] args) throws ParseException {
         CommandLineParser parser = new DefaultParser();
@@ -61,7 +61,7 @@ public class Application {
             formatter.printHelp("java -jar <jar-name> <options>", options);
             System.exit(0);
         } catch (InvalidCommandException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
             System.exit(1);
         }
     }

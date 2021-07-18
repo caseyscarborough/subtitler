@@ -1,16 +1,15 @@
 package sh.casey.subtitler.condenser;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import sh.casey.subtitler.model.SrtSubtitle;
 import sh.casey.subtitler.model.SrtSubtitleFile;
 
+@Slf4j
 public class SrtSubtitleCondenser implements SubtitleCondenser<SrtSubtitleFile> {
-
-    private static final Logger LOGGER = Logger.getLogger(SrtSubtitleCondenser.class);
 
     @Override
     public SrtSubtitleFile condense(SrtSubtitleFile input) {
-        LOGGER.info("Condensing subtitle file...");
+        log.info("Condensing subtitle file...");
         SrtSubtitleFile output = new SrtSubtitleFile();
         SrtSubtitle previous = null;
         int counter = 0;
@@ -27,7 +26,7 @@ public class SrtSubtitleCondenser implements SubtitleCondenser<SrtSubtitleFile> 
         int outputLines = output.getSubtitles().size();
         double reducedLines = originalLines - outputLines;
         double percentage = (reducedLines / originalLines) * 100;
-        LOGGER.debug("Condensed subtitle from " + originalLines + " lines to " + outputLines + " lines (" + String.format("%.2f", percentage) + "% reduction).");
+        log.debug("Condensed subtitle from " + originalLines + " lines to " + outputLines + " lines (" + String.format("%.2f", percentage) + "% reduction).");
         return output;
     }
 }

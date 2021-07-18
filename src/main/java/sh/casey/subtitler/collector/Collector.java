@@ -1,6 +1,6 @@
 package sh.casey.subtitler.collector;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import sh.casey.subtitler.model.Subtitle;
 import sh.casey.subtitler.model.SubtitleFile;
 import sh.casey.subtitler.model.SubtitleType;
@@ -11,12 +11,11 @@ import sh.casey.subtitler.util.FileUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class Collector {
 
-    private static final Logger LOGGER = Logger.getLogger(Collector.class);
-
     public void collect(SubtitleType type, String outputFile, List<String> files) {
-        LOGGER.info("Collecting and reading " + files.size() + " " + type.getExtension() + " files. Outputting to " + outputFile + ".");
+        log.info("Collecting and reading " + files.size() + " " + type.getExtension() + " files. Outputting to " + outputFile + ".");
 
         List<Subtitle> contents = new ArrayList<>();
         SubtitleReaderFactory factory = new SubtitleReaderFactory();

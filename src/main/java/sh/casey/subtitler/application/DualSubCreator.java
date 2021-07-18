@@ -1,6 +1,6 @@
 package sh.casey.subtitler.application;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import sh.casey.subtitler.converter.SubtitleConverter;
 import sh.casey.subtitler.converter.SubtitleConverterFactory;
 import sh.casey.subtitler.model.AssDialogue;
@@ -16,9 +16,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 public class DualSubCreator {
-
-    private static final Logger LOGGER = Logger.getLogger(DualSubCreator.class);
 
     private final String top;
     private final String bottom;
@@ -40,7 +39,7 @@ public class DualSubCreator {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void create() {
-        LOGGER.info("Creating dual subtitle file using top file '" + top + "' and bottom file '" + bottom + "'");
+        log.info("Creating dual subtitle file using top file '" + top + "' and bottom file '" + bottom + "'");
         SubtitleReader topReader = new SubtitleReaderFactory().getInstance(topType);
         SubtitleReader bottomReader = new SubtitleReaderFactory().getInstance(bottomType);
         SubtitleFile topFile = topReader.read(top);
@@ -73,7 +72,7 @@ public class DualSubCreator {
 
         AssSubtitleWriter writer = new AssSubtitleWriter();
         writer.write(outputAss, output);
-        LOGGER.debug("Done.");
+        log.debug("Done.");
     }
 
     public static class Builder {
