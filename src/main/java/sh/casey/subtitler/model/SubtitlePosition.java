@@ -6,7 +6,7 @@ public enum SubtitlePosition {
 
     private final String position;
 
-    SubtitlePosition(String position) {
+    SubtitlePosition(final String position) {
         this.position = position;
     }
 

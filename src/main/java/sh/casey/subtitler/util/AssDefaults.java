@@ -10,7 +10,7 @@ import java.util.List;
 public class AssDefaults {
 
     public static AssSubtitleFile getDefaultAssSubtitleFile() {
-        AssSubtitleFile file = new AssSubtitleFile();
+        final AssSubtitleFile file = new AssSubtitleFile();
         file.setScriptType("v4.00+");
         file.setWrapStyle("0");
         file.setScaledBorderAndShadow("yes");
@@ -50,14 +50,14 @@ public class AssDefaults {
     }
 
     public static AssStyle getItalicStyling() {
-        AssStyle styling = getDefaultStyling();
+        final AssStyle styling = getDefaultStyling();
         styling.setItalic("1");
         styling.setName("Italic");
         return styling;
     }
 
     public static AssStyle getDefaultStyling() {
-        AssStyle style = new AssStyle();
+        final AssStyle style = new AssStyle();
         style.setName("Default");
         style.setFontName("Arial");
         style.setFontSize("18");
@@ -99,7 +99,7 @@ public class AssDefaults {
     }
 
     public static AssDialogue getDefaultDialogue() {
-        AssDialogue dialogue = new AssDialogue();
+        final AssDialogue dialogue = new AssDialogue();
         dialogue.setLayer("0");
         dialogue.setStyle("Default");
         dialogue.setMarginL("0000");
@@ -111,17 +111,17 @@ public class AssDefaults {
     }
 
     public static AssDialogue getItalicDialogue() {
-        AssDialogue dialogue = getDefaultDialogue();
+        final AssDialogue dialogue = getDefaultDialogue();
         dialogue.setStyle("Italic");
         return dialogue;
     }
 
     public static List<AssStyle> getDefaultStylesWithTopAndBottom() {
-        AssStyle top = AssDefaults.getDefaultStyling();
+        final AssStyle top = AssDefaults.getDefaultStyling();
         top.setName("Top");
         top.setAlignment("8");
 
-        AssStyle bottom = AssDefaults.getDefaultStyling();
+        final AssStyle bottom = AssDefaults.getDefaultStyling();
         bottom.setName("Bottom");
         bottom.setAlignment("2");
 

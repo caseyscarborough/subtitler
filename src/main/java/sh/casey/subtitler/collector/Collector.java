@@ -14,18 +14,18 @@ import java.util.List;
 @Slf4j
 public class Collector {
 
-    public void collect(SubtitleType type, String outputFile, List<String> files) {
+    public void collect(final SubtitleType type, final String outputFile, final List<String> files) {
         log.info("Collecting and reading " + files.size() + " " + type.getExtension() + " files. Outputting to " + outputFile + ".");
 
-        List<Subtitle> contents = new ArrayList<>();
-        SubtitleReaderFactory factory = new SubtitleReaderFactory();
-        SubtitleReader<? extends SubtitleFile> reader = factory.getInstance(type);
-        for (String file : files) {
+        final List<Subtitle> contents = new ArrayList<>();
+        final SubtitleReaderFactory factory = new SubtitleReaderFactory();
+        final SubtitleReader<? extends SubtitleFile> reader = factory.getInstance(type);
+        for (final String file : files) {
             contents.addAll(reader.read(file).getSubtitles());
         }
 
-        StringBuilder sb = new StringBuilder();
-        for (Subtitle content : contents) {
+        final StringBuilder sb = new StringBuilder();
+        for (final Subtitle content : contents) {
             sb.append(content.getText()).append("\n");
         }
 

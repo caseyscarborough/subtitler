@@ -5,7 +5,7 @@ import java.util.List;
 
 public class DfxpSubtitleFile implements SubtitleFile {
 
-    private List<DxfpSubtitle> subtitles = new ArrayList<>();
+    private final List<DxfpSubtitle> subtitles = new ArrayList<>();
 
     @Override
     public List<DxfpSubtitle> getSubtitles() {

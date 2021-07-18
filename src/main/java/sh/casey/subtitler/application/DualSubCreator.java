@@ -25,7 +25,7 @@ public class DualSubCreator {
     private final SubtitleType bottomType;
     private final String output;
 
-    private DualSubCreator(String top, String bottom, SubtitleType topType, SubtitleType bottomType, String output) {
+    private DualSubCreator(final String top, final String bottom, final SubtitleType topType, final SubtitleType bottomType, final String output) {
         this.top = top;
         this.bottom = bottom;
         this.topType = topType;
@@ -40,37 +40,37 @@ public class DualSubCreator {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void create() {
         log.info("Creating dual subtitle file using top file '" + top + "' and bottom file '" + bottom + "'");
-        SubtitleReader topReader = new SubtitleReaderFactory().getInstance(topType);
-        SubtitleReader bottomReader = new SubtitleReaderFactory().getInstance(bottomType);
+        final SubtitleReader topReader = new SubtitleReaderFactory().getInstance(topType);
+        final SubtitleReader bottomReader = new SubtitleReaderFactory().getInstance(bottomType);
         SubtitleFile topFile = topReader.read(top);
         SubtitleFile bottomFile = bottomReader.read(bottom);
 
         if (topType != SubtitleType.ASS) {
-            SubtitleConverter converter = new SubtitleConverterFactory().getInstance(topType, SubtitleType.ASS);
+            final SubtitleConverter converter = new SubtitleConverterFactory().getInstance(topType, SubtitleType.ASS);
             topFile = converter.convert(topFile);
         }
 
         if (bottomType != SubtitleType.ASS) {
-            SubtitleConverter converter = new SubtitleConverterFactory().getInstance(bottomType, SubtitleType.ASS);
+            final SubtitleConverter converter = new SubtitleConverterFactory().getInstance(bottomType, SubtitleType.ASS);
             bottomFile = converter.convert(bottomFile);
         }
 
-        AssSubtitleFile topAss = (AssSubtitleFile) topFile;
-        AssSubtitleFile bottomAss = (AssSubtitleFile) bottomFile;
+        final AssSubtitleFile topAss = (AssSubtitleFile) topFile;
+        final AssSubtitleFile bottomAss = (AssSubtitleFile) bottomFile;
 
-        AssSubtitleFile outputAss = AssDefaults.getDefaultAssSubtitleFile();
+        final AssSubtitleFile outputAss = AssDefaults.getDefaultAssSubtitleFile();
         outputAss.getStyles().clear();
         outputAss.getStyles().addAll(AssDefaults.getDefaultStylesWithTopAndBottom());
         topAss.getDialogues().forEach(d -> d.setStyle("Top"));
         bottomAss.getDialogues().forEach(d -> d.setStyle("Bottom"));
 
-        List<AssDialogue> dialogues = new ArrayList<>();
+        final List<AssDialogue> dialogues = new ArrayList<>();
         dialogues.addAll(topAss.getDialogues());
         dialogues.addAll(bottomAss.getDialogues());
         Collections.sort(dialogues);
         outputAss.setDialogues(dialogues);
 
-        AssSubtitleWriter writer = new AssSubtitleWriter();
+        final AssSubtitleWriter writer = new AssSubtitleWriter();
         writer.write(outputAss, output);
         log.debug("Done.");
     }
@@ -85,7 +85,7 @@ public class DualSubCreator {
         Builder() {
         }
 
-        public Builder topFile(String file) {
+        public Builder topFile(final String file) {
             top = file;
             if (file.endsWith("srt")) {
                 topType(SubtitleType.SRT);
@@ -95,7 +95,7 @@ public class DualSubCreator {
             return this;
         }
 
-        public Builder bottomFile(String file) {
+        public Builder bottomFile(final String file) {
             bottom = file;
             if (file.endsWith("srt")) {
                 bottomType(SubtitleType.SRT);
@@ -105,17 +105,17 @@ public class DualSubCreator {
             return this;
         }
 
-        public Builder outputFile(String file) {
+        public Builder outputFile(final String file) {
             output = file;
             return this;
         }
 
-        public Builder topType(SubtitleType topType) {
+        public Builder topType(final SubtitleType topType) {
             this.topType = topType;
             return this;
         }
 
-        public Builder bottomType(SubtitleType bottomType) {
+        public Builder bottomType(final SubtitleType bottomType) {
             this.bottomType = bottomType;
             return this;
         }

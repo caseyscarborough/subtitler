@@ -11,7 +11,7 @@ import sh.casey.subtitler.shifter.SubtitleShifterFactory;
 
 class ShiftCommand extends BaseCommand {
 
-    public ShiftCommand(CommandLine cmd) {
+    public ShiftCommand(final CommandLine cmd) {
         super(cmd);
     }
 
@@ -21,13 +21,13 @@ class ShiftCommand extends BaseCommand {
             throw new InvalidCommandException("You must pass in the time to shift the subtitles in milliseconds.");
         }
 
-        String input = getInputFilename();
-        SubtitleType subtitleType = getInputFileType();
-        String output = getOutputFilename();
-        SubtitleShifter<? extends SubtitleFile> shifter = new SubtitleShifterFactory().getInstance(subtitleType);
-        Integer number = cmd.getOptionValue('n') != null ? Integer.parseInt(cmd.getOptionValue('n')) : null;
+        final String input = getInputFilename();
+        final SubtitleType subtitleType = getInputFileType();
+        final String output = getOutputFilename();
+        final SubtitleShifter<? extends SubtitleFile> shifter = new SubtitleShifterFactory().getInstance(subtitleType);
+        final Integer number = cmd.getOptionValue('n') != null ? Integer.parseInt(cmd.getOptionValue('n')) : null;
 
-        ShiftConfig config = ShiftConfig.builder()
+        final ShiftConfig config = ShiftConfig.builder()
             .input(input)
             .output(output)
             .ms(Integer.parseInt(cmd.getOptionValue('t')))

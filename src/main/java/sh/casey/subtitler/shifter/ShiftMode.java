@@ -9,16 +9,16 @@ public enum ShiftMode {
 
     private final String explanation;
 
-    ShiftMode(String explanation) {
+    ShiftMode(final String explanation) {
         this.explanation = explanation;
     }
 
-    public static ShiftMode findByString(String s) {
+    public static ShiftMode findByString(final String s) {
         if (StringUtils.isBlank(s)) {
             return FROM_TO;
         }
 
-        for (ShiftMode value : values()) {
+        for (final ShiftMode value : values()) {
             if (s.toUpperCase().matches(value.name())) {
                 return value;
             }

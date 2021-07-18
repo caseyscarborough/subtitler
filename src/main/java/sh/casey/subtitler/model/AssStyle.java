@@ -30,7 +30,7 @@ public class AssStyle {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -38,7 +38,7 @@ public class AssStyle {
         return fontName;
     }
 
-    public void setFontName(String fontName) {
+    public void setFontName(final String fontName) {
         this.fontName = fontName;
     }
 
@@ -46,7 +46,7 @@ public class AssStyle {
         return fontSize;
     }
 
-    public void setFontSize(String fontSize) {
+    public void setFontSize(final String fontSize) {
         this.fontSize = fontSize;
     }
 
@@ -54,7 +54,7 @@ public class AssStyle {
         return primaryColor;
     }
 
-    public void setPrimaryColor(String primaryColor) {
+    public void setPrimaryColor(final String primaryColor) {
         this.primaryColor = primaryColor;
     }
 
@@ -62,7 +62,7 @@ public class AssStyle {
         return secondaryColor;
     }
 
-    public void setSecondaryColor(String secondaryColor) {
+    public void setSecondaryColor(final String secondaryColor) {
         this.secondaryColor = secondaryColor;
     }
 
@@ -70,7 +70,7 @@ public class AssStyle {
         return outlineColor;
     }
 
-    public void setOutlineColor(String outlineColor) {
+    public void setOutlineColor(final String outlineColor) {
         this.outlineColor = outlineColor;
     }
 
@@ -78,7 +78,7 @@ public class AssStyle {
         return backColor;
     }
 
-    public void setBackColor(String backColor) {
+    public void setBackColor(final String backColor) {
         this.backColor = backColor;
     }
 
@@ -86,7 +86,7 @@ public class AssStyle {
         return bold;
     }
 
-    public void setBold(String bold) {
+    public void setBold(final String bold) {
         this.bold = bold;
     }
 
@@ -94,7 +94,7 @@ public class AssStyle {
         return italic;
     }
 
-    public void setItalic(String italic) {
+    public void setItalic(final String italic) {
         this.italic = italic;
     }
 
@@ -102,7 +102,7 @@ public class AssStyle {
         return underline;
     }
 
-    public void setUnderline(String underline) {
+    public void setUnderline(final String underline) {
         this.underline = underline;
     }
 
@@ -110,7 +110,7 @@ public class AssStyle {
         return strikeOut;
     }
 
-    public void setStrikeOut(String strikeOut) {
+    public void setStrikeOut(final String strikeOut) {
         this.strikeOut = strikeOut;
     }
 
@@ -118,7 +118,7 @@ public class AssStyle {
         return scaleX;
     }
 
-    public void setScaleX(String scaleX) {
+    public void setScaleX(final String scaleX) {
         this.scaleX = scaleX;
     }
 
@@ -126,7 +126,7 @@ public class AssStyle {
         return scaleY;
     }
 
-    public void setScaleY(String scaleY) {
+    public void setScaleY(final String scaleY) {
         this.scaleY = scaleY;
     }
 
@@ -134,7 +134,7 @@ public class AssStyle {
         return spacing;
     }
 
-    public void setSpacing(String spacing) {
+    public void setSpacing(final String spacing) {
         this.spacing = spacing;
     }
 
@@ -142,7 +142,7 @@ public class AssStyle {
         return angle;
     }
 
-    public void setAngle(String angle) {
+    public void setAngle(final String angle) {
         this.angle = angle;
     }
 
@@ -150,7 +150,7 @@ public class AssStyle {
         return borderStyle;
     }
 
-    public void setBorderStyle(String borderStyle) {
+    public void setBorderStyle(final String borderStyle) {
         this.borderStyle = borderStyle;
     }
 
@@ -158,7 +158,7 @@ public class AssStyle {
         return outline;
     }
 
-    public void setOutline(String outline) {
+    public void setOutline(final String outline) {
         this.outline = outline;
     }
 
@@ -166,7 +166,7 @@ public class AssStyle {
         return shadow;
     }
 
-    public void setShadow(String shadow) {
+    public void setShadow(final String shadow) {
         this.shadow = shadow;
     }
 
@@ -174,7 +174,7 @@ public class AssStyle {
         return alignment;
     }
 
-    public void setAlignment(String alignment) {
+    public void setAlignment(final String alignment) {
         this.alignment = alignment;
     }
 
@@ -182,7 +182,7 @@ public class AssStyle {
         return marginL;
     }
 
-    public void setMarginL(String marginL) {
+    public void setMarginL(final String marginL) {
         this.marginL = marginL;
     }
 
@@ -190,7 +190,7 @@ public class AssStyle {
         return marginR;
     }
 
-    public void setMarginR(String marginR) {
+    public void setMarginR(final String marginR) {
         this.marginR = marginR;
     }
 
@@ -198,7 +198,7 @@ public class AssStyle {
         return marginV;
     }
 
-    public void setMarginV(String marginV) {
+    public void setMarginV(final String marginV) {
         this.marginV = marginV;
     }
 
@@ -206,11 +206,11 @@ public class AssStyle {
         return encoding;
     }
 
-    public void setEncoding(String encoding) {
+    public void setEncoding(final String encoding) {
         this.encoding = encoding;
     }
 
-    public String getValue(String formatValue) {
+    public String getValue(final String formatValue) {
         switch (formatValue) {
             case "Name":
                 return getName();

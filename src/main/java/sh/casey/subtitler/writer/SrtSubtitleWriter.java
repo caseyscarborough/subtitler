@@ -6,9 +6,9 @@ import sh.casey.subtitler.util.FileUtils;
 
 public class SrtSubtitleWriter implements SubtitleWriter<SrtSubtitleFile> {
     @Override
-    public void write(SrtSubtitleFile file, String outputPath) {
-        StringBuilder sb = new StringBuilder();
-        for (SrtSubtitle sub : file.getSubtitles()) {
+    public void write(final SrtSubtitleFile file, final String outputPath) {
+        final StringBuilder sb = new StringBuilder();
+        for (final SrtSubtitle sub : file.getSubtitles()) {
             sb.append(sub.getNumber())
                 .append("\n")
                 .append(sub.getStart())
@@ -19,7 +19,7 @@ public class SrtSubtitleWriter implements SubtitleWriter<SrtSubtitleFile> {
                 .append("\n");
         }
 
-        String output = sb.toString().trim();
+        final String output = sb.toString().trim();
         FileUtils.writeFile(outputPath, output);
     }
 }

@@ -32,7 +32,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return comments;
     }
 
-    public void setComments(List<String> comments) {
+    public void setComments(final List<String> comments) {
         this.comments = comments;
     }
 
@@ -40,7 +40,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
@@ -48,7 +48,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return scriptType;
     }
 
-    public void setScriptType(String scriptType) {
+    public void setScriptType(final String scriptType) {
         this.scriptType = scriptType;
     }
 
@@ -56,7 +56,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return wrapStyle;
     }
 
-    public void setWrapStyle(String wrapStyle) {
+    public void setWrapStyle(final String wrapStyle) {
         this.wrapStyle = wrapStyle;
     }
 
@@ -64,7 +64,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return playResX;
     }
 
-    public void setPlayResX(String playResX) {
+    public void setPlayResX(final String playResX) {
         this.playResX = playResX;
     }
 
@@ -72,7 +72,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return playResY;
     }
 
-    public void setPlayResY(String playResY) {
+    public void setPlayResY(final String playResY) {
         this.playResY = playResY;
     }
 
@@ -80,7 +80,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return scaledBorderAndShadow;
     }
 
-    public void setScaledBorderAndShadow(String scaledBorderAndShadow) {
+    public void setScaledBorderAndShadow(final String scaledBorderAndShadow) {
         this.scaledBorderAndShadow = scaledBorderAndShadow;
     }
 
@@ -88,7 +88,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return videoAspectRatio;
     }
 
-    public void setVideoAspectRatio(String videoAspectRatio) {
+    public void setVideoAspectRatio(final String videoAspectRatio) {
         this.videoAspectRatio = videoAspectRatio;
     }
 
@@ -96,7 +96,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return videoZoom;
     }
 
-    public void setVideoZoom(String videoZoom) {
+    public void setVideoZoom(final String videoZoom) {
         this.videoZoom = videoZoom;
     }
 
@@ -104,7 +104,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return videoPosition;
     }
 
-    public void setVideoPosition(String videoPosition) {
+    public void setVideoPosition(final String videoPosition) {
         this.videoPosition = videoPosition;
     }
 
@@ -112,7 +112,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return collisions;
     }
 
-    public void setCollisions(String collisions) {
+    public void setCollisions(final String collisions) {
         this.collisions = collisions;
     }
 
@@ -120,7 +120,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return stylesFormatOrder;
     }
 
-    public void setStylesFormatOrder(List<String> stylesFormatOrder) {
+    public void setStylesFormatOrder(final List<String> stylesFormatOrder) {
         this.stylesFormatOrder = stylesFormatOrder;
     }
 
@@ -128,7 +128,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return styles;
     }
 
-    public void setStyles(List<AssStyle> styles) {
+    public void setStyles(final List<AssStyle> styles) {
         this.styles = styles;
     }
 
@@ -136,7 +136,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return eventsFormatOrder;
     }
 
-    public void setEventsFormatOrder(List<String> eventsFormatOrder) {
+    public void setEventsFormatOrder(final List<String> eventsFormatOrder) {
         this.eventsFormatOrder = eventsFormatOrder;
     }
 
@@ -144,7 +144,7 @@ public class AssSubtitleFile implements SubtitleFile {
         return dialogues;
     }
 
-    public void setDialogues(List<AssDialogue> dialogues) {
+    public void setDialogues(final List<AssDialogue> dialogues) {
         this.dialogues = dialogues;
     }
 

@@ -23,7 +23,7 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(final Integer number) {
         this.number = number;
     }
 
@@ -31,7 +31,7 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
         return layer;
     }
 
-    public void setLayer(String layer) {
+    public void setLayer(final String layer) {
         this.layer = layer;
     }
 
@@ -41,7 +41,7 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
     }
 
     @Override
-    public void setStart(String start) {
+    public void setStart(final String start) {
         this.start = start;
     }
 
@@ -51,7 +51,7 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
     }
 
     @Override
-    public void setEnd(String end) {
+    public void setEnd(final String end) {
         this.end = end;
     }
 
@@ -59,7 +59,7 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
         return style;
     }
 
-    public void setStyle(String style) {
+    public void setStyle(final String style) {
         this.style = style;
     }
 
@@ -67,7 +67,7 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
         return actor;
     }
 
-    public void setActor(String actor) {
+    public void setActor(final String actor) {
         this.actor = actor;
     }
 
@@ -75,7 +75,7 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
         return marginL;
     }
 
-    public void setMarginL(String marginL) {
+    public void setMarginL(final String marginL) {
         this.marginL = marginL;
     }
 
@@ -83,7 +83,7 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
         return marginR;
     }
 
-    public void setMarginR(String marginR) {
+    public void setMarginR(final String marginR) {
         this.marginR = marginR;
     }
 
@@ -91,7 +91,7 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
         return marginV;
     }
 
-    public void setMarginV(String marginV) {
+    public void setMarginV(final String marginV) {
         this.marginV = marginV;
     }
 
@@ -99,7 +99,7 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
         return effect;
     }
 
-    public void setEffect(String effect) {
+    public void setEffect(final String effect) {
         this.effect = effect;
     }
 
@@ -112,7 +112,7 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 
@@ -120,11 +120,11 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
         return comment;
     }
 
-    public void setComment(boolean comment) {
+    public void setComment(final boolean comment) {
         this.comment = comment;
     }
 
-    public String getValue(String formatValue) {
+    public String getValue(final String formatValue) {
         switch (formatValue) {
             case "Layer":
                 return getLayer();
@@ -153,7 +153,7 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
     }
 
     @Override
-    public int compareTo(AssDialogue o) {
+    public int compareTo(final AssDialogue o) {
         if (this.getText() == null) {
             this.setText("");
         }

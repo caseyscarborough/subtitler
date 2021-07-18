@@ -10,13 +10,13 @@ public enum SubtitleType {
     private final String extension;
     private final String timeFormat;
 
-    SubtitleType(String extension, String timeFormat) {
+    SubtitleType(final String extension, final String timeFormat) {
         this.extension = extension;
         this.timeFormat = timeFormat;
     }
 
-    public static SubtitleType find(String s) {
-        for (SubtitleType value : values()) {
+    public static SubtitleType find(final String s) {
+        for (final SubtitleType value : values()) {
             if (value.name().equalsIgnoreCase(s) || value.extension.equalsIgnoreCase(s)) {
                 return value;
             }

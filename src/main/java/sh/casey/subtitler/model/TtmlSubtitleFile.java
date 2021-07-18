@@ -12,7 +12,7 @@ public class TtmlSubtitleFile implements SubtitleFile {
         return subtitles;
     }
 
-    public void setSubtitles(List<TtmlSubtitle> subtitles) {
+    public void setSubtitles(final List<TtmlSubtitle> subtitles) {
         this.subtitles = subtitles;
     }
 

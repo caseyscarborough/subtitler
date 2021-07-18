@@ -6,7 +6,7 @@ import sh.casey.subtitler.application.exception.InvalidCommandException;
 
 class DualSubtitleCommand extends BaseCommand {
 
-    public DualSubtitleCommand(CommandLine cmd) {
+    public DualSubtitleCommand(final CommandLine cmd) {
         super(cmd);
     }
 

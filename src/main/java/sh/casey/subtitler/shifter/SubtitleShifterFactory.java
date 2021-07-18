@@ -5,7 +5,7 @@ import sh.casey.subtitler.model.SubtitleType;
 
 public class SubtitleShifterFactory {
 
-    public SubtitleShifter<? extends SubtitleFile> getInstance(SubtitleType type) {
+    public SubtitleShifter<? extends SubtitleFile> getInstance(final SubtitleType type) {
         if (type.equals(SubtitleType.SRT)) {
             return new SrtSubtitleShifter();
         } else if (type.equals(SubtitleType.ASS)) {

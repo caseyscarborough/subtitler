@@ -14,7 +14,7 @@ public class DxfpSubtitle implements Subtitle {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -28,7 +28,7 @@ public class DxfpSubtitle implements Subtitle {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(final Integer number) {
         this.number = number;
     }
 
@@ -38,7 +38,7 @@ public class DxfpSubtitle implements Subtitle {
     }
 
     @Override
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 
@@ -48,7 +48,7 @@ public class DxfpSubtitle implements Subtitle {
     }
 
     @Override
-    public void setStart(String start) {
+    public void setStart(final String start) {
         this.start = start;
     }
 
@@ -58,7 +58,7 @@ public class DxfpSubtitle implements Subtitle {
     }
 
     @Override
-    public void setEnd(String end) {
+    public void setEnd(final String end) {
         this.end = end;
     }
 
@@ -66,7 +66,7 @@ public class DxfpSubtitle implements Subtitle {
         return region;
     }
 
-    public void setRegion(String region) {
+    public void setRegion(final String region) {
         this.region = region;
     }
 
@@ -74,7 +74,7 @@ public class DxfpSubtitle implements Subtitle {
         return italic;
     }
 
-    public void setItalic(boolean italic) {
+    public void setItalic(final boolean italic) {
         this.italic = italic;
     }
 }

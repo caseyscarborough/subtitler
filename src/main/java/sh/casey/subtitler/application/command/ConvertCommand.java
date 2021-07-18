@@ -13,7 +13,7 @@ import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
 class ConvertCommand extends BaseCommand {
 
-    public ConvertCommand(CommandLine cmd) {
+    public ConvertCommand(final CommandLine cmd) {
         super(cmd);
     }
 
@@ -23,15 +23,15 @@ class ConvertCommand extends BaseCommand {
             throw new InvalidCommandException("You must specify an output file.");
         }
 
-        String inputFile = getInputFilename();
-        SubtitleType inputType = getInputFileType();
-        SubtitleType outputType = getOutputFileType();
+        final String inputFile = getInputFilename();
+        final SubtitleType inputType = getInputFileType();
+        final SubtitleType outputType = getOutputFileType();
 
-        SubtitleReader<SubtitleFile> reader = new SubtitleReaderFactory().getInstance(inputType);
-        SubtitleFile file = reader.read(inputFile);
-        SubtitleConverter<SubtitleFile, SubtitleFile> converter = new SubtitleConverterFactory().getInstance(inputType, outputType);
-        SubtitleFile convertedFile = converter.convert(file);
-        SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(outputType);
+        final SubtitleReader<SubtitleFile> reader = new SubtitleReaderFactory().getInstance(inputType);
+        final SubtitleFile file = reader.read(inputFile);
+        final SubtitleConverter<SubtitleFile, SubtitleFile> converter = new SubtitleConverterFactory().getInstance(inputType, outputType);
+        final SubtitleFile convertedFile = converter.convert(file);
+        final SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(outputType);
         writer.write(convertedFile, cmd.getOptionValue('o'));
     }
 }

@@ -21,9 +21,9 @@ public class Application {
 
     private static final Logger log = Logger.getLogger(Application.class);
 
-    public static void main(String[] args) throws ParseException {
-        CommandLineParser parser = new DefaultParser();
-        Options options = new Options();
+    public static void main(final String[] args) throws ParseException {
+        final CommandLineParser parser = new DefaultParser();
+        final Options options = new Options();
 
         // actions
         options.addOption("d", "dual-subs", false, "Create Dual Sub file from two input files");
@@ -51,16 +51,16 @@ public class Application {
         options.addOption("it", "input-type", true, "The type of the input file, options are " + Arrays.toString(SubtitleType.values()));
         options.addOption("ot", "output-type", true, "The type for the output file, options are " + Arrays.toString(SubtitleType.values()));
 
-        CommandLine cmd = parser.parse(options, args);
-        CommandFactory factory = new CommandFactory();
+        final CommandLine cmd = parser.parse(options, args);
+        final CommandFactory factory = new CommandFactory();
         try {
-            ApplicationCommand command = factory.getInstance(cmd);
+            final ApplicationCommand command = factory.getInstance(cmd);
             command.execute();
-        } catch (CommandNotFoundException e) {
-            HelpFormatter formatter = new HelpFormatter();
+        } catch (final CommandNotFoundException e) {
+            final HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp("subtitler <options>", options);
             System.exit(0);
-        } catch (InvalidCommandException e) {
+        } catch (final InvalidCommandException e) {
             log.error(e.getMessage());
             System.exit(1);
         }

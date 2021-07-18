@@ -4,11 +4,11 @@ import org.apache.commons.lang3.StringUtils;
 
 public class TimeUtil {
 
-    public static Long assFormatTimeToMilliseconds(String time) {
-        String[] parts = time.replaceAll("\\.", ":").split(":");
+    public static Long assFormatTimeToMilliseconds(final String time) {
+        final String[] parts = time.replaceAll("\\.", ":").split(":");
         long milliseconds = 0L;
         for (int i = 0; i < parts.length; i++) {
-            long amount = Long.parseLong(parts[i]);
+            final long amount = Long.parseLong(parts[i]);
             if (i == 0) {
                 milliseconds += amount * 3600000;
             } else if (i == 1) {
@@ -25,7 +25,7 @@ public class TimeUtil {
 
     // This method removes the 3rd millisecond character
     // from .ass subtitles, e.g. 1:00:00.333 => 1:00:00.33
-    public static String assTrim(String time) {
+    public static String assTrim(final String time) {
         if (StringUtils.isBlank(time)) {
             return null;
         }

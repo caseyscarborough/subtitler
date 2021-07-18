@@ -2,11 +2,11 @@ package sh.casey.subtitler.exception;
 
 public class SubtitleException extends RuntimeException {
 
-    public SubtitleException(String message) {
+    public SubtitleException(final String message) {
         super(message);
     }
 
-    public SubtitleException(String message, Throwable cause) {
+    public SubtitleException(final String message, final Throwable cause) {
         super(message, cause);
     }
 }

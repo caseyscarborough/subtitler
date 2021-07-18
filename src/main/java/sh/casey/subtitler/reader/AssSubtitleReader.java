@@ -22,15 +22,15 @@ import static sh.casey.subtitler.config.Constants.BYTE_ORDER_MARK;
 public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
 
     @Override
-    public AssSubtitleFile read(String filename) {
+    public AssSubtitleFile read(final String filename) {
         log.info("Reading subtitle file: " + filename);
         Validate.notBlank(filename);
-        AssSubtitleFile file = new AssSubtitleFile();
+        final AssSubtitleFile file = new AssSubtitleFile();
         int lineCounter = 0;
-        BufferedReader br;
+        final BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(filename));
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             throw new SubtitleException("Could not read subtitle file " + filename, e);
         }
 
@@ -38,7 +38,7 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
             log.debug("Reading first line...");
             lineCounter++;
             String line = br.readLine();
-            Integer dialogueCounter = 0;
+            int dialogueCounter = 0;
             while (line != null) {
                 line = line.trim().replace(BYTE_ORDER_MARK, "");
                 if (line.startsWith("[")) {
@@ -48,7 +48,7 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                         line = br.readLine();
                         while (line != null && !line.startsWith("[")) {
                             line = line.trim();
-                            String value = getValue(line);
+                            final String value = getValue(line);
                             if (line.startsWith("Title:")) {
                                 file.setTitle(value);
                             } else if (line.startsWith("Collisions: ")) {
@@ -84,24 +84,24 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                         line = br.readLine().trim();
 
                         while (!line.startsWith("[")) {
-                            String value = getValue(line);
+                            final String value = getValue(line);
                             if (line.startsWith("Format:")) {
-                                List<String> formatOrder = Arrays.stream(value.split(",")).map(String::trim).collect(Collectors.toList());
+                                final List<String> formatOrder = Arrays.stream(value.split(",")).map(String::trim).collect(Collectors.toList());
                                 file.setStylesFormatOrder(formatOrder);
                             } else if (line.startsWith("Style:")) {
                                 if (file.getStylesFormatOrder().isEmpty()) {
                                     throw new SubtitleException(".ass subtitle is in the incorrect format. Did not find 'Format' field before 'Style' field in [V4+ Styles] section. See line number: " + lineCounter);
                                 }
 
-                                String[] styles = value.split(",");
+                                final String[] styles = value.split(",");
                                 if (styles.length != file.getStylesFormatOrder().size()) {
                                     throw new SubtitleException(".ass subtitle is in the incorrect format. More styles were listed than were included in the format header. See line number: " + lineCounter);
                                 }
 
-                                AssStyle style = new AssStyle();
+                                final AssStyle style = new AssStyle();
                                 for (int i = 0; i < file.getStylesFormatOrder().size(); i++) {
-                                    String type = file.getStylesFormatOrder().get(i);
-                                    String styleValue = styles[i].trim();
+                                    final String type = file.getStylesFormatOrder().get(i);
+                                    final String styleValue = styles[i].trim();
 
                                     if (type.equals("Name")) {
                                         style.setName(styleValue);
@@ -162,20 +162,20 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                         line = br.readLine().trim();
 
                         while (line != null && !line.startsWith("[")) {
-                            String value = getValue(line);
+                            final String value = getValue(line);
                             if (line.startsWith("Format:")) {
-                                List<String> formatOrder = Arrays.stream(value.split(",")).map(String::trim).collect(Collectors.toList());
+                                final List<String> formatOrder = Arrays.stream(value.split(",")).map(String::trim).collect(Collectors.toList());
                                 file.setEventsFormatOrder(formatOrder);
                             } else if (line.startsWith("Dialogue:") || line.startsWith("Comment:")) {
                                 if (file.getEventsFormatOrder().isEmpty()) {
                                     throw new SubtitleException(".ass subtitle is in the incorrect format. Did not find 'Format' field before 'Dialogue' field in [Events] section. See line number: " + lineCounter);
                                 }
 
-                                String[] dialogues = value.split(",");
+                                final String[] dialogues = value.split(",");
                                 // This usually means that the dialogue had some commas in it.
                                 // This will fix those issues.
                                 if (dialogues.length > file.getEventsFormatOrder().size()) {
-                                    StringBuilder sb = new StringBuilder();
+                                    final StringBuilder sb = new StringBuilder();
                                     boolean first = true;
                                     for (int i = file.getEventsFormatOrder().size() - 1; i < dialogues.length; i++) {
                                         if (!first) {
@@ -196,11 +196,11 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                                     }
                                 }
 
-                                AssDialogue dialogue = new AssDialogue();
+                                final AssDialogue dialogue = new AssDialogue();
                                 dialogue.setComment(line.startsWith("Comment:"));
                                 for (int i = 0; i < file.getEventsFormatOrder().size() && i < dialogues.length; i++) {
-                                    String type = file.getEventsFormatOrder().get(i);
-                                    String dialogueValue = dialogues[i].trim();
+                                    final String type = file.getEventsFormatOrder().get(i);
+                                    final String dialogueValue = dialogues[i].trim();
 
                                     if (type.equals("Layer")) {
                                         dialogue.setLayer(dialogueValue);
@@ -243,14 +243,14 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                 }
             }
             log.debug("Read " + lineCounter + " lines from file " + filename);
-        } catch (NullPointerException e) {
+        } catch (final NullPointerException e) {
             log.warn("Unexpected end of file after reading " + lineCounter + " lines for file " + filename, e);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new SubtitleException("An error occurred reading file " + filename, e);
         } finally {
             try {
                 br.close();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 log.error("Could not close stream", e);
             }
         }
@@ -259,8 +259,8 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
         return file;
     }
 
-    private String getValue(String line) {
-        String[] split = line.split(":");
+    private String getValue(final String line) {
+        final String[] split = line.split(":");
         if (split.length > 1) {
             return String.join(":", Arrays.asList(split)).substring(split[0].length() + 1).trim();
         }

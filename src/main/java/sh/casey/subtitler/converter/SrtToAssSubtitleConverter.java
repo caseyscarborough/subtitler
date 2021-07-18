@@ -15,16 +15,16 @@ import java.util.List;
 public class SrtToAssSubtitleConverter implements SubtitleConverter<SrtSubtitleFile, AssSubtitleFile> {
 
     @Override
-    public AssSubtitleFile convert(SrtSubtitleFile input) {
+    public AssSubtitleFile convert(final SrtSubtitleFile input) {
         log.debug("Converting SRT file to ASS file...");
-        AssSubtitleFile output = AssDefaults.getDefaultAssSubtitleFile();
-        List<SrtSubtitle> lines = input.getSubtitles();
-        for (SrtSubtitle line : lines) {
-            AssDialogue dialogue = AssDefaults.getDefaultDialogue();
+        final AssSubtitleFile output = AssDefaults.getDefaultAssSubtitleFile();
+        final List<SrtSubtitle> lines = input.getSubtitles();
+        for (final SrtSubtitle line : lines) {
+            final AssDialogue dialogue = AssDefaults.getDefaultDialogue();
             dialogue.setStart(line.getFromTimeForAssFormat());
             dialogue.setEnd(line.getToTimeForAssFormat());
 
-            Document html = Jsoup.parse(line.getTextForAss());
+            final Document html = Jsoup.parse(line.getTextForAss());
             dialogue.setText(html.text());
             output.getDialogues().add(dialogue);
         }

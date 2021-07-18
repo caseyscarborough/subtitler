@@ -12,20 +12,20 @@ import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
 class RenumberCommand extends BaseCommand {
 
-    public RenumberCommand(CommandLine cmd) {
+    public RenumberCommand(final CommandLine cmd) {
         super(cmd);
     }
 
     @Override
     public void execute() {
-        String input = getInputFilename();
-        String output = getOutputFilename();
-        SubtitleType subtitleType = getInputFileType();
-        SubtitleReader<SubtitleFile> reader = new SubtitleReaderFactory().getInstance(subtitleType);
-        SubtitleFile file = reader.read(input);
-        SubtitleRenumberer<SubtitleFile> renumberer = new SubtitleRenumbererFactory().getInstance(subtitleType);
+        final String input = getInputFilename();
+        final String output = getOutputFilename();
+        final SubtitleType subtitleType = getInputFileType();
+        final SubtitleReader<SubtitleFile> reader = new SubtitleReaderFactory().getInstance(subtitleType);
+        final SubtitleFile file = reader.read(input);
+        final SubtitleRenumberer<SubtitleFile> renumberer = new SubtitleRenumbererFactory().getInstance(subtitleType);
         renumberer.renumber(file);
-        SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(subtitleType);
+        final SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(subtitleType);
         writer.write(file, output);
     }
 }
