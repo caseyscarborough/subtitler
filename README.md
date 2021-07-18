@@ -4,10 +4,10 @@ This is a cross-platform, full-featured Java library and CLI utility for working
 
 It currently supports the following subtitle types:
 
-- `.srt` - Most common subtitle format.
-- `.ass` - SubStation Alpha
+- `.srt` - SubRip Subtitle (most common format)
+- `.ass` - Advanced SubStation Alpha (SSAv4+)
 - `.ttml` - Timed Text Markup Language
-- `.dfxp` - Commonly used from subtitles on Netflix.
+- `.dfxp` - Commonly used from subtitles on Netflix
 
 ## Installation
 
