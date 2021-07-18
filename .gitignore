@@ -1,0 +1,12 @@
+*.iml
+.idea/
+*.class
+target/
+build/
+out/
+*.log
+*.tar
+.gradle
+
+src/test/resources/srt
+src/test/resources/ass
