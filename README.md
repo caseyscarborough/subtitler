@@ -16,6 +16,7 @@ It currently supports the following subtitle types:
 ```bash
 brew tap caseyscarborough/subtitler
 brew install subtitler
+subtitler -v
 ```
 
 ### Download
@@ -77,6 +78,7 @@ usage: subtitler <options>
  -t,--time <arg>           Time in milliseconds to shift subtitles
                            (required when using -s)
  -tf,--top <arg>           Top file for dual sub creation
+ -v,--version              Display the current version
 ```
 
 ### Shifting
