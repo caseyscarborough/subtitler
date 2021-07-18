@@ -33,7 +33,7 @@ jobs:
           echo "Building distribution file for version ${VERSION}..."
           ./gradlew -Pversion=${VERSION} distZip
           mv build/distributions/subtitler-${VERSION}.zip subtitler.zip
-          SHA256=$(shasum -a 256 subtitler.zip)
+          shasum -a 256 subtitler.zip > subtitler.zip.sha256
           echo "sha256=${SHA256}"
       - name: Create Release
         id: create_release
@@ -45,7 +45,7 @@ jobs:
           release_name: ${{ github.ref }}
           draft: false
           prerelease: false
-      - name: Upload Release Asset
+      - name: Upload Zip File
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
@@ -53,4 +53,13 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: subtitler.zip
           asset_name: subtitler.zip
+          asset_content_type: application/octet-stream
+      - name: Upload SHA256 File
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: subtitler.zip.sha256
+          asset_name: subtitler.zip.sha256
           asset_content_type: application/octet-stream
