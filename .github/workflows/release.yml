@@ -37,4 +37,4 @@ jobs:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: build/distributions/subtitler.zip
           asset_name: subtitler.zip
-          asset_content_type: application/json
+          asset_content_type: application/zip
