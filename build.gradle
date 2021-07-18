@@ -1,4 +1,4 @@
-plugins{
+plugins {
     id 'java'
     id 'idea'
     id 'application'
@@ -37,4 +37,8 @@ dependencies {
 
 application {
     mainClass = 'sh.casey.subtitler.application.Application'
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
