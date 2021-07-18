@@ -184,7 +184,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.caseyscarborough:subtitler:1.0.0'
+    implementation 'com.github.caseyscarborough:subtitler:1.0.1'
 }
 ```
 
@@ -196,7 +196,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'sh.casey.subtitler:subtitler:1.0.0'
+    implementation 'sh.casey.subtitler:subtitler:1.0.1'
 }
 ```
 
