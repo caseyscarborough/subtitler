@@ -1,8 +1,8 @@
 package sh.casey.subtitler.writer;
 
-import sh.casey.subtitler.util.FileUtils;
 import sh.casey.subtitler.model.SrtSubtitle;
 import sh.casey.subtitler.model.SrtSubtitleFile;
+import sh.casey.subtitler.util.FileUtils;
 
 public class SrtSubtitleWriter implements SubtitleWriter<SrtSubtitleFile> {
     @Override

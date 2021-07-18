@@ -4,10 +4,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import sh.casey.subtitler.util.FileUtils;
 import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.DfxpSubtitleFile;
 import sh.casey.subtitler.model.DxfpSubtitle;
+import sh.casey.subtitler.util.FileUtils;
 
 public class DfxpSubtitleReader implements SubtitleReader<DfxpSubtitleFile> {
 

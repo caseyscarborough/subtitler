@@ -1,10 +1,10 @@
 package sh.casey.subtitler.writer;
 
 import org.apache.commons.lang3.StringUtils;
-import sh.casey.subtitler.util.FileUtils;
 import sh.casey.subtitler.model.AssDialogue;
 import sh.casey.subtitler.model.AssStyle;
 import sh.casey.subtitler.model.AssSubtitleFile;
+import sh.casey.subtitler.util.FileUtils;
 
 public class AssSubtitleWriter implements SubtitleWriter<AssSubtitleFile> {
 

@@ -1,12 +1,12 @@
 package sh.casey.subtitler.collector;
 
 import org.apache.log4j.Logger;
-import sh.casey.subtitler.util.FileUtils;
 import sh.casey.subtitler.model.Subtitle;
 import sh.casey.subtitler.model.SubtitleFile;
 import sh.casey.subtitler.model.SubtitleType;
 import sh.casey.subtitler.reader.SubtitleReader;
 import sh.casey.subtitler.reader.SubtitleReaderFactory;
+import sh.casey.subtitler.util.FileUtils;
 
 import java.util.ArrayList;
 import java.util.List;
