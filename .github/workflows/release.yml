@@ -33,6 +33,8 @@ jobs:
           echo "Building distribution file for version ${VERSION}..."
           ./gradlew -Pversion=${VERSION} distZip
           mv build/distributions/subtitler-${VERSION}.zip subtitler.zip
+          SHA256=$(shasum -a 256 subtitler.zip)
+          echo "sha256=${SHA256}"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
