@@ -29,7 +29,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - name: Build CLI Zip File
         run: |
-          ./gradlew distZip
+          VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
+          echo "Building distribution file for version ${VERSION}..."
+          ./gradlew -Pversion=${VERSION} distZip
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
