@@ -8,8 +8,8 @@ import sh.casey.subtitler.model.AssDialogue;
 import sh.casey.subtitler.model.AssSubtitleFile;
 import sh.casey.subtitler.model.DfxpSubtitleFile;
 import sh.casey.subtitler.model.DxfpSubtitle;
-import sh.casey.subtitler.util.AssDefaults;
 import sh.casey.subtitler.model.SubtitleType;
+import sh.casey.subtitler.util.AssDefaults;
 
 import java.text.DateFormat;
 import java.text.ParseException;

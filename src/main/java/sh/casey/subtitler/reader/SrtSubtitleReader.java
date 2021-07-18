@@ -2,10 +2,10 @@ package sh.casey.subtitler.reader;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import sh.casey.subtitler.config.Constants;
 import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.SrtSubtitle;
 import sh.casey.subtitler.model.SrtSubtitleFile;
-import sh.casey.subtitler.config.Constants;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

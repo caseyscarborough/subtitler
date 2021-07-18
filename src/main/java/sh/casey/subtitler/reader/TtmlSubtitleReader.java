@@ -4,9 +4,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import sh.casey.subtitler.util.FileUtils;
 import sh.casey.subtitler.model.TtmlSubtitle;
 import sh.casey.subtitler.model.TtmlSubtitleFile;
+import sh.casey.subtitler.util.FileUtils;
 
 public class TtmlSubtitleReader implements SubtitleReader<TtmlSubtitleFile> {
 
