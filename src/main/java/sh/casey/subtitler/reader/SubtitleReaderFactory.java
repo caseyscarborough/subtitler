@@ -5,6 +5,7 @@ import sh.casey.subtitler.model.SubtitleType;
 
 public class SubtitleReaderFactory {
 
+    @SuppressWarnings("unchecked")
     public <T extends SubtitleFile> SubtitleReader<T> getInstance(SubtitleType type) {
         if (type.equals(SubtitleType.ASS)) {
             return (SubtitleReader<T>) new AssSubtitleReader();

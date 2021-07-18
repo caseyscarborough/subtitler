@@ -5,6 +5,7 @@ import sh.casey.subtitler.model.SubtitleType;
 
 public class SubtitleCondenserFactory {
 
+    @SuppressWarnings("unchecked")
     public <T extends SubtitleFile> SubtitleCondenser<T> getInstance(SubtitleType type) {
         if (type == SubtitleType.SRT) {
             return (SubtitleCondenser<T>) new SrtSubtitleCondenser();
