@@ -38,6 +38,7 @@ public class DualSubCreator {
         return new Builder();
     }
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public void create() {
         LOGGER.info("Creating dual subtitle file using top file '" + top + "' and bottom file '" + bottom + "'");
         SubtitleReader topReader = new SubtitleReaderFactory().getInstance(topType);

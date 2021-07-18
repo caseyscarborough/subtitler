@@ -3,7 +3,7 @@ package sh.casey.subtitler.converter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.StringEscapeUtils;
 import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 import sh.casey.subtitler.model.AssDialogue;
 import sh.casey.subtitler.model.AssSubtitleFile;
 import sh.casey.subtitler.model.DfxpSubtitleFile;
@@ -41,7 +41,7 @@ public class DfxpToAssSubtitleConverter implements SubtitleConverter<DfxpSubtitl
                     .replaceAll("<br>", "\\\\N")
                     .replaceAll("<br />", "\\\\N")
                     .replaceAll("<br/>", "\\\\N");
-                dialogue.setText(StringEscapeUtils.unescapeHtml4(Jsoup.clean(dialogueText, Whitelist.none())));
+                dialogue.setText(StringEscapeUtils.unescapeHtml4(Jsoup.clean(dialogueText, Safelist.none())));
                 dialogue.setStyle(subtitle.getRegion().startsWith("top") ? "Top" : "Bottom");
                 output.getDialogues().add(dialogue);
             } catch (ParseException e) {
