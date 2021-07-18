@@ -11,6 +11,13 @@ It currently supports the following subtitle types:
 
 ## Installation
 
+### Homebrew (Mac OS X)
+
+```bash
+brew tap caseyscarborough/subtitler
+brew install subtitler
+```
+
 ### Download
 
 Download the `.zip` file from [the latest release](https://github.com/caseyscarborough/subtitler/releases/latest). Unzip the file and add the `bin` directory to your `PATH` environment variable.
@@ -184,7 +191,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.caseyscarborough:subtitler:1.0.2'
+    implementation 'com.github.caseyscarborough:subtitler:1.0.3'
 }
 ```
 
@@ -196,7 +203,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'sh.casey.subtitler:subtitler:1.0.2'
+    implementation 'sh.casey.subtitler:subtitler:1.0.3'
 }
 ```
 
