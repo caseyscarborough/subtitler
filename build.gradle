@@ -44,6 +44,12 @@ tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
 
+jar {
+    manifest {
+        attributes 'Implementation-Version': version
+    }
+}
+
 publishing {
     repositories {
         maven {

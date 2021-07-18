@@ -26,6 +26,7 @@ public class Application {
         final Options options = new Options();
 
         // actions
+        options.addOption("v", "version", false, "Display the current version");
         options.addOption("d", "dual-subs", false, "Create Dual Sub file from two input files");
         options.addOption("s", "shift", false, "Shift timing on subtitles");
         options.addOption("c", "convert", false, "Convert file from one format to another");
