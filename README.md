@@ -39,6 +39,40 @@ Legend:
 
 The original intention of this library/utility was to convert other subtitle types to `.ass`, so converting to `.ass` first will give you the most support.
 
+## Table of Contents
+
+- [Installation](#installation)
+    * [Homebrew (Mac OS X)](#homebrew-mac-os-x)
+    * [Download](#download)
+    * [Building from Source](#building-from-source)
+        + [Requirements](#requirements)
+        + [Building](#building)
+- [CLI Usage](#cli-usage)
+    * [Shifting](#shifting)
+        + [Shift All Subtitles](#shift-all-subtitles)
+        + [Shift Subtitles Before or After a Specific Time](#shift-subtitles-before-or-after-a-specific-time)
+        + [Shift a Specific Subtitle Number](#shift-a-specific-subtitle-number)
+        + [Shifting Only the Beginning or End Times](#shifting-only-the-beginning-or-end-times)
+        + [Shift Subtitles Matching Specific Text](#shift-subtitles-matching-specific-text)
+    * [Converting](#converting)
+    * [Renumbering](#renumbering)
+    * [Condensing](#condensing)
+    * [Create Dual Subtitle Files](#create-dual-subtitle-files)
+- [API Usage](#api-usage)
+    * [Including the Dependency](#including-the-dependency)
+        + [Jitpack](#jitpack)
+        + [GitHub](#github)
+    * [Get Subtitle Type from Filename](#get-subtitle-type-from-filename)
+    * [Reading Subtitles](#reading-subtitles)
+    * [Shifting Subtitles](#shifting-subtitles)
+    * [Writing Subtitles](#writing-subtitles)
+    * [Converting Subtitles](#converting-subtitles)
+    * [Renumbering Subtitles](#renumbering-subtitles)
+    * [Condensing Subtitles](#condensing-subtitles)
+    * [Creating Dual-Sub File](#creating-dual-sub-file)
+- [Issues or Contributing](#issues-or-contributing)
+- [TODO](#todo)
+
 ## Installation
 
 ### Homebrew (Mac OS X)
