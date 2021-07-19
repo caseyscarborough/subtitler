@@ -9,6 +9,17 @@ It currently supports the following subtitle types:
 - `.ttml` - Timed Text Markup Language
 - `.dfxp` - Commonly used from subtitles on Netflix
 
+It supports the following features for each subtitle type:
+
+| |Reading|Writing|Renumbering|Shifting|Condensing|Converting|
+|----|----|----|----|----|----|----|
+|`.srt`|✅|✅|✅|✅|✅| to `.ass` |
+|`.ass`|✅|✅|✅|✅| | |
+|`.ttml`|✅| | | | | to `.srt` |
+|`.dfxp`|✅| | | | | to `.ass` |
+
+Most of the functions can be performed by converting to another subtitle type first that is supported with the feature you are trying to use. For example, if you would like to shift a `.dfxp` file, then convert it to `.ass` first.
+
 ## Installation
 
 ### Homebrew (Mac OS X)
@@ -325,35 +336,6 @@ DualSubCreator creator = DualSubCreator.builder()
 // This will write the new file.
 creator.create();
 ```
-
-## Known Issues
-
-Not all features work with every subtitle type. Most of the functions can be performed by converting to another subtitle type first that is supported with the feature you are trying to use. For example, if you would like to shift a `.dfxp` file, then convert it to `.ass` first.
-
-Currently here are the supported functions for each subtitle type:
-
-- Reading
-  * `.ass`
-  * `.srt`
-  * `.dfxp`
-  * `.ttml`
-- Writing
-  * `.ass`
-  * `.srt`
-- Converting
-  * From `.srt` to `.ass`
-  * From `.ttml` to `.ass`
-  * From `.dfxp` to `.ass`
-- Renumbering
-  * `.ass`
-  * `.srt`
-- Shifting  
-  * `.ass`
-  * `.srt`
-- Condensing
-  * `.srt`
-
-I plan to implement more types in the future.  
 
 ## Issues or Contributing
 
