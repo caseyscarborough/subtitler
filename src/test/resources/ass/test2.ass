@@ -1,0 +1,354 @@
+﻿[Script Info]
+Title: Default file
+ScriptType: v4.00+
+WrapStyle: 0
+PlayResX: 720
+PlayResY: 480
+ScaledBorderAndShadow: yes
+Audio File: 
+Video File: 
+Video Aspect Ratio: 0
+Video Zoom: 6
+Video Position: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Dialogue1,Tahoma,32,&H00FDFDFD,&H000000FF,&H1F000000,&HC7000000,0,0,0,0,100,100,0,0,1,1.4,1.7,2,60,60,15,1
+Style: Dialogue4,Tahoma,31,&H00FDFDFD,&H000000FF,&H1F000000,&HC7000000,0,0,0,0,100,100,0,0,1,1.4,1.7,2,60,60,15,1
+Style: Dialogue2,Tahoma,31,&H00FDFDFD,&H000000FF,&H1F000000,&HC7000000,0,0,0,0,100,100,0,0,1,1.4,1.7,2,60,60,15,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:10.61,0:00:14.01,Dialogue1,Unknown,0000,0000,0000,,{\i1}Let's go grab them up! The Dragon Balls!{\i0}
+Dialogue: 0,0:00:10.61,0:00:14.01,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Tsukamo ze! Doragon Booru{\i0}
+Dialogue: 0,0:00:14.01,0:00:17.51,Dialogue1,Unknown,0000,0000,0000,,{\i1}One of the most thrilling{\i0} {\i1}secrets in the world{\i0}
+Dialogue: 0,0:00:14.01,0:00:17.51,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,51)}{\i1}Sekai de itto suriru na himitsu{\i0}
+Dialogue: 0,0:00:17.51,0:00:21.15,Dialogue1,Unknown,0000,0000,0000,,{\i1}Let's go seek them out! The Dragon Balls!{\i0}
+Dialogue: 0,0:00:17.51,0:00:21.15,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(360,54)}{\i1}Sagaso ze! Doragon Booru{\i0}
+Dialogue: 0,0:00:21.15,0:00:24.29,Dialogue1,Unknown,0000,0000,0000,,{\i1}One of the most delightful{\i0} {\i1}miracles in the world{\i0}
+Dialogue: 0,0:00:21.15,0:00:24.29,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Sekai de itto yukai na kiseki{\i0}
+Dialogue: 0,0:00:24.29,0:00:27.22,Dialogue1,Unknown,0000,0000,0000,,{\i1}This life is one big treasure island{\i0}
+Dialogue: 0,0:00:24.29,0:00:27.22,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Kono yo wa dekkai takarajima{\i0}
+Dialogue: 0,0:00:27.92,0:00:33.33,Dialogue1,Unknown,0000,0000,0000,,{\i1}It's the truth!{\i0}\N{\i1}Now more than ever, Adventure!{\i0}
+Dialogue: 0,0:00:27.92,0:00:33.33,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,51)}{\i1}So sa ima koso adobencha!{\i0}
+Dialogue: 0,0:00:35.46,0:00:39.03,Dialogue1,Unknown,0000,0000,0000,,{\i1}The love of a pounding chest is GISSIRI{\i0}
+Dialogue: 0,0:00:35.46,0:00:39.03,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(360,54)}{\i1}Mune waku-waku no ai ga GISSIRI{\i0}
+Dialogue: 0,0:00:39.03,0:00:42.54,Dialogue1,Unknown,0000,0000,0000,,{\i1}Multi-colored dreams rain down DOSSARI{\i0}
+Dialogue: 0,0:00:39.03,0:00:42.54,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Iro toridori no yume ga DOSSARI{\i0}
+Dialogue: 0,0:00:42.54,0:00:48.60,Dialogue1,Unknown,0000,0000,0000,,{\i1}Somewhere in this world, they are glowing{\i0}
+Dialogue: 0,0:00:42.54,0:00:48.60,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Kono yo no doko ka de hikatte 'ru{\i0}
+Dialogue: 0,0:00:49.54,0:00:52.45,Dialogue1,Unknown,0000,0000,0000,,{\i1}Let's go on out there and find them, boy{\i0}
+Dialogue: 0,0:00:49.54,0:00:52.45,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(363,54)}{\i1}Soitsu mitsuke ni yuko ze BOY{\i0}
+Dialogue: 0,0:00:53.18,0:00:56.32,Dialogue1,Unknown,0000,0000,0000,,{\i1}All the while pounding{\i0} {\i1}on mutants and monsters{\i0}
+Dialogue: 0,0:00:53.18,0:00:56.32,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Yokai henge mo buttobashi{\i0}
+Dialogue: 0,0:00:56.32,0:01:02.85,Dialogue1,Unknown,0000,0000,0000,,{\i1}And we'll fly through the day{\i0} {\i1}on our cloud machine as well!{\i0}
+Dialogue: 0,0:00:56.32,0:01:02.85,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Kumo no mashin de kyo mo tobu no sa{\i0}
+Dialogue: 0,0:01:03.73,0:01:07.23,Dialogue1,Unknown,0000,0000,0000,,{\i1}Let's fly, fly, fly, how mysterious{\i0}
+Dialogue: 0,0:01:03.73,0:01:07.23,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Let's fly, fly, fly makafushigi{\i0}
+Dialogue: 0,0:01:07.23,0:01:10.22,Dialogue1,Unknown,0000,0000,0000,,{\i1}Charging through the sky,{\i0} {\i1}while we overcome mountains!{\i0}
+Dialogue: 0,0:01:07.23,0:01:10.22,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Sora o kakenuke yama o koe{\i0}
+Dialogue: 0,0:01:10.87,0:01:13.89,Dialogue1,Unknown,0000,0000,0000,,{\i1}Let's try, try, try, such an adventure{\i0}
+Dialogue: 0,0:01:10.87,0:01:13.89,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Let's try, try, try, daiboken{\i0}
+Dialogue: 0,0:01:14.50,0:01:20.74,Dialogue1,Unknown,0000,0000,0000,,{\i1}Our strange little journey now begins!{\i0}
+Dialogue: 0,0:01:14.50,0:01:20.74,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Fushigi na tabi ga hajimaru ze{\i0}
+Dialogue: 0,0:01:21.58,0:01:25.01,Dialogue1,Unknown,0000,0000,0000,,{\i1}Let's get them in hand! The Dragon Balls!{\i0}
+Dialogue: 0,0:01:21.58,0:01:25.01,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(362,54)}{\i1}Te ni irero! Doragon Booru{\i0}
+Dialogue: 0,0:01:25.01,0:01:27.11,Dialogue1,Unknown,0000,0000,0000,,{\i1}One of the most formidable{\i0} {\i1}gambles in the world{\i0}
+Dialogue: 0,0:01:25.01,0:01:27.11,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(360,54)}{\i1}Sekai de itto tegowai chansu{\i0}
+Dialogue: 0,0:01:28.65,0:01:32.15,Dialogue1,Unknown,0000,0000,0000,,{\i1}Let's go chase them down! The Dragon Balls!{\i0}
+Dialogue: 0,0:01:28.65,0:01:32.15,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(360,54)}{\i1}Oikakero! Doragon Booru{\i0}
+Dialogue: 0,0:01:32.15,0:01:35.39,Dialogue1,Unknown,0000,0000,0000,,{\i1}Some of the most enjoyable{\i0} {\i1}drama in the world{\i0}
+Dialogue: 0,0:01:32.15,0:01:35.39,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,51)}{\i1}Sekai de itto ikashita dorama{\i0}
+Dialogue: 0,0:01:35.39,0:01:38.86,Dialogue1,Unknown,0000,0000,0000,,{\i1}This life is one big treasure island{\i0}
+Dialogue: 0,0:01:35.39,0:01:38.86,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Kono yo wa dekkai takarajima{\i0}
+Dialogue: 0,0:01:38.86,0:01:48.60,Dialogue1,Unknown,0000,0000,0000,,{\i1}It's the truth!{\i0}\N{\i1}Now more than ever, Adventure!{\i0}
+Dialogue: 0,0:01:38.86,0:01:48.60,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,51)}{\i1}So sa ima koso adobencha!{\i0}
+Dialogue: 0,0:01:54.14,0:01:59.98,Dialogue1,Unknown,0000,0000,0000,,Goku! Only the Basho Fan can put {\i1}these{\i0} flames out!
+Dialogue: 0,0:02:04.25,0:02:08.49,Dialogue1,Unknown,0000,0000,0000,,{\i1}In order to put out the mysterious flames{\i0} {\i1}that have surrounded Gyumao's castle,{\i0}
+Dialogue: 0,0:02:08.49,0:02:12.16,Dialogue1,Unknown,0000,0000,0000,,{\i1}Goku and Chichi set out{\i0} {\i1}to find the Basho Fan,{\i0}
+Dialogue: 0,0:02:12.16,0:02:16.79,Dialogue1,Unknown,0000,0000,0000,,{\i1}armed only with a single hint{\i0}\N{\i1}Fortuneteller Baba gave them: "octagon".{\i0}
+Dialogue: 0,0:02:32.51,0:02:35.92,Dialogue1,Unknown,0000,0000,0000,,{\i1}Hearing from an elderly scientist that{\i0} {\i1}the Basho Fan was on Ice Mountain,{\i0}
+Dialogue: 0,0:02:35.92,0:02:39.82,Dialogue1,Unknown,0000,0000,0000,,{\i1}which the Fire-Eating Bird{\i0} {\i1}is too afraid to get near,{\i0}
+Dialogue: 0,0:02:39.82,0:02:43.31,Dialogue1,Unknown,0000,0000,0000,,{\i1}the two made their way north. But...{\i0}
+Dialogue: 0,0:02:54.24,0:02:58.87,Dialogue1,Unknown,0000,0000,0000,,"All Thanks to Chichi's Wife-Training"
+Dialogue: 0,0:03:26.33,0:03:28.40,Dialogue1,Unknown,0000,0000,0000,,What a beautiful mountain...
+Dialogue: 0,0:03:28.40,0:03:32.40,Dialogue1,Unknown,0000,0000,0000,,Why do you suppose the\NFire-Eating Bird won't get near it?
+Dialogue: 0,0:03:50.66,0:03:52.29,Dialogue1,Unknown,0000,0000,0000,,Help!
+Dialogue: 0,0:04:17.45,0:04:20.79,Dialogue1,Unknown,0000,0000,0000,,So cold...
+Dialogue: 0,0:04:20.79,0:04:23.22,Dialogue1,Unknown,0000,0000,0000,,W-Who are you?!
+Dialogue: 0,0:04:23.22,0:04:26.13,Dialogue1,Unknown,0000,0000,0000,,I'm... Goku...
+Dialogue: 0,0:04:26.13,0:04:29.10,Dialogue1,Unknown,0000,0000,0000,,I'm... his wife...
+Dialogue: 0,0:04:29.10,0:04:32.67,Dialogue1,Unknown,0000,0000,0000,,I'm the Octagon Woman.
+Dialogue: 0,0:04:32.67,0:04:35.80,Dialogue1,Unknown,0000,0000,0000,,Octagon... Woman?
+Dialogue: 0,0:04:35.80,0:04:39.07,Dialogue1,Unknown,0000,0000,0000,,So then, that means...!
+Dialogue: 0,0:04:39.07,0:04:43.51,Dialogue1,Unknown,0000,0000,0000,,Yeah! The Basho Fan {\i1}must{\i0} be on that mountain!
+Dialogue: 0,0:04:43.51,0:04:45.67,Dialogue1,Unknown,0000,0000,0000,,--We did it!\N--Yeah!
+Dialogue: 0,0:04:48.15,0:04:49.98,Dialogue1,Unknown,0000,0000,0000,,So cold...!
+Dialogue: 0,0:04:54.56,0:05:01.00,Dialogue1,Unknown,0000,0000,0000,,You brought that girl all the way here from Mt. Frypan?
+Dialogue: 0,0:05:01.00,0:05:03.90,Dialogue1,Unknown,0000,0000,0000,,You mean I wasn't supposed to bring Chichi with me?
+Dialogue: 0,0:05:03.90,0:05:05.77,Dialogue1,Unknown,0000,0000,0000,,Of course you weren't!
+Dialogue: 0,0:05:05.77,0:05:12.41,Dialogue1,Unknown,0000,0000,0000,,That mountain has been called\NMt. No-Women-Allowed for ages!
+Dialogue: 0,0:05:12.41,0:05:14.88,Dialogue1,Unknown,0000,0000,0000,,What's that mean?
+Dialogue: 0,0:05:14.88,0:05:19.75,Dialogue1,Unknown,0000,0000,0000,,It means the curse will be set off whenever a woman goes up it!
+Dialogue: 0,0:05:19.75,0:05:24.65,Dialogue1,Unknown,0000,0000,0000,,So then that huge blizzard happened because of {\i1}me{\i0}?
+Dialogue: 0,0:05:27.82,0:05:32.36,Dialogue1,Unknown,0000,0000,0000,,Exactly what business do you two have on that mountain anyway?
+Dialogue: 0,0:05:32.36,0:05:35.63,Dialogue1,Unknown,0000,0000,0000,,We're looking for the Basho Fan.
+Dialogue: 0,0:05:35.63,0:05:37.20,Dialogue1,Unknown,0000,0000,0000,,The Basho Fan?
+Dialogue: 0,0:05:37.20,0:05:39.90,Dialogue1,Unknown,0000,0000,0000,,Supposedly, it can blow out any fire at all.
+Dialogue: 0,0:05:39.90,0:05:43.60,Dialogue1,Unknown,0000,0000,0000,,A fan that can blow out any fire at all...?
+Dialogue: 0,0:05:43.60,0:05:45.84,Dialogue1,Unknown,0000,0000,0000,,Do you know anything about it, ma'am?
+Dialogue: 0,0:05:45.84,0:05:48.68,Dialogue1,Unknown,0000,0000,0000,,No, I've never heard of it before...
+Dialogue: 0,0:05:48.68,0:05:51.81,Dialogue1,Unknown,0000,0000,0000,,But your name's Octagon.
+Dialogue: 0,0:05:51.81,0:05:53.08,Dialogue1,Unknown,0000,0000,0000,,Eh?
+Dialogue: 0,0:05:53.08,0:06:00.86,Dialogue1,Unknown,0000,0000,0000,,Fortuneteller Baba-{\i1}san{\i0} said it was somewhere relating to an octagon.
+Dialogue: 0,0:06:00.86,0:06:03.93,Dialogue1,Unknown,0000,0000,0000,,You misheard me. I'm not the "Octagon Woman"...
+Dialogue: 0,0:06:03.93,0:06:07.76,Dialogue1,Unknown,0000,0000,0000,,I'm the "Teeth-All-Gone Woman"!
+Dialogue: 0,0:06:08.86,0:06:11.77,Dialogue1,Unknown,0000,0000,0000,,So the Basho Fan {\i1}isn't{\i0} up there?
+Dialogue: 0,0:06:11.77,0:06:14.70,Dialogue1,Unknown,0000,0000,0000,,Where could it be?
+Dialogue: 0,0:06:14.70,0:06:17.94,Dialogue1,Unknown,0000,0000,0000,,Cheer up, young man!
+Dialogue: 0,0:06:17.94,0:06:22.04,Dialogue1,Unknown,0000,0000,0000,,Your goal is to put a fire out, correct?
+Dialogue: 0,0:06:22.04,0:06:24.65,Dialogue1,Unknown,0000,0000,0000,,There's something on the mountain that can do just that!
+Dialogue: 0,0:06:24.65,0:06:25.85,Dialogue1,Unknown,0000,0000,0000,,Really?
+Dialogue: 0,0:06:25.85,0:06:27.88,Dialogue1,Unknown,0000,0000,0000,,Can you tell us what it is?
+Dialogue: 0,0:06:27.88,0:06:30.69,Dialogue1,Unknown,0000,0000,0000,,The snow that falls on the mountain!
+Dialogue: 0,0:06:30.69,0:06:37.29,Dialogue1,Unknown,0000,0000,0000,,That snow is so cold, it can freeze even fire!
+Dialogue: 0,0:06:37.29,0:06:39.46,Dialogue1,Unknown,0000,0000,0000,,Snow that can freeze fire?
+Dialogue: 0,0:06:39.46,0:06:42.76,Dialogue1,Unknown,0000,0000,0000,,Goku-{\i1}san{\i0}! If we could just take some of that snow back with us...
+Dialogue: 0,0:06:42.76,0:06:44.17,Dialogue1,Unknown,0000,0000,0000,,Right!
+Dialogue: 0,0:06:44.17,0:06:47.27,Dialogue1,Unknown,0000,0000,0000,,This time, I'll go alone!
+Dialogue: 0,0:06:47.27,0:06:50.41,Dialogue1,Unknown,0000,0000,0000,,It's up to you, Goku-{\i1}san{\i0}!
+Dialogue: 0,0:06:50.41,0:06:53.47,Dialogue1,Unknown,0000,0000,0000,,--Can he borrow this, ma'am?\N--Sure.
+Dialogue: 0,0:06:53.47,0:06:54.97,Dialogue1,Unknown,0000,0000,0000,,Goku-{\i1}san{\i0}!
+Dialogue: 0,0:06:56.94,0:06:59.35,Dialogue1,Unknown,0000,0000,0000,,{\i1}Kinto Un{\i0}!
+Dialogue: 0,0:07:01.72,0:07:04.49,Dialogue1,Unknown,0000,0000,0000,,The soup was great, ma'am!
+Dialogue: 0,0:07:04.49,0:07:06.62,Dialogue1,Unknown,0000,0000,0000,,Let's go!
+Dialogue: 0,0:07:06.62,0:07:08.12,Dialogue1,Unknown,0000,0000,0000,,Be careful!
+Dialogue: 0,0:07:08.12,0:07:11.79,Dialogue1,Unknown,0000,0000,0000,,Is he a good husband?
+Dialogue: 0,0:07:11.79,0:07:15.40,Dialogue1,Unknown,0000,0000,0000,,You bet! He's the best in the world!
+Dialogue: 0,0:07:15.40,0:07:19.33,Dialogue1,Unknown,0000,0000,0000,,And are you a good wife to him...?
+Dialogue: 0,0:07:19.33,0:07:23.14,Dialogue1,Unknown,0000,0000,0000,,W-We're still just newlyweds...
+Dialogue: 0,0:07:23.14,0:07:25.91,Dialogue1,Unknown,0000,0000,0000,,Do you {\i1}want{\i0} to be a good wife to him?
+Dialogue: 0,0:07:25.91,0:07:28.64,Dialogue1,Unknown,0000,0000,0000,,I want to be the best wife in the whole world!
+Dialogue: 0,0:07:28.64,0:07:31.31,Dialogue1,Unknown,0000,0000,0000,,Is that so?
+Dialogue: 0,0:07:31.31,0:07:33.25,Dialogue1,Unknown,0000,0000,0000,,Shall we start, then?
+Dialogue: 0,0:07:43.36,0:07:44.63,Dialogue1,Unknown,0000,0000,0000,,Pilaf-{\i1}sama.{\i0}
+Dialogue: 0,0:07:44.63,0:07:49.16,Dialogue1,Unknown,0000,0000,0000,,Might that be the northern mountain we're looking for?
+Dialogue: 0,0:07:49.16,0:07:52.66,Dialogue1,Unknown,0000,0000,0000,,I don't see 'em anywhere.
+Dialogue: 0,0:07:55.80,0:08:00.34,Dialogue1,Unknown,0000,0000,0000,,What do you think this Basho Fan thing they're looking for is, anyway?
+Dialogue: 0,0:08:00.34,0:08:04.18,Dialogue1,Unknown,0000,0000,0000,,They're trying {\i1}really{\i0} hard to find it!
+Dialogue: 0,0:08:04.18,0:08:09.42,Dialogue1,Unknown,0000,0000,0000,,It could be even greater than the Dragon Balls themselves!
+Dialogue: 0,0:08:09.42,0:08:14.98,Dialogue1,Unknown,0000,0000,0000,,With {\i1}it{\i0} in hand, I bet you could conquer the world for sure this time!
+Dialogue: 0,0:08:19.26,0:08:24.70,Dialogue1,Unknown,0000,0000,0000,,Mai! Keep us going {\i1}forward{\i0}, will ya?!
+Dialogue: 0,0:08:24.70,0:08:31.20,Dialogue1,Unknown,0000,0000,0000,,We've suddenly been caught up in a strange cloud...!
+Dialogue: 0,0:08:32.71,0:08:36.27,Dialogue1,Unknown,0000,0000,0000,,Uh oh! We're falling!
+Dialogue: 0,0:08:48.72,0:08:51.26,Dialogue1,Unknown,0000,0000,0000,,{\i1}Hold on, Chichi!{\i0}
+Dialogue: 0,0:08:51.26,0:08:53.56,Dialogue1,Unknown,0000,0000,0000,,{\i1}I will bring it back!{\i0}
+Dialogue: 0,0:09:03.40,0:09:04.94,Dialogue1,Unknown,0000,0000,0000,,Pull!
+Dialogue: 0,0:09:04.94,0:09:09.07,Dialogue1,Unknown,0000,0000,0000,,Pull harder or we'll all be stranded up here!
+Dialogue: 0,0:09:12.48,0:09:13.51,Dialogue1,Unknown,0000,0000,0000,,So cold...
+Dialogue: 0,0:09:13.51,0:09:18.29,Dialogue1,Unknown,0000,0000,0000,,It's so cold out here, even these robots might break!
+Dialogue: 0,0:09:18.29,0:09:19.99,Dialogue1,Unknown,0000,0000,0000,,Hey, you guys!
+Dialogue: 0,0:09:19.99,0:09:22.36,Dialogue1,Unknown,0000,0000,0000,,What're you doing?
+Dialogue: 0,0:09:22.36,0:09:24.16,Dialogue1,Unknown,0000,0000,0000,,--What the...?!\N--Huh?
+Dialogue: 0,0:09:24.16,0:09:26.79,Dialogue1,Unknown,0000,0000,0000,,You!
+Dialogue: 0,0:09:26.79,0:09:28.39,Dialogue1,Unknown,0000,0000,0000,,Pilaf-{\i1}sama{\i0}!
+Dialogue: 0,0:09:36.84,0:09:38.01,Dialogue1,Unknown,0000,0000,0000,,Hey.
+Dialogue: 0,0:09:38.01,0:09:40.64,Dialogue1,Unknown,0000,0000,0000,,Why, you...! Now look what you've done!
+Dialogue: 0,0:09:40.64,0:09:43.44,Dialogue1,Unknown,0000,0000,0000,,--Eh?\N--Pilaf-{\i1}sama{\i0}! Look out!
+Dialogue: 0,0:09:49.22,0:09:50.95,Dialogue1,Unknown,0000,0000,0000,,Pilaf-{\i1}sama{\i0}!
+Dialogue: 0,0:10:00.39,0:10:04.02,Dialogue1,Unknown,0000,0000,0000,,T-The fire froze...
+Dialogue: 0,0:10:05.13,0:10:07.34,Dialogue1,Unknown,0000,0000,0000,,This is so cold!
+Dialogue: 0,0:10:07.34,0:10:11.93,Dialogue1,Unknown,0000,0000,0000,,Wow! This can {\i1}definitely{\i0} put out that fire!
+Dialogue: 0,0:10:18.48,0:10:20.45,Dialogue1,Unknown,0000,0000,0000,,Clean this room,
+Dialogue: 0,0:10:20.45,0:10:22.48,Dialogue1,Unknown,0000,0000,0000,,this room,
+Dialogue: 0,0:10:22.48,0:10:24.78,Dialogue1,Unknown,0000,0000,0000,,and this room.
+Dialogue: 0,0:10:26.82,0:10:31.73,Dialogue1,Unknown,0000,0000,0000,,If you need water, you'll find a lake if you go through the forest
+Dialogue: 0,0:10:31.73,0:10:35.20,Dialogue1,Unknown,0000,0000,0000,,and continue past the next two valleys. Got it?
+Dialogue: 0,0:10:35.20,0:10:37.20,Dialogue1,Unknown,0000,0000,0000,,You don't have any plumbing?
+Dialogue: 0,0:10:37.20,0:10:39.00,Dialogue1,Unknown,0000,0000,0000,,Nope.
+Dialogue: 0,0:10:41.60,0:10:44.51,Dialogue1,Unknown,0000,0000,0000,,Aha! After all this time,\NI finally got you cornered!
+Dialogue: 0,0:10:44.51,0:10:47.34,Dialogue1,Unknown,0000,0000,0000,,After all this time? We just saw each other at the volcano!
+Dialogue: 0,0:10:47.34,0:10:50.41,Dialogue1,Unknown,0000,0000,0000,,O-Oh, yeah...
+Dialogue: 0,0:10:50.41,0:10:54.62,Dialogue1,Unknown,0000,0000,0000,,Whatever! Just hand over the Basho Fan thingy!
+Dialogue: 0,0:10:54.62,0:10:57.05,Dialogue1,Unknown,0000,0000,0000,,Shuu! Mai! Get him!
+Dialogue: 0,0:10:57.05,0:10:58.55,Dialogue1,Unknown,0000,0000,0000,,Eh? But that's suicide...!
+Dialogue: 0,0:10:58.55,0:11:02.86,Dialogue1,Unknown,0000,0000,0000,,Pilaf-{\i1}sama{\i0}! Do we even have any way to stand up to him?!
+Dialogue: 0,0:11:02.86,0:11:04.43,Dialogue1,Unknown,0000,0000,0000,,No!
+Dialogue: 0,0:11:04.43,0:11:07.29,Dialogue1,Unknown,0000,0000,0000,,So what should we do?!
+Dialogue: 0,0:11:07.29,0:11:10.70,Dialogue1,Unknown,0000,0000,0000,,How come you guys know about the Basho Fan?
+Dialogue: 0,0:11:10.70,0:11:13.69,Dialogue1,Unknown,0000,0000,0000,,What's it matter? Take this!
+Dialogue: 0,0:11:23.04,0:11:24.41,Dialogue1,Unknown,0000,0000,0000,,Say...
+Dialogue: 0,0:11:24.41,0:11:26.94,Dialogue1,Unknown,0000,0000,0000,,Get him with everything you got!
+Dialogue: 0,0:11:34.29,0:11:39.19,Dialogue1,Unknown,0000,0000,0000,,Alright, then! You can have this back!
+Dialogue: 0,0:11:39.19,0:11:41.29,Dialogue1,Unknown,0000,0000,0000,,Scared you!
+Dialogue: 0,0:11:43.80,0:11:45.57,Dialogue1,Unknown,0000,0000,0000,,Hey.
+Dialogue: 0,0:11:45.57,0:11:47.74,Dialogue1,Unknown,0000,0000,0000,,Aren't you a girl?
+Dialogue: 0,0:11:47.74,0:11:51.40,Dialogue1,Unknown,0000,0000,0000,,T-That's right! Got a problem with that?!
+Dialogue: 0,0:11:54.81,0:11:57.44,Dialogue1,Unknown,0000,0000,0000,,--Hey...\N--W-What?!
+Dialogue: 0,0:11:58.91,0:12:01.25,Dialogue1,Unknown,0000,0000,0000,,You know, they say that whenever a girl goes up this mountain...
+Dialogue: 0,0:12:01.25,0:12:03.82,Dialogue1,Unknown,0000,0000,0000,,What do you think you're doing, you moron?!
+Dialogue: 0,0:12:03.82,0:12:08.42,Dialogue1,Unknown,0000,0000,0000,,...the curse takes effect.
+Dialogue: 0,0:12:08.42,0:12:11.03,Dialogue1,Unknown,0000,0000,0000,,Curse?
+Dialogue: 0,0:12:11.03,0:12:15.76,Dialogue1,Unknown,0000,0000,0000,,Whenever a girl comes up, a blizzard shows up to freeze them...
+Dialogue: 0,0:12:15.76,0:12:17.00,Dialogue1,Unknown,0000,0000,0000,,W-What?!
+Dialogue: 0,0:12:17.00,0:12:19.97,Dialogue1,Unknown,0000,0000,0000,,Yeah, right!
+Dialogue: 0,0:12:25.14,0:12:26.77,Dialogue1,Unknown,0000,0000,0000,,Mai! Get over here!
+Dialogue: 0,0:12:26.77,0:12:28.48,Dialogue1,Unknown,0000,0000,0000,,Yes, sire. What can I do for you?
+Dialogue: 0,0:12:28.48,0:12:32.55,Dialogue1,Unknown,0000,0000,0000,,Roll down the mountain!
+Dialogue: 0,0:12:32.55,0:12:33.95,Dialogue1,Unknown,0000,0000,0000,,What was that?
+Dialogue: 0,0:12:33.95,0:12:37.39,Dialogue1,Unknown,0000,0000,0000,,I'm conducting an experiment! Hurry it up!
+Dialogue: 0,0:12:58.31,0:13:01.00,Dialogue1,Unknown,0000,0000,0000,,I-It's true!
+Dialogue: 0,0:13:07.31,0:13:09.34,Dialogue1,Unknown,0000,0000,0000,,{\i1}That's it!{\i0}
+Dialogue: 0,0:13:37.98,0:13:39.68,Dialogue1,Unknown,0000,0000,0000,,Chichi! Goku!
+Dialogue: 0,0:13:39.68,0:13:43.71,Dialogue1,Unknown,0000,0000,0000,,Hurry up with the Basho Fan!
+Dialogue: 0,0:13:56.60,0:14:01.06,Dialogue1,Unknown,0000,0000,0000,,{\i1}How can I expect to be a good wife{\i0} {\i1}for Goku-san if I can't even do this?{\i0}
+Dialogue: 0,0:14:07.37,0:14:11.44,Dialogue1,Unknown,0000,0000,0000,,Carrying the snow'll be a cinch if it's in snowball form!
+Dialogue: 0,0:14:12.51,0:14:16.02,Dialogue1,Unknown,0000,0000,0000,,Here he comes!
+Dialogue: 0,0:14:16.02,0:14:17.42,Dialogue1,Unknown,0000,0000,0000,,Why aren't you firing?!
+Dialogue: 0,0:14:17.42,0:14:20.02,Dialogue1,Unknown,0000,0000,0000,,Won't it just freeze again?
+Dialogue: 0,0:14:20.02,0:14:22.39,Dialogue1,Unknown,0000,0000,0000,,Don't worry! The blizzard's over!
+Dialogue: 0,0:14:22.39,0:14:24.45,Dialogue1,Unknown,0000,0000,0000,,--Fire!\N--Huh?
+Dialogue: 0,0:14:27.13,0:14:29.00,Dialogue1,Unknown,0000,0000,0000,,You're still here?
+Dialogue: 0,0:14:29.00,0:14:30.80,Dialogue1,Unknown,0000,0000,0000,,Fire! Fire!
+Dialogue: 0,0:14:30.80,0:14:32.39,Dialogue1,Unknown,0000,0000,0000,,Huh?
+Dialogue: 0,0:14:37.74,0:14:40.54,Dialogue1,Unknown,0000,0000,0000,,Pilaf-{\i1}sama{\i0}...! You're terrible!
+Dialogue: 0,0:14:40.54,0:14:44.21,Dialogue1,Unknown,0000,0000,0000,,Oh, you're back! I'm so glad!
+Dialogue: 0,0:14:44.21,0:14:46.88,Dialogue1,Unknown,0000,0000,0000,,Don't assume you've won just yet!
+Dialogue: 0,0:14:46.88,0:14:49.62,Dialogue1,Unknown,0000,0000,0000,,Shuu! Mai! Time for our last resort!
+Dialogue: 0,0:14:49.62,0:14:52.05,Dialogue1,Unknown,0000,0000,0000,,Run away!
+Dialogue: 0,0:14:58.63,0:15:02.00,Dialogue1,Unknown,0000,0000,0000,,I brought you some tea, ma'am!
+Dialogue: 0,0:15:02.00,0:15:04.50,Dialogue1,Unknown,0000,0000,0000,,Oh, thanks.
+Dialogue: 0,0:15:04.50,0:15:07.74,Dialogue1,Unknown,0000,0000,0000,,You raise bees?!
+Dialogue: 0,0:15:07.74,0:15:11.44,Dialogue1,Unknown,0000,0000,0000,,Did you clean the house?
+Dialogue: 0,0:15:11.44,0:15:13.51,Dialogue1,Unknown,0000,0000,0000,,Yes, I'm all done.
+Dialogue: 0,0:15:13.51,0:15:14.94,Dialogue1,Unknown,0000,0000,0000,,Shoo!
+Dialogue: 0,0:15:14.94,0:15:18.78,Dialogue1,Unknown,0000,0000,0000,,Did you need anything else?
+Dialogue: 0,0:15:18.78,0:15:23.95,Dialogue1,Unknown,0000,0000,0000,,It would be really nice of you if you cleaned the garden!
+Dialogue: 0,0:15:23.95,0:15:27.05,Dialogue1,Unknown,0000,0000,0000,,Sure! Where might the garden be?
+Dialogue: 0,0:15:27.05,0:15:30.02,Dialogue1,Unknown,0000,0000,0000,,This entire forest is my garden!
+Dialogue: 0,0:15:30.02,0:15:32.46,Dialogue1,Unknown,0000,0000,0000,,This entire forest...?!
+Dialogue: 0,0:15:32.46,0:15:36.86,Dialogue1,Unknown,0000,0000,0000,,That's right! Here.\NThe dustpan's in the back!
+Dialogue: 0,0:15:40.03,0:15:44.53,Dialogue1,Unknown,0000,0000,0000,,{\i1}Old man Gyumao!{\i0}\N{\i1}Hold on just a little bit longer!{\i0}
+Dialogue: 0,0:15:47.47,0:15:49.57,Dialogue1,Unknown,0000,0000,0000,,Here's the dustpan...
+Dialogue: 0,0:15:52.28,0:15:56.78,Dialogue1,Unknown,0000,0000,0000,,Huh? It feels like it's getting lighter for some reason...
+Dialogue: 0,0:15:56.78,0:15:59.62,Dialogue1,Unknown,0000,0000,0000,,It'll be all gone if I don't hurry!
+Dialogue: 0,0:16:07.29,0:16:11.20,Dialogue1,Unknown,0000,0000,0000,,Not too shabby...
+Dialogue: 0,0:16:15.17,0:16:17.40,Dialogue1,Unknown,0000,0000,0000,,Huh? What?
+Dialogue: 0,0:16:17.40,0:16:19.40,Dialogue1,Unknown,0000,0000,0000,,Get away!
+Dialogue: 0,0:16:27.75,0:16:30.51,Dialogue1,Unknown,0000,0000,0000,,What's going on...?
+Dialogue: 0,0:16:33.59,0:16:36.46,Dialogue1,Unknown,0000,0000,0000,,{\i1}This{\i0} did that?
+Dialogue: 0,0:16:36.46,0:16:40.59,Dialogue1,Unknown,0000,0000,0000,,Could this dustpan be the...?
+Dialogue: 0,0:16:43.73,0:16:48.44,Dialogue1,Unknown,0000,0000,0000,,This is it, ma'am! The Basho Fan!
+Dialogue: 0,0:16:48.44,0:16:49.77,Dialogue1,Unknown,0000,0000,0000,,What?
+Dialogue: 0,0:16:49.77,0:16:55.00,Dialogue1,Unknown,0000,0000,0000,,I found that thing lying on the beach a long time ago.
+Dialogue: 0,0:16:55.68,0:16:58.95,Dialogue1,Unknown,0000,0000,0000,,So the Basho Fan really {\i1}was{\i0} in an octagon place!
+Dialogue: 0,0:16:58.95,0:17:00.81,Dialogue1,Unknown,0000,0000,0000,,Just like Fortuneteller Baba said!
+Dialogue: 0,0:17:00.81,0:17:03.32,Dialogue1,Unknown,0000,0000,0000,,This is so great!
+Dialogue: 0,0:17:03.32,0:17:05.38,Dialogue1,Unknown,0000,0000,0000,,H-Hey, now...!
+Dialogue: 0,0:17:08.22,0:17:12.56,Dialogue1,Unknown,0000,0000,0000,,I haven't gotten very far, and already this is all that's left...
+Dialogue: 0,0:17:12.56,0:17:14.63,Dialogue1,Unknown,0000,0000,0000,,Chichi's gonna be so disappointed...
+Dialogue: 0,0:17:14.63,0:17:18.10,Dialogue1,Unknown,0000,0000,0000,,Goku-{\i1}san{\i0}!
+Dialogue: 0,0:17:18.10,0:17:22.40,Dialogue1,Unknown,0000,0000,0000,,I found the Basho Fan!
+Dialogue: 0,0:17:22.40,0:17:25.57,Dialogue1,Unknown,0000,0000,0000,,Let's hurry back to my dad!
+Dialogue: 0,0:17:25.57,0:17:27.54,Dialogue1,Unknown,0000,0000,0000,,Really?!
+Dialogue: 0,0:17:29.98,0:17:32.71,Dialogue1,Unknown,0000,0000,0000,,It's the Basho Fan, all right!\NNo doubt about it!
+Dialogue: 0,0:17:36.32,0:17:38.69,Dialogue1,Unknown,0000,0000,0000,,{\i1}We'll{\i0} take that!
+Dialogue: 0,0:17:38.69,0:17:40.48,Dialogue1,Unknown,0000,0000,0000,,You...!
+Dialogue: 0,0:17:42.42,0:17:46.59,Dialogue1,Unknown,0000,0000,0000,,Looks like {\i1}I{\i0} get the last laugh!
+Dialogue: 0,0:17:50.33,0:17:52.23,Dialogue1,Unknown,0000,0000,0000,,Give it back!
+Dialogue: 0,0:17:52.23,0:17:54.47,Dialogue1,Unknown,0000,0000,0000,,Don't move!
+Dialogue: 0,0:17:54.47,0:17:58.31,Dialogue1,Unknown,0000,0000,0000,,Move and I'll cut it in two!
+Dialogue: 0,0:17:58.31,0:18:01.81,Dialogue1,Unknown,0000,0000,0000,,Dammit...!
+Dialogue: 0,0:18:01.81,0:18:03.28,Dialogue1,Unknown,0000,0000,0000,,Pilaf-{\i1}sama.{\i0}
+Dialogue: 0,0:18:03.28,0:18:07.71,Dialogue1,Unknown,0000,0000,0000,,Is that grubby fan really worth anything?
+Dialogue: 0,0:18:07.71,0:18:09.42,Dialogue1,Unknown,0000,0000,0000,,Hey! Girl!
+Dialogue: 0,0:18:09.42,0:18:11.32,Dialogue1,Unknown,0000,0000,0000,,What?!
+Dialogue: 0,0:18:11.32,0:18:15.12,Dialogue1,Unknown,0000,0000,0000,,What sort of pan is that?
+Dialogue: 0,0:18:15.12,0:18:16.36,Dialogue1,Unknown,0000,0000,0000,,It's a {\i1}fan{\i0}!
+Dialogue: 0,0:18:16.36,0:18:18.46,Dialogue1,Unknown,0000,0000,0000,,Whatever! Just tell me already!
+Dialogue: 0,0:18:18.46,0:18:20.03,Dialogue1,Unknown,0000,0000,0000,,You'll find out if you swing it!
+Dialogue: 0,0:18:20.03,0:18:23.10,Dialogue1,Unknown,0000,0000,0000,,Oh, yeah?
+Dialogue: 0,0:18:23.10,0:18:25.37,Dialogue1,Unknown,0000,0000,0000,,Hey, Shuu! Give it a swing!
+Dialogue: 0,0:18:25.37,0:18:26.96,Dialogue1,Unknown,0000,0000,0000,,Right!
+Dialogue: 0,0:18:46.12,0:18:49.16,Dialogue1,Unknown,0000,0000,0000,,Goku-{\i1}san{\i0}! The Basho Fan is amazing!
+Dialogue: 0,0:18:49.16,0:18:51.83,Dialogue1,Unknown,0000,0000,0000,,Okay! Let's go, Chichi!
+Dialogue: 0,0:18:51.83,0:18:54.60,Dialogue1,Unknown,0000,0000,0000,,Take care, ma'am!
+Dialogue: 0,0:18:54.60,0:18:56.30,Dialogue1,Unknown,0000,0000,0000,,Hold on.
+Dialogue: 0,0:18:56.30,0:18:58.56,Dialogue1,Unknown,0000,0000,0000,,Take this with you.
+Dialogue: 0,0:18:59.77,0:19:02.24,Dialogue1,Unknown,0000,0000,0000,,What is it?
+Dialogue: 0,0:19:02.24,0:19:04.74,Dialogue1,Unknown,0000,0000,0000,,Honey made by my bees.
+Dialogue: 0,0:19:04.74,0:19:10.41,Dialogue1,Unknown,0000,0000,0000,,It's an extremely rare honey made by bees that live in octagonal beehives!
+Dialogue: 0,0:19:10.41,0:19:12.94,Dialogue1,Unknown,0000,0000,0000,,Octagonal beehives?
+Dialogue: 0,0:19:14.55,0:19:19.19,Dialogue1,Unknown,0000,0000,0000,,I have faith you'll become a great wife!
+Dialogue: 0,0:19:19.19,0:19:22.26,Dialogue1,Unknown,0000,0000,0000,,That honey might come in handy someday!
+Dialogue: 0,0:19:22.26,0:19:25.26,Dialogue1,Unknown,0000,0000,0000,,It has all sorts of uses, you see!
+Dialogue: 0,0:19:25.26,0:19:28.23,Dialogue1,Unknown,0000,0000,0000,,Thank you, ma'am!
+Dialogue: 0,0:19:28.23,0:19:30.86,Dialogue1,Unknown,0000,0000,0000,,Have a happy marriage!
+Dialogue: 0,0:19:36.50,0:19:41.03,Dialogue1,Unknown,0000,0000,0000,,Get outta here! Get, I say!
+Dialogue: 0,0:19:42.38,0:19:43.44,Dialogue1,Unknown,0000,0000,0000,,Haven't you found it yet?!
+Dialogue: 0,0:19:43.44,0:19:47.04,Dialogue1,Unknown,0000,0000,0000,,Chichi! Goku!
+Dialogue: 0,0:19:51.39,0:19:56.86,Dialogue1,Unknown,0000,0000,0000,,Chichi! I can't die until you've put this wedding gown on!
+Dialogue: 0,0:19:56.86,0:19:59.52,Dialogue1,Unknown,0000,0000,0000,,Damn it!
+Dialogue: 0,0:20:04.33,0:20:09.14,Dialogue1,Unknown,0000,0000,0000,,Dad! We brought the Basho Fan!
+Dialogue: 0,0:20:09.14,0:20:12.20,Dialogue1,Unknown,0000,0000,0000,,Everything's going to be okay!
+Dialogue: 0,0:20:17.08,0:20:21.45,Dialogue1,Unknown,0000,0000,0000,,Great! You brought it!
+Dialogue: 0,0:20:21.45,0:20:23.25,Dialogue1,Unknown,0000,0000,0000,,Old man Gyumao!
+Dialogue: 0,0:20:23.25,0:20:27.49,Dialogue1,Unknown,0000,0000,0000,,Hold on tight to something or you'll get blown away!
+Dialogue: 0,0:20:27.49,0:20:30.22,Dialogue1,Unknown,0000,0000,0000,,Got it!
+Dialogue: 0,0:20:30.22,0:20:32.09,Dialogue1,Unknown,0000,0000,0000,,Goku-{\i1}san{\i0}!
+Dialogue: 0,0:20:52.65,0:20:54.21,Dialogue1,Unknown,0000,0000,0000,,Alright!
+Dialogue: 0,0:20:54.21,0:20:56.35,Dialogue1,Unknown,0000,0000,0000,,It's out!
+Dialogue: 0,0:20:56.35,0:20:58.51,Dialogue1,Unknown,0000,0000,0000,,He did it!
+Dialogue: 0,0:21:09.40,0:21:12.70,Dialogue1,Unknown,0000,0000,0000,,Goku-{\i1}san{\i0}! The fire's back...!
+Dialogue: 0,0:21:14.64,0:21:16.97,Dialogue1,Unknown,0000,0000,0000,,Damn it!
+Dialogue: 0,0:21:16.97,0:21:19.81,Dialogue1,Unknown,0000,0000,0000,,I'll try again!
+Dialogue: 0,0:21:19.81,0:21:23.83,Dialogue1,Unknown,0000,0000,0000,,No matter how many times it takes,\NI'll keep swinging until it goes out!
+Dialogue: 0,0:21:45.90,0:21:48.14,Dialogue1,Unknown,0000,0000,0000,,Rain!
+Dialogue: 0,0:21:48.14,0:21:51.80,Dialogue1,Unknown,0000,0000,0000,,--Rain!\N--It might go out now!
+Dialogue: 0,0:21:59.01,0:22:04.69,Dialogue1,Unknown,0000,0000,0000,,{\i1}Flames still surround Gyumao's castle.{\i0}
+Dialogue: 0,0:22:04.69,0:22:06.35,Dialogue1,Unknown,0000,0000,0000,,Chichi!
+Dialogue: 0,0:22:06.35,0:22:09.59,Dialogue1,Unknown,0000,0000,0000,,Goku!
+Dialogue: 0,0:22:13.03,0:22:16.69,Dialogue1,Unknown,0000,0000,0000,,Dad!
+Dialogue: 0,0:22:18.87,0:22:22.07,Dialogue1,Unknown,0000,0000,0000,,{\i1}Will Goku and Chichi be able to{\i0} {\i1}put out these mysterious flames,{\i0}
+Dialogue: 0,0:22:22.07,0:22:27.57,Dialogue1,Unknown,0000,0000,0000,,{\i1}which not even the{\i0}\N{\i1}Basho Fan can extinguish?!{\i0}
+Dialogue: 0,0:22:44.59,0:22:47.53,Dialogue1,Unknown,0000,0000,0000,,{\i1}Come along, fantasy{\i0}
+Dialogue: 0,0:22:44.59,0:22:47.53,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Oide fantaji{\i0}
+Dialogue: 0,0:22:47.53,0:22:50.06,Dialogue1,Unknown,0000,0000,0000,,{\i1}I enjoy a mystery{\i0}
+Dialogue: 0,0:22:47.53,0:22:50.06,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,51)}{\i1}Suki sa misuteri{\i0}
+Dialogue: 0,0:22:50.06,0:22:56.74,Dialogue1,Unknown,0000,0000,0000,,{\i1}Don't you go hiding your youth!{\i0}
+Dialogue: 0,0:22:50.06,0:22:56.74,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,51)}{\i1}Kimi no wakasa kakusanai de{\i0}
+Dialogue: 0,0:22:56.74,0:22:59.71,Dialogue1,Unknown,0000,0000,0000,,{\i1}Wanting to perform the mysterious{\i0}
+Dialogue: 0,0:22:56.74,0:22:59.71,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Fushigi shitakute{\i0}
+Dialogue: 0,0:22:59.71,0:23:02.11,Dialogue1,Unknown,0000,0000,0000,,{\i1}Wanting to pursue the adventure{\i0}
+Dialogue: 0,0:22:59.71,0:23:02.11,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,51)}{\i1}Boken shitakute{\i0}
+Dialogue: 0,0:23:02.11,0:23:08.22,Dialogue1,Unknown,0000,0000,0000,,{\i1}Everyone is itching to go!{\i0}
+Dialogue: 0,0:23:02.11,0:23:08.22,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,51)}{\i1}Dare mo min'na uzu-uzu shite 'ru{\i0}
+Dialogue: 0,0:23:08.22,0:23:14.15,Dialogue1,Unknown,0000,0000,0000,,{\i1}If you act like an adult and give up{\i0}
+Dialogue: 0,0:23:08.22,0:23:14.15,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,51)}{\i1}Otona no furi shite akiramecha{\i0}
+Dialogue: 0,0:23:14.15,0:23:20.33,Dialogue1,Unknown,0000,0000,0000,,{\i1}You'll never unravel{\i0} {\i1}the mystery of the miracle!{\i0}
+Dialogue: 0,0:23:14.15,0:23:20.33,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(360,54)}{\i1}Kiseki no nazo nado tokenai yo{\i0}
+Dialogue: 0,0:23:20.33,0:23:30.33,Dialogue1,Unknown,0000,0000,0000,,{\i1}Go on and try to live{\i0} {\i1}even more wild and strong!{\i0}
+Dialogue: 0,0:23:20.33,0:23:30.33,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(360,51)}{\i1}Motto wairudo ni{\i0}
+Dialogue: 0,0:23:20.33,0:23:30.33,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,84)}{\i1}motto takumashiku ikite goran{\i0}
+Dialogue: 0,0:23:31.51,0:23:39.08,Dialogue1,Unknown,0000,0000,0000,,{\i1}I'll give you a romance,{\i0}\N{\i1}I'll give you a romance{\i0}
+Dialogue: 0,0:23:31.51,0:23:39.08,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(360,54)}{\i1}Romantikku ageru yo{\i0}
+Dialogue: 0,0:23:31.51,0:23:39.08,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(360,84)}{\i1}Romantikku ageru yo{\i0}
+Dialogue: 0,0:23:39.08,0:23:43.58,Dialogue1,Unknown,0000,0000,0000,,{\i1}If you will show me your true courage{\i0}
+Dialogue: 0,0:23:39.08,0:23:43.58,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,54)}{\i1}Honto no yuki misete kuretara{\i0}
+Dialogue: 0,0:23:43.58,0:23:50.96,Dialogue1,Unknown,0000,0000,0000,,{\i1}I'll give you a romance,{\i0}\N{\i1}I'll give you a romance{\i0}
+Dialogue: 0,0:23:43.58,0:23:50.96,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(360,54)}{\i1}Romantikku ageru yo{\i0}
+Dialogue: 0,0:23:43.58,0:23:50.96,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(360,84)}{\i1}Romantikku ageru yo{\i0}
+Dialogue: 0,0:23:50.96,0:23:59.49,Dialogue1,Unknown,0000,0000,0000,,{\i1}I'll give your pounding heart{\i0} {\i1}a glittery, shining dream!{\i0}
+Dialogue: 0,0:23:50.96,0:23:59.49,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(362,51)}{\i1}Tokimeku mune ni{\i0}
+Dialogue: 0,0:23:50.96,0:23:59.49,Dialogue4,Unknown,0000,0000,0000,,{\an5\pos(361,84)}{\i1}kira-kira hikatta yume o ageru yo{\i0}
+Dialogue: 0,0:24:12.51,0:24:14.28,Dialogue1,Unknown,0000,0000,0000,,{\i1}Heya! It's Goku!{\i0}
+Dialogue: 0,0:24:14.28,0:24:16.52,Dialogue1,Unknown,0000,0000,0000,,{\i1}Damn it! Why won't it go out?!{\i0}
+Dialogue: 0,0:24:16.52,0:24:20.82,Dialogue1,Unknown,0000,0000,0000,,{\i1}Goku-sa, how about we go to Mt. Gogyo{\i0} {\i1}like Fortuneteller Baba suggested?{\i0}
+Dialogue: 0,0:24:20.82,0:24:22.96,Dialogue1,Unknown,0000,0000,0000,,{\i1}Huh? Where did you{\i0} {\i1}guys come from?!{\i0}
+Dialogue: 0,0:24:22.96,0:24:25.43,Dialogue1,Unknown,0000,0000,0000,,{\i1}--Outta the way!{\i0}\N{\i1}--Monsters!{\i0}
+Dialogue: 0,0:24:25.43,0:24:29.53,Dialogue1,Unknown,0000,0000,0000,,{\i1}Damn it! We're so close{\i0} {\i1}to finding out this fire's secret!{\i0}
+Dialogue: 0,0:24:29.53,0:24:31.06,Dialogue1,Unknown,0000,0000,0000,,{\i1}Next time on Dragon Ball:{\i0}
+Dialogue: 0,0:24:31.06,0:24:33.53,Dialogue1,Unknown,0000,0000,0000,,{\i1}"Hurry, Goku! The Mystery of Mt. Gogyo"{\i0}
+Dialogue: 0,0:24:33.53,0:24:35.54,Dialogue1,Unknown,0000,0000,0000,,{\i1}Don't miss it!{\i0}
+Dialogue: 0,0:24:34.63,0:24:38.13,Dialogue2,Unknown,0000,0000,0000,,{\an5\pos(360,51)}Next Time
+Dialogue: 0,0:24:34.63,0:24:38.13,Dialogue2,Unknown,0000,0000,0000,,{\an5\pos(359,84)}"Hurry, Goku! The Mystery of Mt. Gogyo"
