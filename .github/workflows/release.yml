@@ -37,7 +37,8 @@ jobs:
       - name: Generate Release Notes
         run: |
           export PREVIOUS=$(git describe --tags $(git rev-list --tags --max-count=2) --abbrev=0 | tail -n1)
-          git log --pretty=format:"- %s" $PREVIOUS..HEAD > release_notes.md
+          git log --pretty=format:"- %s" $PREVIOUS..HEAD > release_notes.txt
+          cat release_notes.txt
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -50,4 +51,4 @@ jobs:
           draft: false
           prerelease: false
           fail_on_unmatched_files: true
-          body_path: release_notes.md
+          body_path: release_notes.txt
