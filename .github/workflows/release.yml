@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: Perform Checkout
         uses: actions/checkout@v2
+        fetch-depth: '0'
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
@@ -37,6 +38,7 @@ jobs:
       - name: Generate Release Notes
         run: |
           export PREVIOUS=$(git describe --tags $(git rev-list --tags --max-count=2) --abbrev=0 | tail -n1)
+          echo "Previous release was $PREVIOUS"
           git log --pretty=format:"- %s" $PREVIOUS..HEAD > release_notes.txt
           cat release_notes.txt
       - name: Create Release
