@@ -23,7 +23,7 @@ public class DfxpToAssSubtitleConverterTest {
 
     @Test
     public void testConvert() {
-        DfxpSubtitleFile input = reader.read("src/test/resources/dfxp/[CostcoSubs] Terrace House - Boys x Girls Next Door - 01.dfxp");
+        DfxpSubtitleFile input = reader.read("src/test/resources/dfxp/test1.dfxp");
         AssSubtitleFile output = converter.convert(input);
 
         boolean containsN = false;
