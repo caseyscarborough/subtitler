@@ -12,7 +12,8 @@ jobs:
     steps:
       - name: Perform Checkout
         uses: actions/checkout@v2
-        fetch-depth: '0'
+        with:
+          fetch-depth: '0'
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
