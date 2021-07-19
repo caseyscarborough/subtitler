@@ -21,20 +21,22 @@ jobs:
           distribution: 'adopt'
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      - name: Extract version
+        id: extract_version
+        run: |
+          printf "::set-output name=%s::%s\n" tag_name "${GITHUB_REF#refs/tags/}"
       - name: Publish Package
         run: |
-          export VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
-          echo "Publishing package version ${VERSION} for user ${GITHUB_ACTOR}..."
-          ./gradlew -Pversion=${VERSION} publish
+          echo "Publishing package version ${{ steps.extract_version.outputs.tag_name }} for user ${GITHUB_ACTOR}..."
+          ./gradlew -Pversion=${{ steps.extract_version.outputs.tag_name }} publish
         env:
           GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - name: Build CLI Zip File
         run: |
-          export VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
-          echo "Building distribution file for version ${VERSION}..."
-          ./gradlew -Pversion=${VERSION} distZip
-          mv build/distributions/subtitler-${VERSION}.zip subtitler.zip
+          echo "Building distribution file for version ${{ steps.extract_version.outputs.tag_name }}..."
+          ./gradlew -Pversion=${{ steps.extract_version.outputs.tag_name }} distZip
+          mv build/distributions/subtitler-${{ steps.extract_version.outputs.tag_name }}.zip subtitler.zip
           shasum -a 256 subtitler.zip > subtitler.zip.sha256
       - name: Generate Release Notes
         run: |
@@ -62,7 +64,7 @@ jobs:
           formula-path: Formula/subtitler.rb
           homebrew-tap: caseyscarborough/homebrew-subtitler
           base-branch: master
-          download-url: https://github.com/caseyscarborough/subtitler/releases/download/${{ github.event.release.tag_name }}/subtitler.zip
+          download-url: https://github.com/caseyscarborough/subtitler/releases/download/${{ steps.extract_version.outputs.tag_name }}/subtitler.zip
           commit-message: |
             {{formulaName}} {{version}}
         env:
