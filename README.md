@@ -83,6 +83,8 @@ brew install subtitler
 subtitler -v
 ```
 
+> Note: This uses a Homebrew tap currently because this project does not have enough notoriety (30 forks or 75 stars) to be merged into homebrew-core. You can see the source code for the tap [here](https://github.com/caseyscarborough/homebrew-subtitler/blob/master/Formula/subtitler.rb).
+
 ### Download
 
 Download the `.zip` file from [the latest release](https://github.com/caseyscarborough/subtitler/releases/latest). Unzip
