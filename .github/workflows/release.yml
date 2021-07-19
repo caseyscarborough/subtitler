@@ -34,6 +34,10 @@ jobs:
           ./gradlew -Pversion=${VERSION} distZip
           mv build/distributions/subtitler-${VERSION}.zip subtitler.zip
           shasum -a 256 subtitler.zip > subtitler.zip.sha256
+      - name: Generate Release Notes
+        run: |
+          export PREVIOUS=$(git describe --tags $(git rev-list --tags --max-count=2) --abbrev=0 | tail -n1)
+          git log --pretty=format:"- %s" $PREVIOUS..HEAD > release_notes.md
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -46,3 +50,4 @@ jobs:
           draft: false
           prerelease: false
           fail_on_unmatched_files: true
+          body_path: release_notes.md
