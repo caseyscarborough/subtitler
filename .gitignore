@@ -9,5 +9,6 @@ out/
 .gradle
 /subtitler*/
 
-src/test/resources/srt
-src/test/resources/ass
+*.ass
+*.dfxp
+*.srt
