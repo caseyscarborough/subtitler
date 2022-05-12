@@ -7,7 +7,7 @@ import sh.casey.subtitler.model.AssSubtitleFile;
 public class AssSubtitleRenumberer implements SubtitleRenumberer<AssSubtitleFile> {
 
     @Override
-    public void renumber(final AssSubtitleFile file) {
+    public void renumber(final AssSubtitleFile file, int start) {
         log.debug(".ass subtitles don't have numbers... not renumbering.");
     }
 }

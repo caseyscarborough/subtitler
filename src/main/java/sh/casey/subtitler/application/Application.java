@@ -30,7 +30,8 @@ public class Application {
         options.addOption("d", "dual-subs", false, "Create Dual Sub file from two input files");
         options.addOption("s", "shift", false, "Shift timing on subtitles");
         options.addOption("c", "convert", false, "Convert file from one format to another");
-        options.addOption("r", "renumber", false, "Renumber a subtitle file starting from 1 (requires -i flag). Useful for when splitting subtitle files that were previously multiple episodes.");
+        options.addOption("r", "renumber", false, "Renumber a subtitle file starting from 1 by default (requires -i flag). Useful for when splitting subtitle files that were previously multiple episodes. Use the --renumber-start (-rs) flag to specify the starting number.");
+        options.addOption("rs", "renumber-start", true, "The number to start renumbering from.");
         options.addOption("cn", "condense", false, "Condense a subtitle file by putting common lines (of the same start/end times) into a single subtitle line.");
         options.addOption("h", "help", false, "Display this help menu");
 
