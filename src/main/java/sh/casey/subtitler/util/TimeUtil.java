@@ -1,8 +1,56 @@
 package sh.casey.subtitler.util;
 
 import org.apache.commons.lang3.StringUtils;
+import sh.casey.subtitler.model.SubtitleType;
 
 public class TimeUtil {
+
+    private static final Long MILLISECONDS = 1L;
+    private static final Long SECONDS = MILLISECONDS * 1000;
+    private static final Long MINUTES = SECONDS * 60;
+    private static final Long HOURS = MINUTES * 60;
+
+    public static Long formatTimeToMilliseconds(SubtitleType type, String time) {
+        if (type == SubtitleType.SRT) {
+            return srtFormatTimeToMilliseconds(time);
+        } else if (type == SubtitleType.ASS) {
+            return assFormatTimeToMilliseconds(time);
+        } else {
+            throw new IllegalArgumentException("Could not format time for type " + type);
+        }
+    }
+
+    public static String millsecondsToTime(SubtitleType type, Long time) {
+        if (type == SubtitleType.SRT) {
+            return srtMillisecondsToTime(time);
+        } else if (type == SubtitleType.ASS) {
+            return assMillisecondsToTime(time);
+        } else {
+            throw new IllegalArgumentException("Could not format time for type " + type);
+        }
+    }
+
+    public static String assMillisecondsToTime(Long time) {
+        long hours = time / HOURS;
+        time %= HOURS;
+        long minutes = time / MINUTES;
+        time %= MINUTES;
+        long seconds = time / SECONDS;
+        time %= SECONDS;
+        long ms = time;
+        return hours + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds) + "." + String.format("%03d", ms).substring(0, 2);
+    }
+
+    public static String srtMillisecondsToTime(Long time) {
+        long hours = time / HOURS;
+        time %= HOURS;
+        long minutes = time / MINUTES;
+        time %= MINUTES;
+        long seconds = time / SECONDS;
+        time %= SECONDS;
+        long ms = time;
+        return String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds) + "," + String.format("%03d", ms);
+    }
 
     public static Long srtFormatTimeToMilliseconds(final String time) {
         return timeToMilliseconds(",", time, 1);
@@ -12,7 +60,7 @@ public class TimeUtil {
         return timeToMilliseconds(".", time, 10);
     }
 
-    private static Long timeToMilliseconds(final String replace, final String time, Integer msFactor) {
+    public static Long timeToMilliseconds(final String replace, final String time, Integer msFactor) {
         final String[] parts = time.replace(replace, ":").split(":");
         long milliseconds = 0L;
         for (int i = 0; i < parts.length; i++) {
