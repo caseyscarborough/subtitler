@@ -27,6 +27,7 @@ public class DfxpSubtitleReader implements SubtitleReader<DfxpSubtitleFile> {
 
         int counter = 1;
         final DfxpSubtitleFile file = new DfxpSubtitleFile();
+        file.setPath(filename);
         for (final Element p : pElements) {
             final String begin = p.attr("begin");
             final String end = p.attr("end");

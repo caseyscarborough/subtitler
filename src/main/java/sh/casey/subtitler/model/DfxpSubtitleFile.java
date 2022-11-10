@@ -3,7 +3,7 @@ package sh.casey.subtitler.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DfxpSubtitleFile implements SubtitleFile {
+public class DfxpSubtitleFile extends BaseSubtitleFile {
 
     private final List<DxfpSubtitle> subtitles = new ArrayList<>();
 

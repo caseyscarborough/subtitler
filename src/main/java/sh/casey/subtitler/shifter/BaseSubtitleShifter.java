@@ -5,48 +5,18 @@ import org.apache.commons.lang3.StringUtils;
 import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.Subtitle;
 import sh.casey.subtitler.model.SubtitleFile;
-import sh.casey.subtitler.model.SubtitleType;
-import sh.casey.subtitler.reader.SubtitleReader;
-import sh.casey.subtitler.reader.SubtitleReaderFactory;
 import sh.casey.subtitler.util.TimeUtil;
-import sh.casey.subtitler.writer.SubtitleWriter;
-import sh.casey.subtitler.writer.SubtitleWriterFactory;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import static java.util.Calendar.MILLISECOND;
-import static sh.casey.subtitler.util.TimeUtil.assTrim;
 
 @Slf4j
 abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleShifter<T> {
 
-    public abstract SubtitleType getSubtitleType();
-
     @Override
-    public void shift(final ShiftConfig config) {
-        final String input = config.getInput();
-        final String output = config.getOutput();
+    public void shift(T file, final ShiftConfig config) {
         final Integer ms = config.getMs();
-        if (StringUtils.isBlank(input)) {
-            throw new SubtitleException("Input file is required.");
-        }
-
-        if (StringUtils.isBlank(output)) {
-            throw new SubtitleException("Output file is required.");
-        }
-
         if (ms == null) {
             throw new SubtitleException("You must specify a time in milliseconds to shift the subtitles.");
         }
-        log.debug("Shifting subtitles in file " + input + " by " + ms + "ms. Sending output to " + output + "...");
-        final SubtitleReader<T> reader = new SubtitleReaderFactory().getInstance(getSubtitleType());
-        final T file = reader.read(input);
-        log.debug("Found " + file.getSubtitles().size() + " lines");
-
+        log.debug("Shifting subtitles in file {} by {}ms.", file.getPath(), ms);
         Long beforeDate = null;
         Long afterDate = null;
         if (StringUtils.isNotBlank(config.getBefore())) {
@@ -117,12 +87,9 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
             }
 
             shiftCount++;
-            log.trace("Shifted ." + getSubtitleType().name().toLowerCase() + " line from " + originalFrom + " --> " + originalEnd + " to " + subtitle.getStart() + " --> " + subtitle.getEnd());
+            log.trace("Shifted ." + file.getType().name().toLowerCase() + " line from " + originalFrom + " --> " + originalEnd + " to " + subtitle.getStart() + " --> " + subtitle.getEnd());
         }
 
         log.debug("Shifted " + shiftCount + " subtitles.");
-        final SubtitleWriterFactory factory = new SubtitleWriterFactory();
-        final SubtitleWriter<T> writer = factory.getInstance(getSubtitleType());
-        writer.write(file, output);
     }
 }

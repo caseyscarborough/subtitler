@@ -28,6 +28,7 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
         log.info("Reading subtitle file: " + filename);
         Validate.notBlank(filename);
         final AssSubtitleFile file = new AssSubtitleFile();
+        file.setPath(filename);
         final AssScriptInfo scriptInfo = new AssScriptInfo();
         int lineCounter = 0;
         final BufferedReader br;

@@ -5,12 +5,12 @@ import org.junit.Test;
 import sh.casey.subtitler.model.AssDialogue;
 import sh.casey.subtitler.model.AssSubtitleFile;
 import sh.casey.subtitler.reader.AssSubtitleReader;
-
-import java.util.UUID;
+import sh.casey.subtitler.util.TimeUtil;
 
 import static org.junit.Assert.assertEquals;
 
 public class AssSubtitleShifterTest {
+
     AssSubtitleReader reader;
     AssSubtitleShifter shifter;
 
@@ -22,19 +22,20 @@ public class AssSubtitleShifterTest {
 
     @Test
     public void testShift() {
+        final Long after = 728000L;
+        final Long before = 780000L;
+        final Integer shift = 12480;
         final String filePath = "src/test/resources/ass/[Judas] Bleach - S01E04 - 004.en.ass";
-        final String newFilePath = "/tmp/" + UUID.randomUUID() + ".ass";
         final AssSubtitleFile file = reader.read(filePath);
-        ShiftConfig config = new ShiftConfig("00:12:08,000", null, null, null, 1000, filePath, newFilePath, ShiftMode.FROM_TO);
-        shifter.shift(config);
-        final AssSubtitleFile newFile = reader.read(newFilePath);
-        assertEquals(file.getDialogues().size(), newFile.getDialogues().size());
-        final Long start = 728000L;
-        for (int i = 0; i < file.getDialogues().size(); i++) {
+        final AssSubtitleFile shifted = reader.read(filePath);
+        ShiftConfig config = new ShiftConfig(TimeUtil.srtMillisecondsToTime(after), TimeUtil.srtMillisecondsToTime(before), null, null, shift, ShiftMode.FROM_TO);
+        shifter.shift(shifted, config);
+        assertEquals(file.getDialogues().size(), shifted.getDialogues().size());
+        for (int i = 0; i < shifted.getDialogues().size(); i++) {
             AssDialogue a = file.getDialogues().get(i);
-            AssDialogue b = newFile.getDialogues().get(i);
-            if (a.getStartMilliseconds() > start) {
-                assertEquals(a.getStartMilliseconds() + 1000, (long) b.getStartMilliseconds());
+            AssDialogue b = shifted.getDialogues().get(i);
+            if (a.getStartMilliseconds() > after && a.getStartMilliseconds() < before) {
+                assertEquals(a.getStartMilliseconds() + shift, (long) b.getStartMilliseconds());
             } else {
                 assertEquals(a.getStartMilliseconds(), b.getStartMilliseconds());
             }

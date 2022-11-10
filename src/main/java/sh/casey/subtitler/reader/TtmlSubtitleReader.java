@@ -15,6 +15,7 @@ public class TtmlSubtitleReader implements SubtitleReader<TtmlSubtitleFile> {
         final String html = FileUtils.readFile(filename);
         final Document document = Jsoup.parse(html);
         final TtmlSubtitleFile file = new TtmlSubtitleFile();
+        file.setPath(filename);
         final Elements ps = document.getElementsByTag("p");
         int counter = 0;
         for (final Element p : ps) {

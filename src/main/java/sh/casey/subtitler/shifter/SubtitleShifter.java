@@ -4,5 +4,5 @@ import sh.casey.subtitler.model.SubtitleFile;
 
 public interface SubtitleShifter<T extends SubtitleFile> {
 
-    void shift(ShiftConfig config);
+    void shift(T subtitle, ShiftConfig config);
 }

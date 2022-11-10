@@ -19,6 +19,7 @@ public class SrtSubtitleReader implements SubtitleReader<SrtSubtitleFile> {
     public SrtSubtitleFile read(final String filename) {
         log.info("Reading subtitle file " + filename);
         final SrtSubtitleFile file = new SrtSubtitleFile();
+        file.setPath(filename);
         BufferedReader br = null;
         int lineCounter = 0;
         try {

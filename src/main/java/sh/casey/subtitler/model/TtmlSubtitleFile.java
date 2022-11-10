@@ -3,7 +3,7 @@ package sh.casey.subtitler.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TtmlSubtitleFile implements SubtitleFile {
+public class TtmlSubtitleFile extends BaseSubtitleFile {
 
     private List<TtmlSubtitle> subtitles = new ArrayList<>();
 

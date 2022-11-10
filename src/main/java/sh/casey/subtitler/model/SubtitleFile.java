@@ -7,4 +7,6 @@ public interface SubtitleFile {
     List<? extends Subtitle> getSubtitles();
 
     SubtitleType getType();
+
+    String getPath();
 }

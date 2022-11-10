@@ -1,13 +1,18 @@
 package sh.casey.subtitler.application.command;
 
 import org.apache.commons.cli.CommandLine;
+import org.apache.commons.lang3.StringUtils;
 import sh.casey.subtitler.application.exception.InvalidCommandException;
 import sh.casey.subtitler.model.SubtitleFile;
 import sh.casey.subtitler.model.SubtitleType;
+import sh.casey.subtitler.reader.SubtitleReader;
+import sh.casey.subtitler.reader.SubtitleReaderFactory;
 import sh.casey.subtitler.shifter.ShiftConfig;
 import sh.casey.subtitler.shifter.ShiftMode;
 import sh.casey.subtitler.shifter.SubtitleShifter;
 import sh.casey.subtitler.shifter.SubtitleShifterFactory;
+import sh.casey.subtitler.writer.SubtitleWriter;
+import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
 class ShiftCommand extends BaseCommand {
 
@@ -24,12 +29,13 @@ class ShiftCommand extends BaseCommand {
         final String input = getInputFilename();
         final SubtitleType subtitleType = getInputFileType();
         final String output = getOutputFilename();
-        final SubtitleShifter<? extends SubtitleFile> shifter = new SubtitleShifterFactory().getInstance(subtitleType);
-        final Integer number = cmd.getOptionValue('n') != null ? Integer.parseInt(cmd.getOptionValue('n')) : null;
+        final SubtitleReader<SubtitleFile> reader = new SubtitleReaderFactory().getInstance(subtitleType);
+        final SubtitleShifter<SubtitleFile> shifter = new SubtitleShifterFactory().getInstance(subtitleType);
+        final SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(subtitleType);
+        final SubtitleFile file = reader.read(input);
+        final Integer number = cmd.hasOption('n') && StringUtils.isNumeric(cmd.getOptionValue('n')) ? Integer.parseInt(cmd.getOptionValue('n')) : null;
 
         final ShiftConfig config = ShiftConfig.builder()
-            .input(input)
-            .output(output)
             .ms(Integer.parseInt(cmd.getOptionValue('t')))
             .before(cmd.getOptionValue('b'))
             .after(cmd.getOptionValue('a'))
@@ -37,6 +43,7 @@ class ShiftCommand extends BaseCommand {
             .matches(cmd.getOptionValue('m'))
             .shiftMode(ShiftMode.findByString(cmd.getOptionValue("sm")))
             .build();
-        shifter.shift(config);
+        shifter.shift(file, config);
+        writer.write(file, output);
     }
 }

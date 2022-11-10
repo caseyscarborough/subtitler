@@ -5,7 +5,7 @@ import java.util.List;
 
 // See this document for information on ASS subtitle tags:
 // http://docs.aegisub.org/3.2/ASS_Tags/
-public class AssSubtitleFile implements SubtitleFile {
+public class AssSubtitleFile extends BaseSubtitleFile {
 
     // Script Info
     private AssScriptInfo scriptInfo;
