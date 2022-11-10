@@ -52,7 +52,9 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                         line = br.readLine();
                         while (line != null && !line.startsWith("[")) {
                             line = line.trim();
-                            scriptInfo.getAttributes().add(line);
+                            if (StringUtils.isNotBlank(line)) {
+                                scriptInfo.getAttributes().add(line);
+                            }
                             lineCounter++;
                             line = br.readLine();
                         }
