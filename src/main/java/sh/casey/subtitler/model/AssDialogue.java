@@ -1,6 +1,7 @@
 package sh.casey.subtitler.model;
 
 import lombok.ToString;
+import sh.casey.subtitler.util.TimeUtil;
 
 @ToString
 public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
@@ -41,6 +42,11 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
     }
 
     @Override
+    public Long getStartMilliseconds() {
+        return TimeUtil.assFormatTimeToMilliseconds(getStart());
+    }
+
+    @Override
     public void setStart(final String start) {
         this.start = start;
     }
@@ -48,6 +54,11 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
     @Override
     public String getEnd() {
         return end;
+    }
+
+    @Override
+    public Long getEndMilliseconds() {
+        return TimeUtil.assFormatTimeToMilliseconds(getEnd());
     }
 
     @Override

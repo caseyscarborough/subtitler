@@ -37,6 +37,11 @@ public class TtmlSubtitle implements Subtitle {
     }
 
     @Override
+    public Long getStartMilliseconds() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void setStart(final String start) {
         this.start = start;
     }
@@ -44,6 +49,11 @@ public class TtmlSubtitle implements Subtitle {
     @Override
     public String getEnd() {
         return end;
+    }
+
+    @Override
+    public Long getEndMilliseconds() {
+        throw new UnsupportedOperationException();
     }
 
     @Override

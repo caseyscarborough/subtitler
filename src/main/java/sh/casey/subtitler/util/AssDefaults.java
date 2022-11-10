@@ -1,6 +1,7 @@
 package sh.casey.subtitler.util;
 
 import sh.casey.subtitler.model.AssDialogue;
+import sh.casey.subtitler.model.AssScriptInfo;
 import sh.casey.subtitler.model.AssStyle;
 import sh.casey.subtitler.model.AssSubtitleFile;
 
@@ -11,10 +12,14 @@ public class AssDefaults {
 
     public static AssSubtitleFile getDefaultAssSubtitleFile() {
         final AssSubtitleFile file = new AssSubtitleFile();
-        file.setScriptType("v4.00+");
-        file.setWrapStyle("0");
-        file.setScaledBorderAndShadow("yes");
-        file.setCollisions("Normal");
+        final AssScriptInfo scriptInfo = new AssScriptInfo();
+        scriptInfo.setScriptType("v4.00+");
+        scriptInfo.setWrapStyle("0");
+        scriptInfo.setScaledBorderAndShadow("yes");
+        scriptInfo.setCollisions("Normal");
+        scriptInfo.setPlayResX("1920");
+        scriptInfo.setPlayResY("1080");
+        file.setScriptInfo(scriptInfo);
         file.setStylesFormatOrder(getDefaultStylingFormatOrder());
         file.getStyles().add(getDefaultStyling());
         file.getStyles().add(getItalicStyling());
@@ -60,7 +65,7 @@ public class AssDefaults {
         final AssStyle style = new AssStyle();
         style.setName("Default");
         style.setFontName("Arial");
-        style.setFontSize("18");
+        style.setFontSize("64");
         style.setPrimaryColor("&H00FFFFFF");
         style.setSecondaryColor("&H00FFFFFF");
         style.setOutlineColor("&H00000000");
@@ -74,7 +79,7 @@ public class AssDefaults {
         style.setSpacing("0");
         style.setAngle("0");
         style.setBorderStyle("1");
-        style.setOutline("1");
+        style.setOutline("3");
         style.setShadow("0");
         style.setAlignment("2");
         style.setMarginL("60");
@@ -116,15 +121,23 @@ public class AssDefaults {
         return dialogue;
     }
 
-    public static List<AssStyle> getDefaultStylesWithTopAndBottom() {
+    public static AssStyle getDefaultTopStyle() {
         final AssStyle top = AssDefaults.getDefaultStyling();
         top.setName("Top");
         top.setAlignment("8");
+        return top;
+    }
 
+    public static AssStyle getDefaultBottomStyle() {
         final AssStyle bottom = AssDefaults.getDefaultStyling();
         bottom.setName("Bottom");
         bottom.setAlignment("2");
+        return bottom;
+    }
 
+    public static List<AssStyle> getDefaultStylesWithTopAndBottom() {
+        final AssStyle top = getDefaultTopStyle();
+        final AssStyle bottom = getDefaultBottomStyle();
         return Arrays.asList(top, bottom);
     }
 }

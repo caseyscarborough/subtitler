@@ -11,6 +11,7 @@ import sh.casey.subtitler.application.command.ApplicationCommand;
 import sh.casey.subtitler.application.command.CommandFactory;
 import sh.casey.subtitler.application.exception.CommandNotFoundException;
 import sh.casey.subtitler.application.exception.InvalidCommandException;
+import sh.casey.subtitler.filter.FilterType;
 import sh.casey.subtitler.model.SubtitleType;
 import sh.casey.subtitler.shifter.ShiftMode;
 
@@ -52,6 +53,10 @@ public class Application {
         options.addOption("t", "time", true, "Time in milliseconds to shift subtitles (required when using -s)");
         options.addOption("it", "input-type", true, "The type of the input file, options are " + Arrays.toString(SubtitleType.values()));
         options.addOption("ot", "output-type", true, "The type for the output file, options are " + Arrays.toString(SubtitleType.values()));
+
+        for (FilterType value : FilterType.values()) {
+            options.addOption(value.getShortOpt(), value.getLongOpt(), true, value.getDescription());
+        }
 
         final CommandLine cmd = parser.parse(options, args);
         final CommandFactory factory = new CommandFactory();

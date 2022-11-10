@@ -8,55 +8,55 @@ import sh.casey.subtitler.util.FileUtils;
 
 public class AssSubtitleWriter implements SubtitleWriter<AssSubtitleFile> {
 
-    private static final String CRLF = "\r\n";
+    private static final String CRLF = System.lineSeparator();
 
     @Override
     public void write(final AssSubtitleFile file, final String outputPath) {
         final StringBuilder sb = new StringBuilder();
         sb.append("[Script Info]").append(CRLF);
 
-        for (final String comment : file.getComments()) {
+        for (final String comment : file.getScriptInfo().getComments()) {
             sb.append(comment).append(CRLF);
         }
 
-        if (StringUtils.isNotBlank(file.getTitle())) {
-            sb.append("Title: ").append(file.getTitle()).append(CRLF);
+        if (StringUtils.isNotBlank(file.getScriptInfo().getTitle())) {
+            sb.append("Title: ").append(file.getScriptInfo().getTitle()).append(CRLF);
         }
 
-        if (StringUtils.isNotBlank(file.getScriptType())) {
-            sb.append("ScriptType: ").append(file.getScriptType()).append(CRLF);
+        if (StringUtils.isNotBlank(file.getScriptInfo().getScriptType())) {
+            sb.append("ScriptType: ").append(file.getScriptInfo().getScriptType()).append(CRLF);
         }
 
-        if (StringUtils.isNotBlank(file.getCollisions())) {
-            sb.append("Collisions: ").append(file.getCollisions()).append(CRLF);
+        if (StringUtils.isNotBlank(file.getScriptInfo().getCollisions())) {
+            sb.append("Collisions: ").append(file.getScriptInfo().getCollisions()).append(CRLF);
         }
 
-        if (StringUtils.isNotBlank(file.getWrapStyle())) {
-            sb.append("WrapStyle: ").append(file.getWrapStyle()).append(CRLF);
+        if (StringUtils.isNotBlank(file.getScriptInfo().getWrapStyle())) {
+            sb.append("WrapStyle: ").append(file.getScriptInfo().getWrapStyle()).append(CRLF);
         }
 
-        if (StringUtils.isNotBlank(file.getPlayResX())) {
-            sb.append("PlayResX: ").append(file.getPlayResX()).append(CRLF);
+        if (StringUtils.isNotBlank(file.getScriptInfo().getPlayResX())) {
+            sb.append("PlayResX: ").append(file.getScriptInfo().getPlayResX()).append(CRLF);
         }
 
-        if (StringUtils.isNotBlank(file.getPlayResY())) {
-            sb.append("PlayResY: ").append(file.getPlayResY()).append(CRLF);
+        if (StringUtils.isNotBlank(file.getScriptInfo().getPlayResY())) {
+            sb.append("PlayResY: ").append(file.getScriptInfo().getPlayResY()).append(CRLF);
         }
 
-        if (StringUtils.isNotBlank(file.getScaledBorderAndShadow())) {
-            sb.append("ScaledBorderAndShadow: ").append(file.getScaledBorderAndShadow()).append(CRLF);
+        if (StringUtils.isNotBlank(file.getScriptInfo().getScaledBorderAndShadow())) {
+            sb.append("ScaledBorderAndShadow: ").append(file.getScriptInfo().getScaledBorderAndShadow()).append(CRLF);
         }
 
-        if (StringUtils.isNotBlank(file.getVideoAspectRatio())) {
-            sb.append("Video Aspect Ratio: ").append(file.getVideoAspectRatio()).append(CRLF);
+        if (StringUtils.isNotBlank(file.getScriptInfo().getVideoAspectRatio())) {
+            sb.append("Video Aspect Ratio: ").append(file.getScriptInfo().getVideoAspectRatio()).append(CRLF);
         }
 
-        if (StringUtils.isNotBlank(file.getVideoZoom())) {
-            sb.append("Video Zoom: ").append(file.getVideoZoom()).append(CRLF);
+        if (StringUtils.isNotBlank(file.getScriptInfo().getVideoZoom())) {
+            sb.append("Video Zoom: ").append(file.getScriptInfo().getVideoZoom()).append(CRLF);
         }
 
-        if (StringUtils.isNotBlank(file.getVideoPosition())) {
-            sb.append("Video Position: ").append(file.getVideoPosition()).append(CRLF);
+        if (StringUtils.isNotBlank(file.getScriptInfo().getVideoPosition())) {
+            sb.append("Video Position: ").append(file.getScriptInfo().getVideoPosition()).append(CRLF);
         }
 
         if (!file.getStyles().isEmpty()) {

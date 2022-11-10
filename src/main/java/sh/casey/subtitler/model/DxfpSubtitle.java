@@ -1,5 +1,7 @@
 package sh.casey.subtitler.model;
 
+import sh.casey.subtitler.util.TimeUtil;
+
 public class DxfpSubtitle implements Subtitle {
 
     private String id;
@@ -48,6 +50,11 @@ public class DxfpSubtitle implements Subtitle {
     }
 
     @Override
+    public Long getStartMilliseconds() {
+        return TimeUtil.assFormatTimeToMilliseconds(getStart());
+    }
+
+    @Override
     public void setStart(final String start) {
         this.start = start;
     }
@@ -55,6 +62,11 @@ public class DxfpSubtitle implements Subtitle {
     @Override
     public String getEnd() {
         return end;
+    }
+
+    @Override
+    public Long getEndMilliseconds() {
+        return TimeUtil.assFormatTimeToMilliseconds(getEnd());
     }
 
     @Override

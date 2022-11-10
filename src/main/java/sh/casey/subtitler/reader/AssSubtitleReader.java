@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.AssDialogue;
+import sh.casey.subtitler.model.AssScriptInfo;
 import sh.casey.subtitler.model.AssStyle;
 import sh.casey.subtitler.model.AssSubtitleFile;
 
@@ -26,6 +27,7 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
         log.info("Reading subtitle file: " + filename);
         Validate.notBlank(filename);
         final AssSubtitleFile file = new AssSubtitleFile();
+        final AssScriptInfo scriptInfo = new AssScriptInfo();
         int lineCounter = 0;
         final BufferedReader br;
         try {
@@ -50,27 +52,27 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                             line = line.trim();
                             final String value = getValue(line);
                             if (line.startsWith("Title:")) {
-                                file.setTitle(value);
+                                scriptInfo.setTitle(value);
                             } else if (line.startsWith("Collisions: ")) {
-                                file.setCollisions(value);
+                                scriptInfo.setCollisions(value);
                             } else if (line.startsWith("ScriptType:")) {
-                                file.setScriptType(value);
+                                scriptInfo.setScriptType(value);
                             } else if (line.startsWith("WrapStyle:")) {
-                                file.setWrapStyle(value);
+                                scriptInfo.setWrapStyle(value);
                             } else if (line.startsWith("PlayResX:")) {
-                                file.setPlayResX(value);
+                                scriptInfo.setPlayResX(value);
                             } else if (line.startsWith("PlayResY:")) {
-                                file.setPlayResY(value);
+                                scriptInfo.setPlayResY(value);
                             } else if (line.startsWith("ScaledBorderAndShadow:")) {
-                                file.setScaledBorderAndShadow(value);
+                                scriptInfo.setScaledBorderAndShadow(value);
                             } else if (line.startsWith("Video Aspect Ratio")) {
-                                file.setVideoAspectRatio(value);
+                                scriptInfo.setVideoAspectRatio(value);
                             } else if (line.startsWith("Video Zoom")) {
-                                file.setVideoZoom(value);
+                                scriptInfo.setVideoZoom(value);
                             } else if (line.startsWith("Video Position")) {
-                                file.setVideoPosition(value);
+                                scriptInfo.setVideoPosition(value);
                             } else if (line.startsWith(";")) {
-                                file.getComments().add(line);
+                                scriptInfo.getComments().add(line);
                             } else if (StringUtils.isNotBlank(line)) {
                                 log.info("Implementation has not been created for the following line in [Script Info] section: " + line);
                             }
@@ -78,6 +80,7 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                             lineCounter++;
                             line = br.readLine();
                         }
+                        file.setScriptInfo(scriptInfo);
                     } else if (line.equalsIgnoreCase("[V4+ Styles]")) {
                         log.debug("Found styles...");
                         lineCounter++;

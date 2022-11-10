@@ -17,7 +17,7 @@ public class DfxpSubtitleReaderTest {
 
     @Test
     public void testRead() {
-        DfxpSubtitleFile file = reader.read("src/test/resources/dfxp/[CostcoSubs] Terrace House - Boys x Girls Next Door - 01.dfxp");
+        DfxpSubtitleFile file = reader.read("src/test/resources/dfxp/test1.dfxp");
         assertEquals(455, file.getSubtitles().size());
     }
 }

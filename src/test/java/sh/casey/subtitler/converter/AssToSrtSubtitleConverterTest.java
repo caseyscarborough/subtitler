@@ -6,6 +6,7 @@ import sh.casey.subtitler.model.AssSubtitleFile;
 import sh.casey.subtitler.model.SrtSubtitle;
 import sh.casey.subtitler.model.SrtSubtitleFile;
 import sh.casey.subtitler.reader.AssSubtitleReader;
+import sh.casey.subtitler.reader.SrtSubtitleReader;
 import sh.casey.subtitler.writer.SrtSubtitleWriter;
 
 import java.util.HashMap;
@@ -43,6 +44,15 @@ public class AssToSrtSubtitleConverterTest {
         assertEquals("<font color=\"#be201f\">Tori = Bird</font>", first.getText());
         assertEquals("00:01:11,030", first.getStart());
         assertEquals("00:01:17,300", first.getEnd());
+    }
+
+    @Test
+    public void testConvert3() {
+        AssSubtitleFile file = reader.read("src/test/resources/ass/Terrace.House.Boys.x.Girls.Next.Door.S01E01.Week01.2012.1080p.NF.WEB-DL.AAC-IRENEBRO.en.ass");
+        SrtSubtitleFile converted = converter.convert(file);
+        new SrtSubtitleWriter().write(converted, "src/test/resources/srt/Terrace.House.Boys.x.Girls.Next.Door.S01E01.Week01.2012.1080p.NF.WEB-DL.AAC-IRENEBRO.en.srt");
+        converted = new SrtSubtitleReader().read("src/test/resources/srt/Terrace.House.Boys.x.Girls.Next.Door.S01E01.Week01.2012.1080p.NF.WEB-DL.AAC-IRENEBRO.en.srt");
+        assertEquals(file.getDialogues().size(), converted.getSubtitles().size());
     }
 
     @Test

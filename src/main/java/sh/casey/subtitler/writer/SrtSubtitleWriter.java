@@ -10,13 +10,13 @@ public class SrtSubtitleWriter implements SubtitleWriter<SrtSubtitleFile> {
         final StringBuilder sb = new StringBuilder();
         for (final SrtSubtitle sub : file.getSubtitles()) {
             sb.append(sub.getNumber())
-                .append("\n")
+                .append(System.lineSeparator())
                 .append(sub.getStart())
                 .append(" --> ")
                 .append(sub.getEnd())
-                .append("\n")
+                .append(System.lineSeparator())
                 .append(sub.getLines())
-                .append("\n");
+                .append(System.lineSeparator());
         }
 
         final String output = sb.toString().trim();

@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import sh.casey.subtitler.converter.SubtitleConverter;
 import sh.casey.subtitler.converter.SubtitleConverterFactory;
 import sh.casey.subtitler.model.AssDialogue;
+import sh.casey.subtitler.model.AssScriptInfo;
+import sh.casey.subtitler.model.AssStyle;
 import sh.casey.subtitler.model.AssSubtitleFile;
 import sh.casey.subtitler.model.SubtitleFile;
 import sh.casey.subtitler.model.SubtitleType;
@@ -24,13 +26,15 @@ public class DualSubCreator {
     private final SubtitleType topType;
     private final SubtitleType bottomType;
     private final String output;
+    private final AssScriptInfo scriptInfo;
 
-    private DualSubCreator(final String top, final String bottom, final SubtitleType topType, final SubtitleType bottomType, final String output) {
+    private DualSubCreator(final String top, final String bottom, final SubtitleType topType, final SubtitleType bottomType, final String output, final AssScriptInfo scriptInfo) {
         this.top = top;
         this.bottom = bottom;
         this.topType = topType;
         this.bottomType = bottomType;
         this.output = output;
+        this.scriptInfo = scriptInfo;
     }
 
     public static Builder builder() {
@@ -58,12 +62,18 @@ public class DualSubCreator {
         final AssSubtitleFile topAss = (AssSubtitleFile) topFile;
         final AssSubtitleFile bottomAss = (AssSubtitleFile) bottomFile;
 
-        final AssSubtitleFile outputAss = AssDefaults.getDefaultAssSubtitleFile();
-        outputAss.getStyles().clear();
-        outputAss.getStyles().addAll(AssDefaults.getDefaultStylesWithTopAndBottom());
+        AssSubtitleFile outputAss;
+        if (bottomType == SubtitleType.ASS) {
+            outputAss = bottomAss;
+            final AssStyle topStyle = AssDefaults.getDefaultTopStyle();
+            topStyle.setFontSize(bottomAss.getStyles().get(0).getFontSize());
+            outputAss.getStyles().add(topStyle);
+        } else {
+            outputAss = AssDefaults.getDefaultAssSubtitleFile();
+            outputAss.getStyles().addAll(AssDefaults.getDefaultStylesWithTopAndBottom());
+            bottomAss.getDialogues().forEach(d -> d.setStyle("Bottom"));
+        }
         topAss.getDialogues().forEach(d -> d.setStyle("Top"));
-        bottomAss.getDialogues().forEach(d -> d.setStyle("Bottom"));
-
         final List<AssDialogue> dialogues = new ArrayList<>();
         dialogues.addAll(topAss.getDialogues());
         dialogues.addAll(bottomAss.getDialogues());
@@ -81,6 +91,7 @@ public class DualSubCreator {
         private SubtitleType topType;
         private SubtitleType bottomType;
         private String output;
+        private AssScriptInfo scriptInfo;
 
         Builder() {
         }
@@ -120,6 +131,11 @@ public class DualSubCreator {
             return this;
         }
 
+        public Builder scriptInfo(final AssScriptInfo scriptInfo) {
+            this.scriptInfo = scriptInfo;
+            return this;
+        }
+
         public DualSubCreator build() {
             if (top == null) {
                 throw new IllegalStateException("Top file must be present to build Dual Sub creator.");
@@ -133,7 +149,7 @@ public class DualSubCreator {
                 throw new IllegalStateException("Output file must be present to build Dual Sub creator.");
             }
 
-            return new DualSubCreator(top, bottom, topType, bottomType, output);
+            return new DualSubCreator(top, bottom, topType, bottomType, output, scriptInfo);
         }
     }
 }

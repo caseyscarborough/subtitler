@@ -12,9 +12,13 @@ public interface Subtitle {
 
     String getStart();
 
+    Long getStartMilliseconds();
+
     void setStart(String start);
 
     String getEnd();
+
+    Long getEndMilliseconds();
 
     void setEnd(String end);
 }
