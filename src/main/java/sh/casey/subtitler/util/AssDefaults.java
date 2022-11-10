@@ -13,12 +13,12 @@ public class AssDefaults {
     public static AssSubtitleFile getDefaultAssSubtitleFile() {
         final AssSubtitleFile file = new AssSubtitleFile();
         final AssScriptInfo scriptInfo = new AssScriptInfo();
-        scriptInfo.setScriptType("v4.00+");
-        scriptInfo.setWrapStyle("0");
-        scriptInfo.setScaledBorderAndShadow("yes");
-        scriptInfo.setCollisions("Normal");
-        scriptInfo.setPlayResX("1920");
-        scriptInfo.setPlayResY("1080");
+        scriptInfo.getAttributes().add("ScriptType: v4.00+");
+        scriptInfo.getAttributes().add("WrapStyle: 0");
+        scriptInfo.getAttributes().add("ScaledBorderAndShadow: yes");
+        scriptInfo.getAttributes().add("Collisions: Normal");
+        scriptInfo.getAttributes().add("PlayResX: 1920");
+        scriptInfo.getAttributes().add("PlayResY: 1080");
         file.setScriptInfo(scriptInfo);
         file.setStylesFormatOrder(getDefaultStylingFormatOrder());
         file.getStyles().add(getDefaultStyling());

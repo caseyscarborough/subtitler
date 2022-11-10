@@ -1,106 +1,72 @@
 package sh.casey.subtitler.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AssScriptInfo {
-    private List<String> comments = new ArrayList<>();
-    private String title;
-    private String scriptType;
-    private String wrapStyle;
-    private String playResX;
-    private String playResY;
-    private String scaledBorderAndShadow;
-    private String videoAspectRatio;
-    private String videoZoom;
-    private String videoPosition;
-    private String collisions;
+    private final List<String> comments = new ArrayList<>();
+    private final List<String> attributes = new ArrayList<>();
 
     public List<String> getComments() {
         return comments;
     }
 
-    public void setComments(List<String> comments) {
-        this.comments = comments;
+    public List<String> getAttributes() {
+        return attributes;
     }
 
     public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+        return getValue("Title");
     }
 
     public String getScriptType() {
-        return scriptType;
-    }
-
-    public void setScriptType(String scriptType) {
-        this.scriptType = scriptType;
+        return getValue("ScriptType");
     }
 
     public String getWrapStyle() {
-        return wrapStyle;
-    }
-
-    public void setWrapStyle(String wrapStyle) {
-        this.wrapStyle = wrapStyle;
+        return getValue("WrapStyle");
     }
 
     public String getPlayResX() {
-        return playResX;
-    }
-
-    public void setPlayResX(String playResX) {
-        this.playResX = playResX;
+        return getValue("PlayResX");
     }
 
     public String getPlayResY() {
-        return playResY;
-    }
-
-    public void setPlayResY(String playResY) {
-        this.playResY = playResY;
+        return getValue("PlayResY");
     }
 
     public String getScaledBorderAndShadow() {
-        return scaledBorderAndShadow;
-    }
-
-    public void setScaledBorderAndShadow(String scaledBorderAndShadow) {
-        this.scaledBorderAndShadow = scaledBorderAndShadow;
+        return getValue("ScaledBorderAndShadow");
     }
 
     public String getVideoAspectRatio() {
-        return videoAspectRatio;
-    }
-
-    public void setVideoAspectRatio(String videoAspectRatio) {
-        this.videoAspectRatio = videoAspectRatio;
+        return getValue("VideoAspectRatio");
     }
 
     public String getVideoZoom() {
-        return videoZoom;
-    }
-
-    public void setVideoZoom(String videoZoom) {
-        this.videoZoom = videoZoom;
+        return getValue("VideoZoom");
     }
 
     public String getVideoPosition() {
-        return videoPosition;
-    }
-
-    public void setVideoPosition(String videoPosition) {
-        this.videoPosition = videoPosition;
+        return getValue("VideoPosition");
     }
 
     public String getCollisions() {
-        return collisions;
+        return getValue("Collisions");
     }
 
-    public void setCollisions(String collisions) {
-        this.collisions = collisions;
+    private String getValue(String value) {
+        return attributes.stream().filter(a -> a.startsWith(value)).map(this::parseValue).findFirst().orElse("");
+    }
+
+    private String parseValue(final String line) {
+        final String[] split = line.split(":");
+        if (split.length > 1) {
+            return String.join(":", Arrays.asList(split)).substring(split[0].length() + 1).trim();
+        }
+        return split[0];
     }
 }

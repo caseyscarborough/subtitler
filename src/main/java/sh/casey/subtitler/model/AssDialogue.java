@@ -3,42 +3,40 @@ package sh.casey.subtitler.model;
 import lombok.ToString;
 import sh.casey.subtitler.util.TimeUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @ToString
 public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
 
-    private Integer number;
-    private String layer;
-    private String start;
-    private String end;
-    private String style;
-    private String actor;
-    private String marginL;
-    private String marginR;
-    private String marginV;
-    private String effect;
-    private String text;
+    private Map<String, String> attributes = new HashMap<>();
     private boolean comment = false;
 
     @Override
     public Integer getNumber() {
-        return number;
+        return Integer.parseInt(attributes.get("Number"));
     }
 
     public void setNumber(final Integer number) {
-        this.number = number;
+        attributes.put("Number", String.valueOf(number));
     }
 
     public String getLayer() {
-        return layer;
+        return attributes.get("Layer");
     }
 
     public void setLayer(final String layer) {
-        this.layer = layer;
+        attributes.put("Layer", layer);
     }
 
     @Override
     public String getStart() {
-        return start;
+        return attributes.get("Start");
+    }
+
+    @Override
+    public void setStart(final String start) {
+        attributes.put("Start", start);
     }
 
     @Override
@@ -47,13 +45,13 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
     }
 
     @Override
-    public void setStart(final String start) {
-        this.start = start;
+    public String getEnd() {
+        return attributes.get("End");
     }
 
     @Override
-    public String getEnd() {
-        return end;
+    public void setEnd(final String end) {
+        attributes.put("End", end);
     }
 
     @Override
@@ -61,57 +59,56 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
         return TimeUtil.assFormatTimeToMilliseconds(getEnd());
     }
 
-    @Override
-    public void setEnd(final String end) {
-        this.end = end;
-    }
-
     public String getStyle() {
-        return style;
+        return getValue("Style");
     }
 
     public void setStyle(final String style) {
-        this.style = style;
+        this.attributes.put("Style", style);
     }
 
     public String getActor() {
-        return actor;
+        return this.attributes.getOrDefault("Actor", this.attributes.get("Name"));
     }
 
     public void setActor(final String actor) {
-        this.actor = actor;
+        this.attributes.put("Actor", actor);
     }
 
     public String getMarginL() {
-        return marginL;
+        return attributes.get("MarginL");
     }
 
     public void setMarginL(final String marginL) {
-        this.marginL = marginL;
+        attributes.put("MarginL", marginL);
     }
 
     public String getMarginR() {
-        return marginR;
+        return attributes.get("MarginR");
     }
 
     public void setMarginR(final String marginR) {
-        this.marginR = marginR;
+        attributes.put("MarginR", marginR);
     }
 
     public String getMarginV() {
-        return marginV;
+        return attributes.get("MarginV");
     }
 
     public void setMarginV(final String marginV) {
-        this.marginV = marginV;
+        attributes.put("MarginV", marginV);
     }
 
     public String getEffect() {
-        return effect;
+        return attributes.get("Effect");
     }
 
     public void setEffect(final String effect) {
-        this.effect = effect;
+        attributes.put("Effect", effect);
+    }
+
+    public Map<String, String> getAttributes() {
+        return attributes;
     }
 
     @Override
@@ -120,11 +117,11 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
     }
 
     public String getText() {
-        return text;
+        return attributes.get("Text");
     }
 
     public void setText(final String text) {
-        this.text = text;
+        attributes.put("Text", text);
     }
 
     public boolean isComment() {
@@ -136,31 +133,7 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
     }
 
     public String getValue(final String formatValue) {
-        switch (formatValue) {
-            case "Layer":
-                return getLayer();
-            case "Start":
-                return getStart();
-            case "End":
-                return getEnd();
-            case "Style":
-                return getStyle();
-            case "Name":
-            case "Actor":
-                return getActor();
-            case "MarginL":
-                return getMarginL();
-            case "MarginR":
-                return getMarginR();
-            case "MarginV":
-                return getMarginV();
-            case "Effect":
-                return getEffect();
-            case "Text":
-                return getText();
-            default:
-                return "";
-        }
+        return attributes.getOrDefault(formatValue, "");
     }
 
     @Override

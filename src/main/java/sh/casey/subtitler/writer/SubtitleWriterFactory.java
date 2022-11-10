@@ -11,6 +11,8 @@ public class SubtitleWriterFactory {
             return (SubtitleWriter<T>) new SrtSubtitleWriter();
         } else if (type.equals(SubtitleType.ASS)) {
             return (SubtitleWriter<T>) new AssSubtitleWriter();
+        } else if (type.equals(SubtitleType.SSA)) {
+            return (SubtitleWriter<T>) new AssSubtitleWriter();
         } else {
             throw new IllegalStateException("Writer has not been implemented for type " + type);
         }

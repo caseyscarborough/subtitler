@@ -5,7 +5,8 @@ public enum SubtitleType {
     ASS(".ass", "H:mm:ss.SS"),
     SRT(".srt", "HH:mm:ss,SSS"),
     TTML(".ttml", "HH:mm:ss.SSS"),
-    DFXP(".dfxp", "HH:mm:ss.SSS");
+    DFXP(".dfxp", "HH:mm:ss.SSS"),
+    SSA(".ssa", ASS.getTimeFormat());
 
     private final String extension;
     private final String timeFormat;

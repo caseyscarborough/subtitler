@@ -5,7 +5,6 @@ import org.junit.Test;
 import sh.casey.subtitler.model.AssDialogue;
 import sh.casey.subtitler.model.AssSubtitleFile;
 import sh.casey.subtitler.reader.AssSubtitleReader;
-import sh.casey.subtitler.util.TimeUtil;
 
 import java.util.UUID;
 

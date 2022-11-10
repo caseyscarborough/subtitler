@@ -1,265 +1,209 @@
 package sh.casey.subtitler.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AssStyle {
 
-    private String name;
-    private String fontName;
-    private String fontSize;
-    private String primaryColor;
-    private String secondaryColor;
-    private String outlineColor;
-    private String backColor;
-    private String bold;
-    private String italic;
-    private String underline;
-    private String strikeOut;
-    private String scaleX;
-    private String scaleY;
-    private String spacing;
-    private String angle;
-    private String borderStyle;
-    private String outline;
-    private String shadow;
-    private String alignment;
-    private String marginL;
-    private String marginR;
-    private String marginV;
-    private String encoding;
+    private Map<String, String> attributes = new HashMap<>();
+
+    public Map<String, String> getAttributes() {
+        return attributes;
+    }
 
     public String getName() {
-        return name;
+        return attributes.get("Name");
     }
 
     public void setName(final String name) {
-        this.name = name;
+        attributes.put("Name", name);
     }
 
     public String getFontName() {
-        return fontName;
+        return attributes.get("Fontname");
     }
 
     public void setFontName(final String fontName) {
-        this.fontName = fontName;
+        attributes.put("Fontname", fontName);
     }
 
     public String getFontSize() {
-        return fontSize;
+        return attributes.get("Fontsize");
     }
 
     public void setFontSize(final String fontSize) {
-        this.fontSize = fontSize;
+        attributes.put("Fontsize", fontSize);
     }
 
     public String getPrimaryColor() {
-        return primaryColor;
+        return attributes.get("PrimaryColour");
     }
 
     public void setPrimaryColor(final String primaryColor) {
-        this.primaryColor = primaryColor;
+        attributes.put("PrimaryColour", primaryColor);
     }
 
     public String getSecondaryColor() {
-        return secondaryColor;
+        return attributes.get("SecondaryColour");
     }
 
     public void setSecondaryColor(final String secondaryColor) {
-        this.secondaryColor = secondaryColor;
+        attributes.put("SecondaryColour", secondaryColor);
+    }
+
+    public String getTertiaryColor() {
+        return attributes.get("TertiaryColour");
+    }
+
+    public void setTertiaryColor(final String tertiaryColor) {
+        attributes.put("TertiaryColour", tertiaryColor);
     }
 
     public String getOutlineColor() {
-        return outlineColor;
+        return attributes.get("OutlineColour");
     }
 
     public void setOutlineColor(final String outlineColor) {
-        this.outlineColor = outlineColor;
+        attributes.put("OutlineColour", outlineColor);
     }
 
     public String getBackColor() {
-        return backColor;
+        return attributes.get("BackColour");
     }
 
     public void setBackColor(final String backColor) {
-        this.backColor = backColor;
+        attributes.put("BackColour", backColor);
     }
 
     public String getBold() {
-        return bold;
+        return attributes.get("Bold");
     }
 
     public void setBold(final String bold) {
-        this.bold = bold;
+        attributes.put("Bold", bold);
     }
 
     public String getItalic() {
-        return italic;
+        return attributes.get("Italic");
     }
 
     public void setItalic(final String italic) {
-        this.italic = italic;
+        attributes.put("Italic", italic);
     }
 
     public String getUnderline() {
-        return underline;
+        return attributes.get("Underline");
     }
 
     public void setUnderline(final String underline) {
-        this.underline = underline;
+        attributes.put("Underline", underline);
     }
 
     public String getStrikeOut() {
-        return strikeOut;
+        return attributes.get("StrikeOut");
     }
 
     public void setStrikeOut(final String strikeOut) {
-        this.strikeOut = strikeOut;
+        attributes.put("StrikeOut", strikeOut);
     }
 
     public String getScaleX() {
-        return scaleX;
+        return attributes.get("ScaleX");
     }
 
     public void setScaleX(final String scaleX) {
-        this.scaleX = scaleX;
+        attributes.put("ScaleX", scaleX);
     }
 
     public String getScaleY() {
-        return scaleY;
+        return attributes.get("ScaleY");
     }
 
     public void setScaleY(final String scaleY) {
-        this.scaleY = scaleY;
+        attributes.put("ScaleY", scaleY);
     }
 
     public String getSpacing() {
-        return spacing;
+        return attributes.get("Spacing");
     }
 
     public void setSpacing(final String spacing) {
-        this.spacing = spacing;
+        attributes.put("Spacing", spacing);
     }
 
     public String getAngle() {
-        return angle;
+        return attributes.get("Angle");
     }
 
     public void setAngle(final String angle) {
-        this.angle = angle;
+        attributes.put("Angle", angle);
     }
 
     public String getBorderStyle() {
-        return borderStyle;
+        return attributes.get("BorderStyle");
     }
 
     public void setBorderStyle(final String borderStyle) {
-        this.borderStyle = borderStyle;
+        attributes.put("BorderStyle", borderStyle);
     }
 
     public String getOutline() {
-        return outline;
+        return attributes.get("Outline");
     }
 
     public void setOutline(final String outline) {
-        this.outline = outline;
+        attributes.put("Outline", outline);
     }
 
     public String getShadow() {
-        return shadow;
+        return attributes.get("Shadow");
     }
 
     public void setShadow(final String shadow) {
-        this.shadow = shadow;
+        attributes.put("Shadow", shadow);
     }
 
     public String getAlignment() {
-        return alignment;
+        return attributes.get("Alignment");
     }
 
     public void setAlignment(final String alignment) {
-        this.alignment = alignment;
+        attributes.put("Alignment", alignment);
     }
 
     public String getMarginL() {
-        return marginL;
+        return attributes.get("MarginL");
     }
 
     public void setMarginL(final String marginL) {
-        this.marginL = marginL;
+        attributes.put("MarginL", marginL);
     }
 
     public String getMarginR() {
-        return marginR;
+        return attributes.get("MarginR");
     }
 
     public void setMarginR(final String marginR) {
-        this.marginR = marginR;
+        attributes.put("MarginR", marginR);
     }
 
     public String getMarginV() {
-        return marginV;
+        return attributes.get("MarginV");
     }
 
     public void setMarginV(final String marginV) {
-        this.marginV = marginV;
+        attributes.put("MarginV", marginV);
     }
 
     public String getEncoding() {
-        return encoding;
+        return attributes.get("Encoding");
     }
 
     public void setEncoding(final String encoding) {
-        this.encoding = encoding;
+        attributes.put("Encoding", encoding);
     }
 
     public String getValue(final String formatValue) {
-        switch (formatValue) {
-            case "Name":
-                return getName();
-            case "Fontname":
-                return getFontName();
-            case "Fontsize":
-                return getFontSize();
-            case "PrimaryColour":
-                return getPrimaryColor();
-            case "SecondaryColour":
-                return getSecondaryColor();
-            case "OutlineColour":
-                return getOutlineColor();
-            case "BackColour":
-                return getBackColor();
-            case "Bold":
-                return getBold();
-            case "Italic":
-                return getItalic();
-            case "Underline":
-                return getUnderline();
-            case "StrikeOut":
-                return getStrikeOut();
-            case "ScaleX":
-                return getScaleX();
-            case "ScaleY":
-                return getScaleY();
-            case "Spacing":
-                return getSpacing();
-            case "Angle":
-                return getAngle();
-            case "BorderStyle":
-                return getBorderStyle();
-            case "Outline":
-                return getOutline();
-            case "Shadow":
-                return getShadow();
-            case "Alignment":
-                return getAlignment();
-            case "MarginL":
-                return getMarginL();
-            case "MarginR":
-                return getMarginR();
-            case "MarginV":
-                return getMarginV();
-            case "Encoding":
-                return getEncoding();
-            default:
-                return "";
-        }
+        return attributes.getOrDefault(formatValue, "");
     }
 }

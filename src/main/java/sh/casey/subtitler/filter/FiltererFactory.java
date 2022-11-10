@@ -9,7 +9,10 @@ public class FiltererFactory {
     public <T extends SubtitleFile> Filterer<T>  getInstance(SubtitleType type) {
         if (type == SubtitleType.ASS) {
             return (Filterer<T>) new AssFilterer();
+        } else if (type == SubtitleType.SSA) {
+            return (Filterer<T>) new AssFilterer();
+        } else {
+            throw new IllegalStateException("Could not find filterer for subtitle type " + type);
         }
-        throw new IllegalStateException("Could not find filterer for subtitle type " + type);
     }
 }

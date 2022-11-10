@@ -7,6 +7,7 @@ import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.AssDialogue;
 import sh.casey.subtitler.model.AssScriptInfo;
 import sh.casey.subtitler.model.AssStyle;
+import sh.casey.subtitler.model.AssStyleVersion;
 import sh.casey.subtitler.model.AssSubtitleFile;
 
 import java.io.BufferedReader;
@@ -50,38 +51,17 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                         line = br.readLine();
                         while (line != null && !line.startsWith("[")) {
                             line = line.trim();
-                            final String value = getValue(line);
-                            if (line.startsWith("Title:")) {
-                                scriptInfo.setTitle(value);
-                            } else if (line.startsWith("Collisions: ")) {
-                                scriptInfo.setCollisions(value);
-                            } else if (line.startsWith("ScriptType:")) {
-                                scriptInfo.setScriptType(value);
-                            } else if (line.startsWith("WrapStyle:")) {
-                                scriptInfo.setWrapStyle(value);
-                            } else if (line.startsWith("PlayResX:")) {
-                                scriptInfo.setPlayResX(value);
-                            } else if (line.startsWith("PlayResY:")) {
-                                scriptInfo.setPlayResY(value);
-                            } else if (line.startsWith("ScaledBorderAndShadow:")) {
-                                scriptInfo.setScaledBorderAndShadow(value);
-                            } else if (line.startsWith("Video Aspect Ratio")) {
-                                scriptInfo.setVideoAspectRatio(value);
-                            } else if (line.startsWith("Video Zoom")) {
-                                scriptInfo.setVideoZoom(value);
-                            } else if (line.startsWith("Video Position")) {
-                                scriptInfo.setVideoPosition(value);
-                            } else if (line.startsWith(";")) {
-                                scriptInfo.getComments().add(line);
-                            } else if (StringUtils.isNotBlank(line)) {
-                                log.info("Implementation has not been created for the following line in [Script Info] section: " + line);
-                            }
-
+                            scriptInfo.getAttributes().add(line);
                             lineCounter++;
                             line = br.readLine();
                         }
                         file.setScriptInfo(scriptInfo);
-                    } else if (line.equalsIgnoreCase("[V4+ Styles]")) {
+                    } else if (line.equalsIgnoreCase("[V4+ Styles]") || line.equalsIgnoreCase("[V4 Styles]")) {
+                        if (line    .contains("V4+")) {
+                            file.setStyleVersion(AssStyleVersion.V4PLUS);
+                        } else if (line.contains("V4")) {
+                            file.setStyleVersion(AssStyleVersion.V4);
+                        }
                         log.debug("Found styles...");
                         lineCounter++;
                         line = br.readLine().trim();
@@ -105,54 +85,7 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                                 for (int i = 0; i < file.getStylesFormatOrder().size(); i++) {
                                     final String type = file.getStylesFormatOrder().get(i);
                                     final String styleValue = styles[i].trim();
-
-                                    if (type.equals("Name")) {
-                                        style.setName(styleValue);
-                                    } else if (type.equals("Fontname")) {
-                                        style.setFontName(styleValue);
-                                    } else if (type.equals("Fontsize")) {
-                                        style.setFontSize(styleValue);
-                                    } else if (type.equals("PrimaryColour")) {
-                                        style.setPrimaryColor(styleValue);
-                                    } else if (type.equals("SecondaryColour")) {
-                                        style.setSecondaryColor(styleValue);
-                                    } else if (type.equals("OutlineColour")) {
-                                        style.setOutlineColor(styleValue);
-                                    } else if (type.equals("BackColour")) {
-                                        style.setBackColor(styleValue);
-                                    } else if (type.equals("Bold")) {
-                                        style.setBold(styleValue);
-                                    } else if (type.equals("Italic")) {
-                                        style.setItalic(styleValue);
-                                    } else if (type.equals("Underline")) {
-                                        style.setUnderline(styleValue);
-                                    } else if (type.equals("StrikeOut")) {
-                                        style.setStrikeOut(styleValue);
-                                    } else if (type.equals("ScaleX")) {
-                                        style.setScaleX(styleValue);
-                                    } else if (type.equals("ScaleY")) {
-                                        style.setScaleY(styleValue);
-                                    } else if (type.equals("Spacing")) {
-                                        style.setSpacing(styleValue);
-                                    } else if (type.equals("Angle")) {
-                                        style.setAngle(styleValue);
-                                    } else if (type.equals("BorderStyle")) {
-                                        style.setBorderStyle(styleValue);
-                                    } else if (type.equals("Outline")) {
-                                        style.setOutline(styleValue);
-                                    } else if (type.equals("Shadow")) {
-                                        style.setShadow(styleValue);
-                                    } else if (type.equals("Alignment")) {
-                                        style.setAlignment(styleValue);
-                                    } else if (type.equals("MarginL")) {
-                                        style.setMarginL(styleValue);
-                                    } else if (type.equals("MarginR")) {
-                                        style.setMarginR(styleValue);
-                                    } else if (type.equals("MarginV")) {
-                                        style.setMarginV(styleValue);
-                                    } else if (type.equals("Encoding")) {
-                                        style.setEncoding(styleValue);
-                                    }
+                                    style.getAttributes().put(type, styleValue);
                                 }
                                 file.getStyles().add(style);
                             }
@@ -204,28 +137,7 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                                 for (int i = 0; i < file.getEventsFormatOrder().size() && i < dialogues.length; i++) {
                                     final String type = file.getEventsFormatOrder().get(i);
                                     final String dialogueValue = dialogues[i].trim();
-
-                                    if (type.equals("Layer")) {
-                                        dialogue.setLayer(dialogueValue);
-                                    } else if (type.equals("Start")) {
-                                        dialogue.setStart(dialogueValue);
-                                    } else if (type.equals("End")) {
-                                        dialogue.setEnd(dialogueValue);
-                                    } else if (type.equals("Style")) {
-                                        dialogue.setStyle(dialogueValue);
-                                    } else if (type.equals("Actor") || type.equals("Name")) {
-                                        dialogue.setActor(dialogueValue);
-                                    } else if (type.equals("MarginL")) {
-                                        dialogue.setMarginL(dialogueValue);
-                                    } else if (type.equals("MarginR")) {
-                                        dialogue.setMarginR(dialogueValue);
-                                    } else if (type.equals("MarginV")) {
-                                        dialogue.setMarginV(dialogueValue);
-                                    } else if (type.equals("Effect")) {
-                                        dialogue.setEffect(dialogueValue);
-                                    } else if (type.equals("Text")) {
-                                        dialogue.setText(dialogueValue);
-                                    }
+                                    dialogue.getAttributes().put(type, dialogueValue);
                                 }
                                 dialogue.setNumber(++dialogueCounter);
                                 file.getDialogues().add(dialogue);

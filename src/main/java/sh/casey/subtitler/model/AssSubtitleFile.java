@@ -17,6 +17,7 @@ public class AssSubtitleFile implements SubtitleFile {
     // Events
     private List<String> eventsFormatOrder = new ArrayList<>();
     private List<AssDialogue> dialogues = new ArrayList<>();
+    private AssStyleVersion styleVersion;
 
     public AssScriptInfo getScriptInfo() {
         return scriptInfo;
@@ -66,5 +67,13 @@ public class AssSubtitleFile implements SubtitleFile {
     @Override
     public SubtitleType getType() {
         return SubtitleType.ASS;
+    }
+
+    public AssStyleVersion getStyleVersion() {
+        return styleVersion;
+    }
+
+    public void setStyleVersion(AssStyleVersion styleVersion) {
+        this.styleVersion = styleVersion;
     }
 }

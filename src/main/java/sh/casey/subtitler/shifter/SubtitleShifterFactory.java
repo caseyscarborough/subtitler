@@ -5,11 +5,14 @@ import sh.casey.subtitler.model.SubtitleType;
 
 public class SubtitleShifterFactory {
 
-    public SubtitleShifter<? extends SubtitleFile> getInstance(final SubtitleType type) {
+    @SuppressWarnings("unchecked")
+    public <T extends SubtitleFile> SubtitleShifter<T> getInstance(final SubtitleType type) {
         if (type.equals(SubtitleType.SRT)) {
-            return new SrtSubtitleShifter();
+            return (SubtitleShifter<T>) new SrtSubtitleShifter();
         } else if (type.equals(SubtitleType.ASS)) {
-            return new AssSubtitleShifter();
+            return (SubtitleShifter<T>) new AssSubtitleShifter();
+        } else if (type.equals(SubtitleType.SSA)) {
+            return (SubtitleShifter<T>) new AssSubtitleShifter();
         } else {
             throw new IllegalStateException(type + " subtitle shifter has not yet been implemented.");
         }

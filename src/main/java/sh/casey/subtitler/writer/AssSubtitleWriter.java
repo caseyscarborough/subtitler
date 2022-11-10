@@ -1,8 +1,8 @@
 package sh.casey.subtitler.writer;
 
-import org.apache.commons.lang3.StringUtils;
 import sh.casey.subtitler.model.AssDialogue;
 import sh.casey.subtitler.model.AssStyle;
+import sh.casey.subtitler.model.AssStyleVersion;
 import sh.casey.subtitler.model.AssSubtitleFile;
 import sh.casey.subtitler.util.FileUtils;
 
@@ -19,49 +19,13 @@ public class AssSubtitleWriter implements SubtitleWriter<AssSubtitleFile> {
             sb.append(comment).append(CRLF);
         }
 
-        if (StringUtils.isNotBlank(file.getScriptInfo().getTitle())) {
-            sb.append("Title: ").append(file.getScriptInfo().getTitle()).append(CRLF);
-        }
-
-        if (StringUtils.isNotBlank(file.getScriptInfo().getScriptType())) {
-            sb.append("ScriptType: ").append(file.getScriptInfo().getScriptType()).append(CRLF);
-        }
-
-        if (StringUtils.isNotBlank(file.getScriptInfo().getCollisions())) {
-            sb.append("Collisions: ").append(file.getScriptInfo().getCollisions()).append(CRLF);
-        }
-
-        if (StringUtils.isNotBlank(file.getScriptInfo().getWrapStyle())) {
-            sb.append("WrapStyle: ").append(file.getScriptInfo().getWrapStyle()).append(CRLF);
-        }
-
-        if (StringUtils.isNotBlank(file.getScriptInfo().getPlayResX())) {
-            sb.append("PlayResX: ").append(file.getScriptInfo().getPlayResX()).append(CRLF);
-        }
-
-        if (StringUtils.isNotBlank(file.getScriptInfo().getPlayResY())) {
-            sb.append("PlayResY: ").append(file.getScriptInfo().getPlayResY()).append(CRLF);
-        }
-
-        if (StringUtils.isNotBlank(file.getScriptInfo().getScaledBorderAndShadow())) {
-            sb.append("ScaledBorderAndShadow: ").append(file.getScriptInfo().getScaledBorderAndShadow()).append(CRLF);
-        }
-
-        if (StringUtils.isNotBlank(file.getScriptInfo().getVideoAspectRatio())) {
-            sb.append("Video Aspect Ratio: ").append(file.getScriptInfo().getVideoAspectRatio()).append(CRLF);
-        }
-
-        if (StringUtils.isNotBlank(file.getScriptInfo().getVideoZoom())) {
-            sb.append("Video Zoom: ").append(file.getScriptInfo().getVideoZoom()).append(CRLF);
-        }
-
-        if (StringUtils.isNotBlank(file.getScriptInfo().getVideoPosition())) {
-            sb.append("Video Position: ").append(file.getScriptInfo().getVideoPosition()).append(CRLF);
+        for (String attribute : file.getScriptInfo().getAttributes()) {
+            sb.append(attribute).append(CRLF);
         }
 
         if (!file.getStyles().isEmpty()) {
             sb.append(CRLF)
-                .append("[V4+ Styles]")
+                .append(file.getStyleVersion() == AssStyleVersion.V4PLUS ? "[V4+ Styles]" : "[V4 Styles]")
                 .append(CRLF)
                 .append("Format: ")
                 .append(String.join(", ", file.getStylesFormatOrder()))
@@ -98,8 +62,7 @@ public class AssSubtitleWriter implements SubtitleWriter<AssSubtitleFile> {
                     if (!first) {
                         sb.append(",");
                     }
-                    final String value = dialogue.getValue(key);
-                    sb.append(value != null ? value : "");
+                    sb.append(dialogue.getValue(key));
                     first = false;
                 }
                 sb.append(CRLF);
