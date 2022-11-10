@@ -4,8 +4,16 @@ import org.apache.commons.lang3.StringUtils;
 
 public class TimeUtil {
 
+    public static Long srtFormatTimeToMilliseconds(final String time) {
+        return timeToMilliseconds(",", time, 1);
+    }
+
     public static Long assFormatTimeToMilliseconds(final String time) {
-        final String[] parts = time.replaceAll("\\.", ":").split(":");
+        return timeToMilliseconds(".", time, 10);
+    }
+
+    private static Long timeToMilliseconds(final String replace, final String time, Integer msFactor) {
+        final String[] parts = time.replace(replace, ":").split(":");
         long milliseconds = 0L;
         for (int i = 0; i < parts.length; i++) {
             final long amount = Long.parseLong(parts[i]);
@@ -16,12 +24,11 @@ public class TimeUtil {
             } else if (i == 2) {
                 milliseconds += amount * 1000;
             } else if (i == 3) {
-                milliseconds += amount * 10;
+                milliseconds += amount * msFactor;
             }
         }
         return milliseconds;
     }
-
 
     // This method removes the 3rd millisecond character
     // from .ass subtitles, e.g. 1:00:00.333 => 1:00:00.33
