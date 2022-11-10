@@ -8,6 +8,7 @@ import sh.casey.subtitler.model.SubtitleFile;
 import sh.casey.subtitler.model.SubtitleType;
 import sh.casey.subtitler.reader.SubtitleReader;
 import sh.casey.subtitler.reader.SubtitleReaderFactory;
+import sh.casey.subtitler.util.TimeUtil;
 import sh.casey.subtitler.writer.SubtitleWriter;
 import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
@@ -23,11 +24,7 @@ import static sh.casey.subtitler.util.TimeUtil.assTrim;
 @Slf4j
 abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleShifter<T> {
 
-    private static final String SHIFT_BEFORE_AFTER_FORMAT = "HH:mm:ss,SSS";
-
     public abstract SubtitleType getSubtitleType();
-
-    public abstract String getDefaultTime();
 
     @Override
     public void shift(final ShiftConfig config) {
@@ -50,9 +47,14 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
         final T file = reader.read(input);
         log.debug("Found " + file.getSubtitles().size() + " lines");
 
-        final Date beforeDate = getBeforeAfterDate(config.getBefore());
-        final Date afterDate = getBeforeAfterDate(config.getAfter());
-
+        Long beforeDate = null;
+        Long afterDate = null;
+        if (StringUtils.isNotBlank(config.getBefore())) {
+            beforeDate = TimeUtil.srtFormatTimeToMilliseconds(config.getBefore());
+        }
+        if (StringUtils.isNotBlank(config.getAfter())) {
+            afterDate = TimeUtil.srtFormatTimeToMilliseconds(config.getAfter());
+        }
         Integer beforeNumber = null;
         Integer afterNumber = null;
         if (StringUtils.isNumeric(config.getBefore())) {
@@ -80,92 +82,47 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
         }
 
         int shiftCount = 0;
-        try {
-            final DateFormat format = new SimpleDateFormat(file.getType().getTimeFormat());
-            final Calendar fromCal = Calendar.getInstance();
-            final Calendar toCal = Calendar.getInstance();
+        for (final Subtitle subtitle : file.getSubtitles()) {
+            final String originalFrom = subtitle.getStart();
+            final String originalEnd = subtitle.getEnd();
+            final Long from = subtitle.getStartMilliseconds();
+            final Long to = subtitle.getEndMilliseconds();
 
-            for (final Subtitle subtitle : file.getSubtitles()) {
-                final String originalFrom = subtitle.getStart();
-                final String originalEnd = subtitle.getEnd();
-                final Date from = format.parse(subtitle.getStart());
-                final Date to = format.parse(subtitle.getEnd());
-
-                // If it's not after the "after" time, don't shift it.
-                if ((afterDate != null && !from.after(afterDate)) || (afterNumber != null && subtitle.getNumber() <= afterNumber)) {
-                    continue;
-                }
-
-                // If it's not before the "before" time, don't shift it.
-                if ((beforeDate != null && !from.before(beforeDate)) || (beforeNumber != null && subtitle.getNumber() >= beforeNumber)) {
-                    continue;
-                }
-
-                // If the user specified a number of a subtitle to shift, don't shift unless this is that number.
-                if (config.getNumber() != null && (subtitle.getNumber() == null || !subtitle.getNumber().equals(config.getNumber()))) {
-                    continue;
-                }
-
-                // If the text doesn't contain the specified matching text, don't shift it.
-                if (StringUtils.isNotBlank(config.getMatches()) && !subtitle.getText().contains(config.getMatches())) {
-                    continue;
-                }
-
-                if (config.getShiftMode().equals(ShiftMode.FROM) || config.getShiftMode().equals(ShiftMode.FROM_TO)) {
-                    fromCal.setTime(from);
-                    final int fromDay = fromCal.get(Calendar.DAY_OF_YEAR);
-                    fromCal.add(MILLISECOND, ms);
-                    final int newFromDay = fromCal.get(Calendar.DAY_OF_YEAR);
-                    if (fromDay == newFromDay) {
-                        String startTime = format.format(fromCal.getTime());
-                        if (getSubtitleType().equals(SubtitleType.ASS)) {
-                            startTime = assTrim(startTime);
-                        }
-                        subtitle.setStart(startTime);
-                    } else {
-                        subtitle.setStart(getDefaultTime());
-                    }
-                }
-
-                if (config.getShiftMode().equals(ShiftMode.TO) || config.getShiftMode().equals(ShiftMode.FROM_TO)) {
-                    toCal.setTime(to);
-                    final int toDay = toCal.get(Calendar.DAY_OF_YEAR);
-                    toCal.add(MILLISECOND, ms);
-                    final int newToDay = toCal.get(Calendar.DAY_OF_YEAR);
-                    if (toDay == newToDay) {
-                        String endTime = format.format(toCal.getTime());
-                        if (getSubtitleType().equals(SubtitleType.ASS)) {
-                            endTime = assTrim(endTime);
-                        }
-                        subtitle.setEnd(endTime);
-                    } else {
-                        subtitle.setEnd(getDefaultTime());
-                    }
-                }
-
-                shiftCount++;
-                log.trace("Shifted ." + getSubtitleType().name().toLowerCase() + " line from " + originalFrom + " --> " + originalEnd + " to " + subtitle.getStart() + " --> " + subtitle.getEnd());
+            // If it's not after the "after" time, don't shift it.
+            if ((afterDate != null && from < afterDate) || (afterNumber != null && subtitle.getNumber() <= afterNumber)) {
+                continue;
             }
-        } catch (final ParseException e) {
-            throw new SubtitleException("An error occurred shifting subtitles", e);
+
+            // If it's not before the "before" time, don't shift it.
+            if ((beforeDate != null && from > beforeDate) || (beforeNumber != null && subtitle.getNumber() >= beforeNumber)) {
+                continue;
+            }
+
+            // If the user specified a number of a subtitle to shift, don't shift unless this is that number.
+            if (config.getNumber() != null && (subtitle.getNumber() == null || !subtitle.getNumber().equals(config.getNumber()))) {
+                continue;
+            }
+
+            // If the text doesn't contain the specified matching text, don't shift it.
+            if (StringUtils.isNotBlank(config.getMatches()) && !subtitle.getText().contains(config.getMatches())) {
+                continue;
+            }
+
+            if (config.getShiftMode().equals(ShiftMode.FROM) || config.getShiftMode().equals(ShiftMode.FROM_TO)) {
+                subtitle.setStart(TimeUtil.millsecondsToTime(subtitle.getType(), from + ms));
+            }
+
+            if (config.getShiftMode().equals(ShiftMode.TO) || config.getShiftMode().equals(ShiftMode.FROM_TO)) {
+                subtitle.setEnd(TimeUtil.millsecondsToTime(subtitle.getType(), to + ms));
+            }
+
+            shiftCount++;
+            log.trace("Shifted ." + getSubtitleType().name().toLowerCase() + " line from " + originalFrom + " --> " + originalEnd + " to " + subtitle.getStart() + " --> " + subtitle.getEnd());
         }
 
         log.debug("Shifted " + shiftCount + " subtitles.");
         final SubtitleWriterFactory factory = new SubtitleWriterFactory();
         final SubtitleWriter<T> writer = factory.getInstance(getSubtitleType());
         writer.write(file, output);
-    }
-
-    private Date getBeforeAfterDate(final String time) {
-        if (StringUtils.isBlank(time) || StringUtils.isNumeric(time)) {
-            return null;
-        }
-
-        final DateFormat format = new SimpleDateFormat(SHIFT_BEFORE_AFTER_FORMAT);
-        try {
-            return format.parse(time);
-        } catch (final ParseException e) {
-            throw new SubtitleException("'Before' time was in the incorrect format. Please use " + SHIFT_BEFORE_AFTER_FORMAT + " format.", e);
-        }
     }
 }

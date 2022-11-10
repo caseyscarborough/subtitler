@@ -9,9 +9,4 @@ class AssSubtitleShifter extends BaseSubtitleShifter<AssSubtitleFile> {
     public SubtitleType getSubtitleType() {
         return SubtitleType.ASS;
     }
-
-    @Override
-    public String getDefaultTime() {
-        return "0:00:00.00";
-    }
 }

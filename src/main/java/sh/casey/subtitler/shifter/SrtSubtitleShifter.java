@@ -9,9 +9,4 @@ class SrtSubtitleShifter extends BaseSubtitleShifter<SrtSubtitleFile> {
     public SubtitleType getSubtitleType() {
         return SubtitleType.SRT;
     }
-
-    @Override
-    public String getDefaultTime() {
-        return "00:00:00,000";
-    }
 }
