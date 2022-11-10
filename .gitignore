@@ -12,3 +12,4 @@ out/
 *.ass
 *.dfxp
 *.srt
+build.sh
