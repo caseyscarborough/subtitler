@@ -2,10 +2,17 @@ package sh.casey.subtitler.application.command;
 
 import org.apache.commons.cli.CommandLine;
 import sh.casey.subtitler.application.exception.CommandNotFoundException;
+import sh.casey.subtitler.filter.FilterType;
 
 public class CommandFactory {
 
     public ApplicationCommand getInstance(final CommandLine cmd) {
+        for (FilterType value : FilterType.values()) {
+            if (cmd.hasOption(value.getLongOpt())) {
+                return new FilterCommand(cmd);
+            }
+        }
+
         if (cmd.hasOption("v")) {
             return new VersionCommand();
         } else if (cmd.hasOption("cn")) {
