@@ -28,7 +28,7 @@ public class Application {
 
         // actions
         options.addOption("v", "version", false, "Display the current version");
-        options.addOption("d", "dual-subs", false, "Create Dual Sub file from two input files");
+        options.addOption("d", "dual-subs", false, "Create dual subtitle file from two input files. The styles are copied from the bottom subtitle (unless it is SRT format).");
         options.addOption("s", "shift", false, "Shift timing on subtitles");
         options.addOption("c", "convert", false, "Convert file from one format to another");
         options.addOption("r", "renumber", false, "Renumber a subtitle file starting from 1 by default (requires -i flag). Useful for when splitting subtitle files that were previously multiple episodes. Use the --renumber-start (-rs) flag to specify the starting number.");
@@ -40,6 +40,7 @@ public class Application {
         // dual-subtitle options
         options.addOption("tf", "top", true, "Top file for dual sub creation");
         options.addOption("bf", "bottom", true, "Bottom file for dual sub creation");
+        options.addOption("dc", "dual-subs-config", true, "Configuration for dual subs (modifies the top subtitle only). Option keys are font, size, and bold. The format is key=value,key=value, e.g. --dual-subs-config 'font=Arial,size=64,bold=false'");
 
         // shift options
         options.addOption("sm", "shift-mode", true, "Shift mode, default is 'FROM_TO'. Options are " + Arrays.stream(ShiftMode.values()).map(ShiftMode::toString).collect(Collectors.joining(", ")));

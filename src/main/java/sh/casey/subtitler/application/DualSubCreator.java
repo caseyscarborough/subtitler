@@ -21,6 +21,7 @@ import java.util.List;
 @Slf4j
 public class DualSubCreator {
 
+    private final DualSubConfig config;
     private final String top;
     private final String bottom;
     private final SubtitleType topType;
@@ -28,7 +29,8 @@ public class DualSubCreator {
     private final String output;
     private final AssScriptInfo scriptInfo;
 
-    private DualSubCreator(final String top, final String bottom, final SubtitleType topType, final SubtitleType bottomType, final String output, final AssScriptInfo scriptInfo) {
+    private DualSubCreator(final DualSubConfig config, final String top, final String bottom, final SubtitleType topType, final SubtitleType bottomType, final String output, final AssScriptInfo scriptInfo) {
+        this.config = config;
         this.top = top;
         this.bottom = bottom;
         this.topType = topType;
@@ -66,7 +68,13 @@ public class DualSubCreator {
         if (bottomType == SubtitleType.ASS) {
             outputAss = bottomAss;
             final AssStyle topStyle = AssDefaults.getDefaultTopStyle();
-            topStyle.setFontSize(bottomAss.getStyles().get(0).getFontSize());
+            if (config.getFont() != null) {
+                topStyle.setFontName(config.getFont());
+            }
+            if (config.getSize() != null) {
+                topStyle.setFontSize(config.getSize());
+            }
+            topStyle.setBold(config.isBold());
             outputAss.getStyles().add(topStyle);
         } else {
             outputAss = AssDefaults.getDefaultAssSubtitleFile();
@@ -86,6 +94,7 @@ public class DualSubCreator {
     }
 
     public static class Builder {
+        private DualSubConfig config;
         private String top;
         private String bottom;
         private SubtitleType topType;
@@ -94,6 +103,11 @@ public class DualSubCreator {
         private AssScriptInfo scriptInfo;
 
         Builder() {
+        }
+
+        public Builder config(final DualSubConfig config) {
+            this.config = config;
+            return this;
         }
 
         public Builder topFile(final String file) {
@@ -149,7 +163,10 @@ public class DualSubCreator {
                 throw new IllegalStateException("Output file must be present to build Dual Sub creator.");
             }
 
-            return new DualSubCreator(top, bottom, topType, bottomType, output, scriptInfo);
+            if (config == null) {
+                config = DualSubConfig.builder().build();
+            }
+            return new DualSubCreator(config, top, bottom, topType, bottomType, output, scriptInfo);
         }
     }
 }
