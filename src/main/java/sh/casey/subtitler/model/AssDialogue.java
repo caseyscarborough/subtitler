@@ -9,12 +9,13 @@ import java.util.Map;
 @ToString
 public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
 
-    private Map<String, String> attributes = new HashMap<>();
+    private final Map<String, String> attributes = new HashMap<>();
     private boolean comment = false;
 
     @Override
     public Integer getNumber() {
-        return Integer.parseInt(attributes.get("Number"));
+        String number = attributes.get("Number");
+        return number != null ? Integer.parseInt(number) : null;
     }
 
     public void setNumber(final Integer number) {

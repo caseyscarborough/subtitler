@@ -15,7 +15,8 @@ public class SrtSubtitleWriter implements SubtitleWriter<SrtSubtitleFile> {
                 .append(" --> ")
                 .append(sub.getEnd())
                 .append(System.lineSeparator())
-                .append(sub.getLines())
+                .append(sub.getLines().trim())
+                .append(System.lineSeparator())
                 .append(System.lineSeparator());
         }
 

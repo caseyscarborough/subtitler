@@ -56,7 +56,7 @@ public class AssDefaults {
 
     public static AssStyle getItalicStyling() {
         final AssStyle styling = getDefaultStyling();
-        styling.setItalic("1");
+        styling.setItalic("-1");
         styling.setName("Italic");
         return styling;
     }
@@ -70,7 +70,7 @@ public class AssDefaults {
         style.setSecondaryColor("&H00FFFFFF");
         style.setOutlineColor("&H00000000");
         style.setBackColor("&H00000000");
-        style.setBold("-1"); // -1 is true, 0 is false.
+        style.setBold("0"); // -1 is true, 0 is false.
         style.setItalic("0");
         style.setUnderline("0");
         style.setStrikeOut("0");

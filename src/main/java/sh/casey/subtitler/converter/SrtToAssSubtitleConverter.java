@@ -27,7 +27,7 @@ public class SrtToAssSubtitleConverter implements SubtitleConverter<SrtSubtitleF
             dialogue.setStart(SubtitleUtils.convertSrtTimeToAssTime(subtitle.getStart()));
             dialogue.setEnd(SubtitleUtils.convertSrtTimeToAssTime(subtitle.getEnd()));
 
-            final String lines = String.join("\n", subtitle.getLines())
+            final String lines = subtitle.getLines()
                 .replace("<i>", "{\\i1}")
                 .replace("</i>", "{\\i0}")
                 .replace("<b>", "{\\b1}")
