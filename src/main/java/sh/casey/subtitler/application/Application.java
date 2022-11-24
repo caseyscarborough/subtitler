@@ -34,6 +34,7 @@ public class Application {
         options.addOption("r", "renumber", false, "Renumber a subtitle file starting from 1 by default (requires -i flag). Useful for when splitting subtitle files that were previously multiple episodes. Use the --renumber-start (-rs) flag to specify the starting number.");
         options.addOption("rs", "renumber-start", true, "The number to start renumbering from.");
         options.addOption("cn", "condense", false, "Condense a subtitle file by putting common lines (of the same start/end times) into a single subtitle line.");
+        options.addOption("n", "normalize", false, "Normalize subtitles (convert half-width kana to full width, etc.)");
         options.addOption("h", "help", false, "Display this help menu");
 
         // dual-subtitle options
@@ -44,7 +45,7 @@ public class Application {
         options.addOption("sm", "shift-mode", true, "Shift mode, default is 'FROM_TO'. Options are " + Arrays.stream(ShiftMode.values()).map(ShiftMode::toString).collect(Collectors.joining(", ")));
         options.addOption("a", "after", true, "Only shift subtitles after a specific time in the file (format HH:mm:ss,SSS)");
         options.addOption("b", "before", true, "Only shift subtitles before a specific time in the file (format HH:mm:ss,SSS)");
-        options.addOption("n", "number", true, "The number of a specific subtitle to shift");
+        options.addOption("no", "number", true, "The number of a specific subtitle to shift");
         options.addOption("m", "matches", true, "Used to specify text to match a specific subtitle to shift");
 
         // generic options

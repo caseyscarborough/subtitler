@@ -33,7 +33,7 @@ class ShiftCommand extends BaseCommand {
         final SubtitleShifter<SubtitleFile> shifter = new SubtitleShifterFactory().getInstance(subtitleType);
         final SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(subtitleType);
         final SubtitleFile file = reader.read(input);
-        final Integer number = cmd.hasOption('n') && StringUtils.isNumeric(cmd.getOptionValue('n')) ? Integer.parseInt(cmd.getOptionValue('n')) : null;
+        final Integer number = cmd.hasOption("no") && StringUtils.isNumeric(cmd.getOptionValue("no")) ? Integer.parseInt(cmd.getOptionValue("no")) : null;
 
         final ShiftConfig config = ShiftConfig.builder()
             .ms(Integer.parseInt(cmd.getOptionValue('t')))
