@@ -75,28 +75,30 @@ public class AssStyle {
         attributes.put("BackColour", backColor);
     }
 
-    public String getBold() {
-        return attributes.get("Bold");
+    public boolean isBold() {
+        // -1 is true, 0 is false.
+        return "-1".equals(attributes.get("Bold"));
     }
 
-    public void setBold(final String bold) {
-        attributes.put("Bold", bold);
+    public void setBold(final boolean bold) {
+        // -1 is true, 0 is false.
+        attributes.put("Bold", bold ? "-1" : "0");
     }
 
-    public String getItalic() {
-        return attributes.get("Italic");
+    public boolean isItalic() {
+        return "-1".equals(attributes.get("Italic"));
     }
 
-    public void setItalic(final String italic) {
-        attributes.put("Italic", italic);
+    public void setItalic(final boolean italic) {
+        attributes.put("Italic", italic ? "-1" : "0");
     }
 
-    public String getUnderline() {
-        return attributes.get("Underline");
+    public boolean isUnderline() {
+        return "-1".equals(attributes.get("Underline"));
     }
 
-    public void setUnderline(final String underline) {
-        attributes.put("Underline", underline);
+    public void setUnderline(final boolean underline) {
+        attributes.put("Underline", underline ? "-1" : "0");
     }
 
     public String getStrikeOut() {

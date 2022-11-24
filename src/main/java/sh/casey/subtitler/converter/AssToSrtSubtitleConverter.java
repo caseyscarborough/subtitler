@@ -71,15 +71,15 @@ public class AssToSrtSubtitleConverter implements SubtitleConverter<AssSubtitleF
         }
 
         // Yes, -1 is true. 0 is false.
-        if (style.getBold() != null && style.getBold().equals("-1")) {
+        if (style.isBold()) {
             output = "<b>" + output + "</b>";
         }
 
-        if (style.getItalic() != null && style.getItalic().equals("-1")) {
+        if (style.isItalic()) {
             output = "<i>" + output + "</i>";
         }
 
-        if (style.getUnderline() != null && style.getUnderline().equals("-1")) {
+        if (style.isUnderline()) {
             output = "<u>" + output + "</u>";
         }
 
