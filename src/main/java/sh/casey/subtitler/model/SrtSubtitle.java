@@ -52,7 +52,7 @@ public class SrtSubtitle implements Subtitle, Comparable<SrtSubtitle> {
     }
 
     public String getLines() {
-        return String.join("\n", lines);
+        return String.join("\n", lines).trim();
     }
 
     public void addLine(final String text) {
@@ -60,7 +60,7 @@ public class SrtSubtitle implements Subtitle, Comparable<SrtSubtitle> {
     }
 
     public boolean isValid() {
-        return start != null && end != null && !getLines().trim().equals("");
+        return start != null && end != null && !getLines().equals("");
     }
 
     @Override
