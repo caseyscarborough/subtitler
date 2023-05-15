@@ -1,6 +1,7 @@
 package sh.casey.subtitler.reader;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import sh.casey.subtitler.exception.SubtitleException;
@@ -11,14 +12,13 @@ import sh.casey.subtitler.model.AssStyleVersion;
 import sh.casey.subtitler.model.AssSubtitleFile;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static sh.casey.subtitler.config.Constants.BYTE_ORDER_MARK;
 
 @Slf4j
 public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
@@ -31,20 +31,15 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
         file.setPath(filename);
         final AssScriptInfo scriptInfo = new AssScriptInfo();
         int lineCounter = 0;
-        final BufferedReader br;
-        try {
-            br = new BufferedReader(new FileReader(filename));
-        } catch (final FileNotFoundException e) {
-            throw new SubtitleException("Could not read subtitle file " + filename, e);
-        }
 
-        try {
+        try (final BOMInputStream bis = new BOMInputStream(new FileInputStream(filename));
+             final BufferedReader br = new BufferedReader(new InputStreamReader(bis))) {
             log.debug("Reading first line...");
             lineCounter++;
             String line = br.readLine();
             int dialogueCounter = 0;
             while (line != null) {
-                line = line.trim().replace(BYTE_ORDER_MARK, "");
+                line = line.trim();
                 if (line.startsWith("[")) {
                     if (line.equalsIgnoreCase("[Script Info]")) {
                         log.debug("Found script info...");
@@ -60,7 +55,7 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                         }
                         file.setScriptInfo(scriptInfo);
                     } else if (line.equalsIgnoreCase("[V4+ Styles]") || line.equalsIgnoreCase("[V4 Styles]")) {
-                        if (line    .contains("V4+")) {
+                        if (line.contains("V4+")) {
                             file.setStyleVersion(AssStyleVersion.V4PLUS);
                         } else if (line.contains("V4")) {
                             file.setStyleVersion(AssStyleVersion.V4);
@@ -163,14 +158,10 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
             log.debug("Read " + lineCounter + " lines from file " + filename);
         } catch (final NullPointerException e) {
             log.warn("Unexpected end of file after reading " + lineCounter + " lines for file " + filename, e);
+        } catch (final FileNotFoundException e) {
+            throw new SubtitleException("Could not read subtitle file " + filename, e);
         } catch (final IOException e) {
             throw new SubtitleException("An error occurred reading file " + filename, e);
-        } finally {
-            try {
-                br.close();
-            } catch (final IOException e) {
-                log.error("Could not close stream", e);
-            }
         }
 
         log.debug("Found " + file.getSubtitles().size() + " subtitles.");

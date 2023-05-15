@@ -1,16 +1,17 @@
 package sh.casey.subtitler.reader;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.lang3.StringUtils;
-import sh.casey.subtitler.config.Constants;
 import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.SrtSubtitle;
 import sh.casey.subtitler.model.SrtSubtitleFile;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 @Slf4j
 public class SrtSubtitleReader implements SubtitleReader<SrtSubtitleFile> {
@@ -20,10 +21,9 @@ public class SrtSubtitleReader implements SubtitleReader<SrtSubtitleFile> {
         log.info("Reading subtitle file " + filename);
         final SrtSubtitleFile file = new SrtSubtitleFile();
         file.setPath(filename);
-        BufferedReader br = null;
         int lineCounter = 0;
-        try {
-            br = new BufferedReader(new FileReader(filename));
+        try (BOMInputStream bis = new BOMInputStream(new FileInputStream(filename));
+             BufferedReader br = new BufferedReader(new InputStreamReader(bis))) {
 
             String line = br.readLine();
             boolean first = true;
@@ -33,11 +33,9 @@ public class SrtSubtitleReader implements SubtitleReader<SrtSubtitleFile> {
                 if (StringUtils.isNotBlank(line)) {
                     // Once we find a line, the first thing should be a subtitle number.
                     if (first) {
-                        line = line.replace(Constants.BYTE_ORDER_MARK, "");
                         first = false;
                     }
                     final int number = Integer.parseInt(line.trim());
-                    final int nextNumber = number + 1;
                     lineCounter++;
                     final String timings = br.readLine().trim();
                     final String[] split = timings.split(" --> ");
@@ -78,14 +76,6 @@ public class SrtSubtitleReader implements SubtitleReader<SrtSubtitleFile> {
             throw new SubtitleException("Could not find file " + filename, e);
         } catch (final ArrayIndexOutOfBoundsException | NumberFormatException | NullPointerException | IOException e) {
             throw new SubtitleException("An error occurred reading lines at line " + lineCounter + " for file " + filename + ". The file might be in an invalid format", e);
-        } finally {
-            try {
-                if (br != null) {
-                    br.close();
-                }
-            } catch (final IOException e) {
-                log.warn("Couldn't close stream for file " + filename, e);
-            }
         }
 
         log.debug("Found " + file.getSubtitles().size() + " subtitles.");
