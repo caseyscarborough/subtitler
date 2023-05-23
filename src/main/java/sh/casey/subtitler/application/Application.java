@@ -36,6 +36,7 @@ public class Application {
         options.addOption("cn", "condense", false, "Condense a subtitle file by putting common lines (of the same start/end times) into a single subtitle line.");
         options.addOption("n", "normalize", false, "Normalize subtitles (convert half-width kana to full width, etc.)");
         options.addOption("h", "help", false, "Display this help menu");
+        options.addOption("p", "print", false, "Print all the dialogues from the subtitle file");
 
         // dual-subtitle options
         options.addOption("tf", "top", true, "Top file for dual sub creation");

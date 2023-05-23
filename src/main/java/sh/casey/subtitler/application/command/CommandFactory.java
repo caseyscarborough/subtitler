@@ -27,6 +27,8 @@ public class CommandFactory {
             return new DualSubtitleCommand(cmd);
         } else if (cmd.hasOption("n")) {
             return new NormalizeCommand(cmd);
+        } else if (cmd.hasOption("p")) {
+            return new PrintCommand(cmd);
         } else {
             throw new CommandNotFoundException("Could not find command for given arguments");
         }
