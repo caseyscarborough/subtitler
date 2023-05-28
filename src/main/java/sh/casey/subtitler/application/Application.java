@@ -33,7 +33,7 @@ public class Application {
         options.addOption("c", "convert", false, "Convert file from one format to another");
         options.addOption("r", "renumber", false, "Renumber a subtitle file starting from 1 by default (requires -i flag). Useful for when splitting subtitle files that were previously multiple episodes. Use the --renumber-start (-rs) flag to specify the starting number.");
         options.addOption("rs", "renumber-start", true, "The number to start renumbering from.");
-        options.addOption("cn", "condense", false, "Condense a subtitle file by putting common lines (of the same start/end times) into a single subtitle line.");
+        options.addOption("cn", "condense", false, "Condense a subtitle file by putting common lines (of the same start/end times) into a single subtitle line. Also combines adjacent subtitles having the same text.");
         options.addOption("n", "normalize", false, "Normalize subtitles (convert half-width kana to full width, etc.)");
         options.addOption("h", "help", false, "Display this help menu");
         options.addOption("p", "print", false, "Print all the dialogues from the subtitle file");
