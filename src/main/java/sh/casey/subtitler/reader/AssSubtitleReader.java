@@ -134,7 +134,12 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                                 dialogue.setComment(line.startsWith("Comment:"));
                                 for (int i = 0; i < file.getEventsFormatOrder().size() && i < dialogues.length; i++) {
                                     final String type = file.getEventsFormatOrder().get(i);
-                                    final String dialogueValue = dialogues[i].trim();
+                                    String dialogueValue = dialogues[i].trim();
+                                    // This will remove unnecessary \N at the end of subtitle lines. The actual dialogue
+                                    // line is the last item in the loop, which is why we are checking for that first.
+                                    if (i == file.getEventsFormatOrder().size() - 1 && dialogueValue.endsWith("\\N")) {
+                                        dialogueValue = dialogueValue.replace("\\N", "\n").trim().replace("\n", "\\N");
+                                    }
                                     dialogue.getAttributes().put(type, dialogueValue);
                                 }
                                 dialogue.setNumber(++dialogueCounter);
