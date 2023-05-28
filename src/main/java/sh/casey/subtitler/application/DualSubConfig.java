@@ -15,4 +15,7 @@ public class DualSubConfig {
 
     // Top subtitles bold
     private final boolean bold;
+
+    // Top outline
+    private final Integer outline;
 }

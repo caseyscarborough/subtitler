@@ -2,8 +2,8 @@ package sh.casey.subtitler.application.command;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.CommandLine;
-import sh.casey.subtitler.application.DualSubCreator;
 import sh.casey.subtitler.application.DualSubConfig;
+import sh.casey.subtitler.application.DualSubCreator;
 import sh.casey.subtitler.application.exception.InvalidCommandException;
 
 @Slf4j
@@ -52,6 +52,9 @@ class DualSubtitleCommand extends BaseCommand {
                         break;
                     case "bold":
                         config.bold(Boolean.parseBoolean(value));
+                        break;
+                    case "outline":
+                        config.outline(Integer.parseInt(value));
                         break;
                     default:
                         log.warn("Invalid dual subs option key: {}", key);

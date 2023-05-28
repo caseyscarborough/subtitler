@@ -22,20 +22,20 @@ import java.util.List;
 public class DualSubCreator {
 
     private final DualSubConfig config;
-    private final String top;
-    private final String bottom;
+    private final String topPath;
+    private final String bottomPath;
     private final SubtitleType topType;
     private final SubtitleType bottomType;
-    private final String output;
+    private final String outputPath;
     private final AssScriptInfo scriptInfo;
 
-    private DualSubCreator(final DualSubConfig config, final String top, final String bottom, final SubtitleType topType, final SubtitleType bottomType, final String output, final AssScriptInfo scriptInfo) {
+    private DualSubCreator(final DualSubConfig config, final String topPath, final String bottomPath, final SubtitleType topType, final SubtitleType bottomType, final String outputPath, final AssScriptInfo scriptInfo) {
         this.config = config;
-        this.top = top;
-        this.bottom = bottom;
+        this.topPath = topPath;
+        this.bottomPath = bottomPath;
         this.topType = topType;
         this.bottomType = bottomType;
-        this.output = output;
+        this.outputPath = outputPath;
         this.scriptInfo = scriptInfo;
     }
 
@@ -45,11 +45,11 @@ public class DualSubCreator {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void create() {
-        log.info("Creating dual subtitle file using top file '" + top + "' and bottom file '" + bottom + "'");
+        log.info("Creating dual subtitle file using top file '" + topPath + "' and bottom file '" + bottomPath + "'");
         final SubtitleReader topReader = new SubtitleReaderFactory().getInstance(topType);
         final SubtitleReader bottomReader = new SubtitleReaderFactory().getInstance(bottomType);
-        SubtitleFile topFile = topReader.read(top);
-        SubtitleFile bottomFile = bottomReader.read(bottom);
+        SubtitleFile topFile = topReader.read(topPath);
+        SubtitleFile bottomFile = bottomReader.read(bottomPath);
 
         if (topType != SubtitleType.ASS) {
             final SubtitleConverter converter = new SubtitleConverterFactory().getInstance(topType, SubtitleType.ASS);
@@ -61,35 +61,46 @@ public class DualSubCreator {
             bottomFile = converter.convert(bottomFile);
         }
 
-        final AssSubtitleFile topAss = (AssSubtitleFile) topFile;
-        final AssSubtitleFile bottomAss = (AssSubtitleFile) bottomFile;
+        final AssSubtitleFile top = (AssSubtitleFile) topFile;
+        final AssSubtitleFile bottom = (AssSubtitleFile) bottomFile;
 
-        AssSubtitleFile outputAss;
+        AssSubtitleFile output;
         if (bottomType == SubtitleType.ASS) {
-            outputAss = bottomAss;
-            final AssStyle topStyle = AssDefaults.getDefaultTopStyle();
-            if (config.getFont() != null) {
-                topStyle.setFontName(config.getFont());
-            }
-            if (config.getSize() != null) {
-                topStyle.setFontSize(config.getSize());
-            }
-            topStyle.setBold(config.isBold());
-            outputAss.getStyles().add(topStyle);
+            // If the bottom file is ASS format, we will reuse all the styles
+            // in the output file
+            output = bottom;
         } else {
-            outputAss = AssDefaults.getDefaultAssSubtitleFile();
-            outputAss.getStyles().addAll(AssDefaults.getDefaultStylesWithTopAndBottom());
-            bottomAss.getDialogues().forEach(d -> d.setStyle("Bottom"));
+            // Otherwise we'll create a new one with defaults
+            output = AssDefaults.getDefaultAssSubtitleFile();
+            output.getStyles().add(AssDefaults.getDefaultBottomStyle());
+            bottom.getDialogues().forEach(d -> d.setStyle("Bottom"));
         }
-        topAss.getDialogues().forEach(d -> d.setStyle("Top"));
+
+        // configure top style
+        final AssStyle topStyle = AssDefaults.getDefaultTopStyle();
+        if (config.getFont() != null) {
+            topStyle.setFontName(config.getFont());
+        }
+        if (config.getSize() != null) {
+            topStyle.setFontSize(config.getSize());
+        }
+        if (config.getOutline() != null) {
+            topStyle.setOutline(String.valueOf(config.getOutline()));
+        }
+        topStyle.setBold(config.isBold());
+        output.getStyles().add(topStyle);
+
+        // set all dialogues for the top file to the top style
+        top.getDialogues().forEach(d -> d.setStyle("Top"));
+
         final List<AssDialogue> dialogues = new ArrayList<>();
-        dialogues.addAll(topAss.getDialogues());
-        dialogues.addAll(bottomAss.getDialogues());
+        dialogues.addAll(top.getDialogues());
+        dialogues.addAll(bottom.getDialogues());
         Collections.sort(dialogues);
-        outputAss.setDialogues(dialogues);
+        output.setDialogues(dialogues);
 
         final AssSubtitleWriter writer = new AssSubtitleWriter();
-        writer.write(outputAss, output);
+        writer.write(output, outputPath);
         log.debug("Done.");
     }
 
