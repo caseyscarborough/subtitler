@@ -3,6 +3,7 @@ package sh.casey.subtitler.util;
 import sh.casey.subtitler.model.AssDialogue;
 import sh.casey.subtitler.model.AssScriptInfo;
 import sh.casey.subtitler.model.AssStyle;
+import sh.casey.subtitler.model.AssStyleVersion;
 import sh.casey.subtitler.model.AssSubtitleFile;
 
 import java.util.Arrays;
@@ -24,6 +25,7 @@ public class AssDefaults {
         file.getStyles().add(getDefaultStyling());
         file.getStyles().add(getItalicStyling());
         file.setEventsFormatOrder(getDefaultEventsFormatOrder());
+        file.setStyleVersion(AssStyleVersion.V4PLUS);
         return file;
     }
 
@@ -107,9 +109,9 @@ public class AssDefaults {
         final AssDialogue dialogue = new AssDialogue();
         dialogue.setLayer("0");
         dialogue.setStyle("Default");
-        dialogue.setMarginL("0000");
-        dialogue.setMarginR("0000");
-        dialogue.setMarginV("0000");
+        dialogue.setMarginL("0");
+        dialogue.setMarginR("0");
+        dialogue.setMarginV("0");
         dialogue.setEffect("");
         dialogue.setActor("");
         return dialogue;
