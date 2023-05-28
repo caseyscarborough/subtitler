@@ -8,7 +8,7 @@ import sh.casey.subtitler.util.FileUtils;
 import java.text.Normalizer;
 
 @Slf4j
-public class NormalizeCommand extends BaseCommand {
+class NormalizeCommand extends BaseCommand {
     public NormalizeCommand(CommandLine cmd) {
         super(cmd);
     }

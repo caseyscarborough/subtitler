@@ -11,7 +11,7 @@ import sh.casey.subtitler.reader.SubtitleReaderFactory;
 import sh.casey.subtitler.writer.SubtitleWriter;
 import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
-public class FilterCommand extends BaseCommand {
+class FilterCommand extends BaseCommand {
 
     public FilterCommand(CommandLine cmd) {
         super(cmd);
