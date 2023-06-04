@@ -19,7 +19,7 @@ class PrintCommand extends BaseCommand {
         final SubtitleReader<SubtitleFile> reader = new SubtitleReaderFactory().getInstance(subtitleType);
         final SubtitleFile file = reader.read(input);
         for (Subtitle subtitle : file.getSubtitles()) {
-            System.out.println(subtitle.getText());
+            System.out.println(subtitle.getStart() + " --> " + subtitle.getEnd() + "\n" + subtitle.getText() + "\n");
         }
     }
 }
