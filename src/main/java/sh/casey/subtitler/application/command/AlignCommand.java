@@ -16,7 +16,7 @@ import sh.casey.subtitler.writer.SubtitleWriter;
 import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
 @Slf4j
-@Command(name = "align", description = "Align subtitles within a specific threshold to a reference file. This will adjust the start/end times of subtitles to closely match the reference file.")
+@Command(name = "align", description = "Align subtitles within a specific threshold to a reference file. This will adjust the start/end times of subtitles to closely match the reference file.", sortOptions = false)
 public class AlignCommand extends BasePicocliCommand {
 
     @Option(names = {"-t", "--threshold"}, description = "The threshold to align subtitles at in milliseconds. Any subtitles that aren't aligned within this threshold will be aligned.", paramLabel = "<threshold>", defaultValue = "500", required = true)

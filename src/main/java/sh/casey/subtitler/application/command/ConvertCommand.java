@@ -1,7 +1,7 @@
 package sh.casey.subtitler.application.command;
 
-import org.apache.commons.cli.CommandLine;
-import sh.casey.subtitler.application.exception.InvalidCommandException;
+import lombok.extern.slf4j.Slf4j;
+import picocli.CommandLine.Command;
 import sh.casey.subtitler.converter.SubtitleConverter;
 import sh.casey.subtitler.converter.SubtitleConverterFactory;
 import sh.casey.subtitler.model.SubtitleFile;
@@ -11,27 +11,22 @@ import sh.casey.subtitler.reader.SubtitleReaderFactory;
 import sh.casey.subtitler.writer.SubtitleWriter;
 import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
-class ConvertCommand extends BaseCommand {
-
-    public ConvertCommand(final CommandLine cmd) {
-        super(cmd);
-    }
+@Slf4j
+@Command(name = "convert", description = "Convert a subtitle file from one format to another.", sortOptions = false)
+public class ConvertCommand extends BasePicocliCommand {
 
     @Override
-    public void execute() {
-        if (!cmd.hasOption('o')) {
-            throw new InvalidCommandException("You must specify an output file.");
-        }
-
-        final String inputFile = getInputFilename();
-        final SubtitleType inputType = getInputFileType();
-        final SubtitleType outputType = getOutputFileType();
+    public void run() {
+        final String input = getInput();
+        final SubtitleType inputType = getInputType();
+        String output = getOutput();
+        final SubtitleType outputType = getOutputType();
 
         final SubtitleReader<SubtitleFile> reader = new SubtitleReaderFactory().getInstance(inputType);
-        final SubtitleFile file = reader.read(inputFile);
+        final SubtitleFile file = reader.read(input);
         final SubtitleConverter<SubtitleFile, SubtitleFile> converter = new SubtitleConverterFactory().getInstance(inputType, outputType);
-        final SubtitleFile convertedFile = converter.convert(file);
+        final SubtitleFile converted = converter.convert(file);
         final SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(outputType);
-        writer.write(convertedFile, cmd.getOptionValue('o'));
+        writer.write(converted, output);
     }
 }

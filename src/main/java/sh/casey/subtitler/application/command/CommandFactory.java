@@ -15,16 +15,16 @@ public class CommandFactory {
 
         if (cmd.hasOption("v")) {
             return new VersionCommand();
-        } else if (cmd.hasOption("cn")) {
-            return new CondenseCommand(cmd);
+//        } else if (cmd.hasOption("cn")) {
+//            return new CondenseCommand(cmd);
 //        } else if (cmd.hasOption("s")) {
 //            return new ShiftCommand(cmd);
         } else if (cmd.hasOption("r")) {
             return new RenumberCommand(cmd);
-        } else if (cmd.hasOption("c")) {
-            return new ConvertCommand(cmd);
-        } else if (cmd.hasOption("d")) {
-            return new DualSubtitleCommand(cmd);
+//        } else if (cmd.hasOption("c")) {
+//            return new ConvertCommand(cmd);
+//        } else if (cmd.hasOption("d")) {
+//            return new DualSubtitleCommand(cmd);
         } else if (cmd.hasOption("n")) {
             return new NormalizeCommand(cmd);
         } else if (cmd.hasOption("p")) {

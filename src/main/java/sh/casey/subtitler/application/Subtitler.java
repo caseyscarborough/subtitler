@@ -5,7 +5,11 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Spec;
 import sh.casey.subtitler.application.command.AlignCommand;
+import sh.casey.subtitler.application.command.CondenseCommand;
+import sh.casey.subtitler.application.command.ConvertCommand;
+import sh.casey.subtitler.application.command.DualSubtitleCommand;
 import sh.casey.subtitler.application.command.ShiftCommand;
+import sh.casey.subtitler.exception.ExceptionHandler;
 
 import java.util.concurrent.Callable;
 
@@ -16,6 +20,9 @@ import java.util.concurrent.Callable;
     mixinStandardHelpOptions = true,
     subcommands = {
         AlignCommand.class,
+        CondenseCommand.class,
+        ConvertCommand.class,
+        DualSubtitleCommand.class,
         ShiftCommand.class,
     }
 )
@@ -29,7 +36,9 @@ public class Subtitler implements Callable<Integer> {
             .setCaseInsensitiveEnumValuesAllowed(true)
             .setUsageHelpAutoWidth(true)
             .setUsageHelpLongOptionsMaxWidth(25)
+            .setExecutionExceptionHandler(new ExceptionHandler())
             .execute(args);
+
         System.exit(exitCode);
     }
 
