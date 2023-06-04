@@ -1,17 +1,18 @@
 package sh.casey.subtitler.shifter;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
+@Getter
+@RequiredArgsConstructor
 public enum ShiftMode {
-    FROM("Shifts only the 'from' time in each subtitle"),
-    FROM_TO("Shifts the 'from' and 'to' times in the subtitle (default)"),
-    TO("Shifts only the 'to' time in each subtitle");
+    FROM("from", "Shifts only the 'from' time in each subtitle"),
+    FROM_TO("from-to", "Shifts the 'from' and 'to' times in the subtitle (default)"),
+    TO("to", "Shifts only the 'to' time in each subtitle");
 
+    private final String flag;
     private final String explanation;
-
-    ShiftMode(final String explanation) {
-        this.explanation = explanation;
-    }
 
     public static ShiftMode findByString(final String s) {
         if (StringUtils.isBlank(s)) {
@@ -20,6 +21,10 @@ public enum ShiftMode {
 
         for (final ShiftMode value : values()) {
             if (s.toUpperCase().matches(value.name())) {
+                return value;
+            }
+
+            if (s.equalsIgnoreCase(value.flag)) {
                 return value;
             }
         }

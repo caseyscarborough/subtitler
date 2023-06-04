@@ -29,6 +29,8 @@ public class CommandFactory {
             return new NormalizeCommand(cmd);
         } else if (cmd.hasOption("p")) {
             return new PrintCommand(cmd);
+        } else if (cmd.hasOption("align")) {
+            return new AlignCommand(cmd);
         } else {
             throw new CommandNotFoundException("Could not find command for given arguments");
         }

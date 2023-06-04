@@ -27,6 +27,7 @@ public class Application {
         final Options options = new Options();
 
         // actions
+        options.addOption(null, "align", false, "Align subtitles with each other. Slightly shifts the start/end times of subtitles to match the other subtitle file.");
         options.addOption("v", "version", false, "Display the current version");
         options.addOption("d", "dual-subs", false, "Create dual subtitle file from two input files. The styles are copied from the bottom subtitle (unless it is SRT format).");
         options.addOption("s", "shift", false, "Shift timing on subtitles");
@@ -57,6 +58,11 @@ public class Application {
         options.addOption("t", "time", true, "Time in milliseconds to shift subtitles (required when using -s)");
         options.addOption("it", "input-type", true, "The type of the input file, options are " + Arrays.toString(SubtitleType.values()));
         options.addOption("ot", "output-type", true, "The type for the output file, options are " + Arrays.toString(SubtitleType.values()));
+
+        // align options
+        options.addOption(null, "reference", true, "Reference subtitle file to align to (required when using --align)");
+        options.addOption(null, "threshold", true, "The threshold for alignment (default is 500ms)");
+        options.addOption(null, "align-mode", true, "The alignment mode, options are " + Arrays.stream(ShiftMode.values()).map(ShiftMode::getFlag).collect(Collectors.joining(", ")));
 
         for (FilterType value : FilterType.values()) {
             options.addOption(value.getShortOpt(), value.getLongOpt(), true, value.getDescription());
