@@ -1,6 +1,5 @@
 package sh.casey.subtitler.application.command;
 
-import org.apache.commons.lang3.StringUtils;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import sh.casey.subtitler.model.SubtitleFile;

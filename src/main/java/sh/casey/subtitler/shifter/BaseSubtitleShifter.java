@@ -16,7 +16,7 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
         if (ms == null) {
             throw new SubtitleException("You must specify a time in milliseconds to shift the subtitles.");
         }
-        log.debug("Shifting subtitles in file {} by {}ms.", file.getPath(), ms);
+        log.info("Shifting subtitles in file {} by {}ms.", file.getPath(), ms);
         Long beforeDate = null;
         Long afterDate = null;
         if (StringUtils.isNotBlank(config.getBefore())) {
@@ -90,6 +90,6 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
             log.trace("Shifted ." + file.getType().name().toLowerCase() + " line from " + originalFrom + " --> " + originalEnd + " to " + subtitle.getStart() + " --> " + subtitle.getEnd());
         }
 
-        log.debug("Shifted " + shiftCount + " subtitles.");
+        log.info("Shifted " + shiftCount + " subtitles.");
     }
 }

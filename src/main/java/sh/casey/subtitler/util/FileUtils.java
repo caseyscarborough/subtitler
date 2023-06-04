@@ -141,7 +141,7 @@ public class FileUtils {
         } catch (final IOException e) {
             throw new RuntimeException("Could not write to file path " + filePath, e);
         }
-        log.debug("Done writing file " + filePath);
+        log.info("Done writing file " + filePath);
     }
 
     public static void writeFileIfNotExists(final String filePath, final String contents, final OpenOption... options) {
@@ -151,9 +151,10 @@ public class FileUtils {
     }
 
     public static void deleteFile(final String filePath) {
-        log.debug("Deleting file " + filePath);
+        log.debug("Deleting file {}", filePath);
         try {
             Files.delete(Paths.get(filePath));
+            log.info("Successfully deleted file at " + filePath);
         } catch (final NoSuchFileException e) {
             log.debug("File didn't exist. Continuing.");
         } catch (final IOException e) {
