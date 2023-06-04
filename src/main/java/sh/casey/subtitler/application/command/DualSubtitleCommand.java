@@ -6,9 +6,9 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Spec;
-import sh.casey.subtitler.application.command.completer.DualSubConfigCompleter;
+import sh.casey.subtitler.application.command.completer.StyleConfigCompleter;
 import sh.casey.subtitler.application.command.completer.SubtitleTypeCompleter;
-import sh.casey.subtitler.application.command.config.DualSubConfig;
+import sh.casey.subtitler.application.command.config.StyleConfig;
 import sh.casey.subtitler.converter.SubtitleConverter;
 import sh.casey.subtitler.converter.SubtitleConverterFactory;
 import sh.casey.subtitler.model.AssDialogue;
@@ -52,7 +52,7 @@ public class DualSubtitleCommand implements Runnable {
     @Option(names = {"-o", "--output-file"}, description = "The output file.", required = true, paramLabel = "<file>")
     private String outputPath;
 
-    @Option(names = {"-c", "--config"}, description = "The dual subtitle configuration in the format \"key=value,key=value\", e.g. \"bold=true,font=Arial,size=32,outline=3\". Configuration options are ${COMPLETION-CANDIDATES}.", completionCandidates = DualSubConfigCompleter.class, paramLabel = "<config>")
+    @Option(names = {"-s", "--style"}, description = "Style configuration in the format \"key=value,key=value\", for example. \"bold=true,font=Arial,size=32,outline=3\". This is ignored when using -k/--keep-top-styles. Options are ${COMPLETION-CANDIDATES}.", completionCandidates = StyleConfigCompleter.class, paramLabel = "<config>")
     private String cfg;
 
     @Option(names = {"-k", "--keep-top-styles"}, description = "Keep the styles from the top file (only available for .ass and .ssa formats). If not set, default styles in combination with the configuration will be applied.")
@@ -61,7 +61,7 @@ public class DualSubtitleCommand implements Runnable {
     @Override
     public void run() {
         // Parse the dual subtitles configuration
-        Map<DualSubConfig, String> config = new EnumMap<>(DualSubConfig.class);
+        Map<StyleConfig, String> styles = new EnumMap<>(StyleConfig.class);
         if (cfg != null) {
             final String[] options = cfg.split(",");
             for (String option : options) {
@@ -74,7 +74,7 @@ public class DualSubtitleCommand implements Runnable {
                 }
                 String key = keyValue[0].trim();
                 String value = keyValue[1].trim();
-                final DualSubConfig found = DualSubConfig.find(key);
+                final StyleConfig found = StyleConfig.find(key);
                 if (found == null) {
                     throw new IllegalArgumentException("Invalid dual subs option \"" + key + "\".");
                 }
@@ -84,7 +84,7 @@ public class DualSubtitleCommand implements Runnable {
                 if (found.getClazz().equals(Boolean.class) && !value.equalsIgnoreCase("true") && !value.equalsIgnoreCase("false")) {
                     throw new IllegalArgumentException("Invalid value for option \"" + key + "\": " + value + ". Expected boolean, got " + value.getClass().getSimpleName() + ".");
                 }
-                config.put(found, value);
+                styles.put(found, value);
             }
         }
 
@@ -133,10 +133,9 @@ public class DualSubtitleCommand implements Runnable {
         } else {
             final AssStyle topStyle = AssDefaults.getDefaultTopStyle();
             topStyle.setName("Top");
-            topStyle.setFontName(config.getOrDefault(DualSubConfig.FONT, topStyle.getFontName()));
-            topStyle.setFontSize(config.getOrDefault(DualSubConfig.SIZE, topStyle.getFontSize()));
-            topStyle.setOutline(config.getOrDefault(DualSubConfig.OUTLINE, topStyle.getOutline()));
-            topStyle.setBold(Boolean.parseBoolean(config.getOrDefault(DualSubConfig.BOLD, String.valueOf(topStyle.isBold()))));
+            for (Map.Entry<StyleConfig, String> entry : styles.entrySet()) {
+                entry.getKey().getConsumer().accept(topStyle, entry.getValue());
+            }
             output.getStyles().add(topStyle);
             // set all dialogues for the top file to the top style
             top.getDialogues().forEach(d -> d.setStyle("Top"));

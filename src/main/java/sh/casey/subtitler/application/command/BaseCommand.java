@@ -63,7 +63,7 @@ abstract class BaseCommand implements Runnable {
         return getTypeFromFilename(input);
     }
 
-    private SubtitleType getTypeFromFilename(String filename) {
+    protected SubtitleType getTypeFromFilename(String filename) {
         if (filename == null) {
             return null;
         }

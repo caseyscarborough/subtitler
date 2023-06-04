@@ -5,7 +5,6 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import sh.casey.subtitler.application.command.completer.FileCompleter;
 import sh.casey.subtitler.application.command.completer.ShiftModeCompleter;
-import sh.casey.subtitler.application.exception.InvalidCommandException;
 import sh.casey.subtitler.model.Subtitle;
 import sh.casey.subtitler.model.SubtitleFile;
 import sh.casey.subtitler.model.SubtitleType;
@@ -33,7 +32,7 @@ public class AlignCommand extends BaseCommand {
         final String inputFilename = getInput();
         final SubtitleType inputType = getInputType();
 
-        final SubtitleType referenceType = getReferenceFileType();
+        final SubtitleType referenceType = getTypeFromFilename(referenceFilename);
         final SubtitleReaderFactory factory = new SubtitleReaderFactory();
         final SubtitleReader<SubtitleFile> inputReader = factory.getInstance(inputType);
         final SubtitleReader<SubtitleFile> referenceReader = factory.getInstance(referenceType);
@@ -41,7 +40,7 @@ public class AlignCommand extends BaseCommand {
         final SubtitleFile input = inputReader.read(inputFilename);
         final SubtitleFile reference = referenceReader.read(referenceFilename);
         if (inputType != referenceType) {
-            throw new InvalidCommandException("Only input and reference files of the same type are currently supported for alignment. First, convert one of the subtitles to the format of the other.");
+            throw new IllegalStateException("Only input and reference files of the same type are currently supported for alignment. First, convert one of the subtitles to the format of the other.");
         }
 
         log.debug("Using threshold of {}ms...", threshold);
@@ -79,11 +78,5 @@ public class AlignCommand extends BaseCommand {
         final String outputFilename = getOutput();
         final SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(getOutputType());
         writer.write(input, outputFilename);
-    }
-
-    private SubtitleType getReferenceFileType() {
-        final String[] parts = referenceFilename.split("\\.");
-        final String extension = parts[parts.length - 1];
-        return SubtitleType.find(extension);
     }
 }

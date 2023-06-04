@@ -85,6 +85,11 @@ public class AssStyle {
         attributes.put("Bold", bold ? "-1" : "0");
     }
 
+    public void setBold(String bold) {
+        // -1 is true, 0 is false
+        attributes.put("Bold", bold.equals("true") || bold.equals("-1") ? "-1" : "0");
+    }
+
     public boolean isItalic() {
         return "-1".equals(attributes.get("Italic"));
     }
@@ -208,4 +213,5 @@ public class AssStyle {
     public String getValue(final String formatValue) {
         return attributes.getOrDefault(formatValue, "");
     }
+
 }

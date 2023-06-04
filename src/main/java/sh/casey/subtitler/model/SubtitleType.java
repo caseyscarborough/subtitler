@@ -22,7 +22,7 @@ public enum SubtitleType {
                 return value;
             }
         }
-        throw new IllegalArgumentException("Could not find subtitle by string '" + s + "'");
+        throw new IllegalArgumentException("Could not find subtitle type for '" + s + "'");
     }
 
     public String getExtension() {

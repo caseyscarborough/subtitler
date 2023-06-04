@@ -13,8 +13,8 @@ import sh.casey.subtitler.application.command.NormalizeCommand;
 import sh.casey.subtitler.application.command.PrintCommand;
 import sh.casey.subtitler.application.command.RenumberCommand;
 import sh.casey.subtitler.application.command.ShiftCommand;
+import sh.casey.subtitler.application.exception.ExceptionHandler;
 import sh.casey.subtitler.application.provider.VersionProvider;
-import sh.casey.subtitler.exception.ExceptionHandler;
 
 import java.util.concurrent.Callable;
 

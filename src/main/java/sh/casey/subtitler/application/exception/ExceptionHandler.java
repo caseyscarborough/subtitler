@@ -1,4 +1,4 @@
-package sh.casey.subtitler.exception;
+package sh.casey.subtitler.application.exception;
 
 import picocli.CommandLine;
 
