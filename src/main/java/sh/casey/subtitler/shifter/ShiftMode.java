@@ -7,9 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 @Getter
 @RequiredArgsConstructor
 public enum ShiftMode {
-    FROM("from", "Shifts only the 'from' time in each subtitle"),
-    FROM_TO("from-to", "Shifts the 'from' and 'to' times in the subtitle (default)"),
-    TO("to", "Shifts only the 'to' time in each subtitle");
+    FROM("from", "shifts only the start time in each subtitle"),
+    FROM_TO("from-to", "shifts the start and end times in the subtitle (default)"),
+    TO("to", "shifts only the end time in each subtitle");
 
     private final String flag;
     private final String explanation;

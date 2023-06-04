@@ -2,6 +2,7 @@ package sh.casey.subtitler.application.command;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
+import sh.casey.subtitler.application.command.completer.ShiftModeCompleter;
 import sh.casey.subtitler.model.SubtitleFile;
 import sh.casey.subtitler.model.SubtitleType;
 import sh.casey.subtitler.reader.SubtitleReader;
@@ -13,11 +14,7 @@ import sh.casey.subtitler.shifter.SubtitleShifterFactory;
 import sh.casey.subtitler.writer.SubtitleWriter;
 import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.stream.Collectors;
-
-@Command(name = "shift", description = "Shifts the subtitles by the specified amount of time.", mixinStandardHelpOptions = true)
+@Command(name = "shift", description = "Shifts the subtitles by the specified amount of time.")
 public class ShiftCommand extends BasePicocliCommand {
 
     @Option(names = {"-t", "--time"}, description = "The amount of time to shift the subtitles in milliseconds.", required = true)
@@ -59,14 +56,5 @@ public class ShiftCommand extends BasePicocliCommand {
         writer.write(file, getOutput());
     }
 
-    static class ShiftModeCompleter implements Iterable<String> {
 
-        @Override
-        public Iterator<String> iterator() {
-            return Arrays.stream(ShiftMode.values())
-                .map(ShiftMode::toString)
-                .collect(Collectors.toList())
-                .iterator();
-        }
-    }
 }
