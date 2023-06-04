@@ -11,7 +11,7 @@ import sh.casey.subtitler.renumberer.SubtitleRenumbererFactory;
 import sh.casey.subtitler.writer.SubtitleWriter;
 import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
-@Command(name = "renumber", aliases = "r", description = "Renumbers the subtitles in a subtitle file so they are ordered.")
+@Command(name = "renumber", aliases = "r", description = "Renumbers the subtitles in a subtitle file so they are ordered.", sortOptions = false, sortSynopsis = false)
 public class RenumberCommand extends BaseCommand {
 
     @Option(names = {"-s", "--start"}, description = "The number to start renumbering from (defaults to 1).", required = true, defaultValue = "1")

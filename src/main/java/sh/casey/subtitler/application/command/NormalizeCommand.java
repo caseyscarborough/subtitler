@@ -7,7 +7,7 @@ import sh.casey.subtitler.util.FileUtils;
 import java.text.Normalizer;
 
 @Slf4j
-@Command(name = "normalize", aliases = "n", description = "Normalize subtitles (convert half-width kana to full width, etc.)", sortOptions = false)
+@Command(name = "normalize", aliases = "n", description = "Normalize subtitles (convert half-width kana to full width, etc.)", sortOptions = false, sortSynopsis = false)
 public class NormalizeCommand extends BaseCommand {
 
     @Override

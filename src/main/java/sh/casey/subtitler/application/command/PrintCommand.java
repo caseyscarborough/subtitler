@@ -7,7 +7,7 @@ import sh.casey.subtitler.model.SubtitleType;
 import sh.casey.subtitler.reader.SubtitleReader;
 import sh.casey.subtitler.reader.SubtitleReaderFactory;
 
-@Command(name = "print", aliases = "p", description = "Parses, formats, and prints the contents of a subtitle file to the console.")
+@Command(name = "print", aliases = "p", description = "Parses, formats, and prints the contents of a subtitle file to the console.", sortOptions = false, sortSynopsis = false)
 public class PrintCommand extends BaseCommand {
 
     @Override

@@ -10,7 +10,7 @@ import sh.casey.subtitler.reader.SubtitleReaderFactory;
 import sh.casey.subtitler.writer.SubtitleWriter;
 import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
-@Command(name = "condense", description = "Condense a subtitle file by putting common lines (of the same start/end times) into a single subtitle line. Also combines adjacent subtitles having the same text.", sortOptions = false)
+@Command(name = "condense", description = "Condense a subtitle file by putting common lines (of the same start/end times) into a single subtitle line. Also combines adjacent subtitles having the same text.", sortOptions = false, sortSynopsis = false)
 public class CondenseCommand extends BaseCommand {
 
     @Override

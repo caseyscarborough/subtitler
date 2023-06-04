@@ -21,7 +21,8 @@ import sh.casey.subtitler.writer.SubtitleWriterFactory;
         "Filter a subtitle file by removing lines that match a specific criteria.",
         "Example: subs filter --type STYLE \"op,ed,signs,songs\"",
     },
-    sortOptions = false
+    sortOptions = false,
+    sortSynopsis = false
 )
 public class FilterCommand extends BaseCommand {
 

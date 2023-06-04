@@ -34,6 +34,8 @@ import java.util.concurrent.Callable;
         RenumberCommand.class,
         ShiftCommand.class,
     },
+    sortOptions = false,
+    sortSynopsis = false,
     versionProvider = VersionProvider.class
 )
 public class Subtitler implements Callable<Integer> {

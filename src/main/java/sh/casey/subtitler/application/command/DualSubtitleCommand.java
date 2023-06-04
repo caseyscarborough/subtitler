@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-@Command(name = "dual", aliases = "d", description = "Create a dual subtitle file from two subtitle files.", sortOptions = false)
+@Command(name = "dual", aliases = "d", description = "Create a dual subtitle file from two subtitle files.", sortOptions = false, sortSynopsis = false)
 public class DualSubtitleCommand implements Runnable {
 
     @Spec
