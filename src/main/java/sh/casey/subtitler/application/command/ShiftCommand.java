@@ -14,8 +14,8 @@ import sh.casey.subtitler.shifter.SubtitleShifterFactory;
 import sh.casey.subtitler.writer.SubtitleWriter;
 import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
-@Command(name = "shift", description = "Shifts the subtitles by the specified amount of time.", sortOptions = false)
-public class ShiftCommand extends BasePicocliCommand {
+@Command(name = "shift", aliases = "s", description = "Shifts the subtitles by the specified amount of time.", sortOptions = false)
+public class ShiftCommand extends BaseCommand {
 
     @Option(names = {"-t", "--time"}, description = "The amount of time to shift the subtitles in milliseconds.", required = true)
     private String time;

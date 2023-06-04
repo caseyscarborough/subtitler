@@ -21,7 +21,7 @@ public class AssFiltererTest {
     public void testName() {
         final AssSubtitleFile file = new AssSubtitleReader().read("src/test/resources/ass/[Judas] Enen no Shouboutai (Fire Force) S01E01.en.ass");
         assertEquals(298, file.getDialogues().size());
-        filterer.filter(file, FilterType.FILTER_STYLE, "Default");
+        filterer.filter(file, FilterType.STYLE, "Default");
         assertEquals(228, file.getDialogues().size());
     }
 }

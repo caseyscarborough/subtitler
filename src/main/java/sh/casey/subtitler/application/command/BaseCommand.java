@@ -1,99 +1,76 @@
 package sh.casey.subtitler.application.command;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.lang3.StringUtils;
-import sh.casey.subtitler.application.exception.InvalidCommandException;
+import picocli.CommandLine.Model.CommandSpec;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.ParameterException;
+import picocli.CommandLine.Spec;
+import sh.casey.subtitler.application.command.completer.FileCompleter;
+import sh.casey.subtitler.application.command.completer.SubtitleTypeCompleter;
 import sh.casey.subtitler.model.SubtitleType;
 
-import java.util.Arrays;
+abstract class BaseCommand implements Runnable {
 
-@Slf4j
-abstract class BaseCommand implements ApplicationCommand {
+    @Spec
+    CommandSpec spec;
 
-    protected final CommandLine cmd;
-    private String inputFilename;
-    private String outputFilename;
+    @Option(names = {"-h", "--help"}, usageHelp = true, description = "Display this help message.")
+    private boolean help;
 
-    public BaseCommand(final CommandLine cmd) {
-        this.cmd = cmd;
+    @Option(names = {"-i", "--input"}, description = "The input file to read from.", required = true, completionCandidates = FileCompleter.class, paramLabel = "<file>")
+    private String input;
+
+    @Option(names = {"-I", "--input-type"}, description = "The type of subtitle file to read from. If not specified, the file extension will be used. Valid options: ${COMPLETION-CANDIDATES}", completionCandidates = SubtitleTypeCompleter.class, paramLabel = "<type>")
+    private SubtitleType inputType;
+
+    @Option(names = {"-o", "--output"}, description = "The output file to write to. If not specified, the input file will be used.", completionCandidates = FileCompleter.class, paramLabel = "<file>")
+    private String output;
+
+    @Option(names = {"-O", "--output-type"}, description = "The type of subtitle file to write to. If not specified, the input type will be used. Valid options: ${COMPLETION-CANDIDATES}", completionCandidates = SubtitleTypeCompleter.class, paramLabel = "<type>")
+    private SubtitleType outputType;
+
+    public String getInput() {
+        if (input != null) {
+            return input;
+        }
+
+        throw new ParameterException(spec.commandLine(), "Input file is required.");
     }
 
-    protected String getInputFilename() {
-        if (StringUtils.isNotBlank(inputFilename)) {
-            return inputFilename;
+    protected String getOutput() {
+        if (output != null) {
+            return output;
         }
 
-        final String inputFilename;
-        if (cmd.hasOption('i')) {
-            inputFilename = cmd.getOptionValue('i');
-        } else if (!cmd.getArgList().isEmpty()) {
-            inputFilename = cmd.getArgList().get(0);
-        } else {
-            throw new InvalidCommandException("Input filename is required.");
-        }
-        log.debug("Using input file " + inputFilename);
-        this.inputFilename = inputFilename;
-        return inputFilename;
+        return input;
     }
 
-    protected SubtitleType getInputFileType() {
-        if (cmd.hasOption("it")) {
-            try {
-                return SubtitleType.find(cmd.getOptionValue("it"));
-            } catch (final IllegalArgumentException e) {
-                throw new InvalidCommandException("Could not find subtitle type '" + cmd.getOptionValue("it") + "'. Valid options are " + Arrays.toString(SubtitleType.values()));
-            }
+    protected SubtitleType getOutputType() {
+        if (outputType != null) {
+            return outputType;
         }
 
-        log.debug("Attempting to resolve input type based on file extension...");
-        final String inputFilename = getInputFilename();
-        final String[] parts = inputFilename.split("\\.");
+        if (output != null) {
+            return getTypeFromFilename(output);
+        }
+
+        return getInputType();
+    }
+
+    protected SubtitleType getInputType() {
+        if (inputType != null) {
+            return inputType;
+        }
+        return getTypeFromFilename(input);
+    }
+
+    private SubtitleType getTypeFromFilename(String filename) {
+        if (filename == null) {
+            return null;
+        }
+
+        final String[] parts = filename.split("\\.");
         final String extension = parts[parts.length - 1];
-        try {
-            final SubtitleType type = SubtitleType.find(extension);
-            log.debug("Resolved subtitle type to " + type.name());
-            return type;
-        } catch (final IllegalArgumentException e) {
-            throw new InvalidCommandException("Could not infer subtitle type from input file. Please use the -it <input-type> option or rename your subtitle extension to a standard format (.srt, .ass, etc).");
-        }
+        return SubtitleType.find(extension);
     }
 
-    protected SubtitleType getOutputFileType() {
-        if (cmd.hasOption("ot")) {
-            try {
-                return SubtitleType.find(cmd.getOptionValue("ot"));
-            } catch (final IllegalArgumentException e) {
-                throw new InvalidCommandException("Could not find subtitle type '" + cmd.getOptionValue("it") + "'. Valid options are " + Arrays.toString(SubtitleType.values()));
-            }
-        }
-
-        log.debug("Attempting to resolve output type based on file extension...");
-        final String outputFilename = getOutputFilename();
-        final String[] parts = outputFilename.split("\\.");
-        final String extension = parts[parts.length - 1];
-        try {
-            final SubtitleType type = SubtitleType.find(extension);
-            log.debug("Resolved subtitle type to " + type.name());
-            return type;
-        } catch (final IllegalArgumentException e) {
-            throw new InvalidCommandException("Could not infer subtitle type from output file. Please use the -ot <output-type> option or rename your subtitle extension to a standard format (.srt, .ass, etc).");
-        }
-    }
-
-    protected String getOutputFilename() {
-        if (StringUtils.isNotBlank(outputFilename)) {
-            return outputFilename;
-        }
-
-        final String outputFilename;
-        if (cmd.hasOption("o")) {
-            outputFilename = cmd.getOptionValue('o');
-        } else {
-            outputFilename = getInputFilename();
-        }
-        log.debug("Using output file " + outputFilename);
-        this.outputFilename = outputFilename;
-        return outputFilename;
-    }
 }

@@ -6,8 +6,11 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum FilterType {
-    FILTER_STYLE("fs", "filter-style", "Filter the subtitle dialogues by the name of the style (only works for SSA/ASS subtitles).");
-    private final String shortOpt;
-    private final String longOpt;
+    STYLE("Filter out subtitles with specific Aegisub style names (only available for .ass and .ssa subtitles). Styles should be separated by comma and are case-insensitive, e.g. --styles \"op,ed,signs,songs\"");
     private final String description;
+
+    @Override
+    public String toString() {
+        return name() + " (" + description + ")";
+    }
 }

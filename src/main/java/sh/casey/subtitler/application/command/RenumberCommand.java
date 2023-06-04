@@ -1,7 +1,7 @@
 package sh.casey.subtitler.application.command;
 
-import org.apache.commons.cli.CommandLine;
-import sh.casey.subtitler.application.exception.InvalidCommandException;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 import sh.casey.subtitler.model.SubtitleFile;
 import sh.casey.subtitler.model.SubtitleType;
 import sh.casey.subtitler.reader.SubtitleReader;
@@ -11,27 +11,23 @@ import sh.casey.subtitler.renumberer.SubtitleRenumbererFactory;
 import sh.casey.subtitler.writer.SubtitleWriter;
 import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
-class RenumberCommand extends BaseCommand {
+@Command(name = "renumber", aliases = "r", description = "Renumbers the subtitles in a subtitle file so they are ordered.")
+public class RenumberCommand extends BaseCommand {
 
-    public RenumberCommand(final CommandLine cmd) {
-        super(cmd);
-    }
+    @Option(names = {"-s", "--start"}, description = "The number to start renumbering from (defaults to 1).", required = true, defaultValue = "1")
+    private int start;
 
     @Override
-    public void execute() {
-        final String input = getInputFilename();
-        final String output = getOutputFilename();
-        final SubtitleType subtitleType = getInputFileType();
+    public void run() {
+        final String input = getInput();
+        final String output = getOutput();
+        final SubtitleType subtitleType = getInputType();
+        final SubtitleType outputType = getOutputType();
         final SubtitleReader<SubtitleFile> reader = new SubtitleReaderFactory().getInstance(subtitleType);
         final SubtitleFile file = reader.read(input);
         final SubtitleRenumberer<SubtitleFile> renumberer = new SubtitleRenumbererFactory().getInstance(subtitleType);
-        try {
-            final String start = cmd.getOptionValue("rs", "1");
-            renumberer.renumber(file, Integer.parseInt(start));
-            final SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(subtitleType);
-            writer.write(file, output);
-        } catch (NumberFormatException e) {
-            throw new InvalidCommandException("The --renumber-start (-rs) parameter must be a number (defaults to 1).");
-        }
+        renumberer.renumber(file, start);
+        final SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(outputType);
+        writer.write(file, output);
     }
 }

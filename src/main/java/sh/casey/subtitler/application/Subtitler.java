@@ -8,7 +8,12 @@ import sh.casey.subtitler.application.command.AlignCommand;
 import sh.casey.subtitler.application.command.CondenseCommand;
 import sh.casey.subtitler.application.command.ConvertCommand;
 import sh.casey.subtitler.application.command.DualSubtitleCommand;
+import sh.casey.subtitler.application.command.FilterCommand;
+import sh.casey.subtitler.application.command.NormalizeCommand;
+import sh.casey.subtitler.application.command.PrintCommand;
+import sh.casey.subtitler.application.command.RenumberCommand;
 import sh.casey.subtitler.application.command.ShiftCommand;
+import sh.casey.subtitler.application.provider.VersionProvider;
 import sh.casey.subtitler.exception.ExceptionHandler;
 
 import java.util.concurrent.Callable;
@@ -23,8 +28,13 @@ import java.util.concurrent.Callable;
         CondenseCommand.class,
         ConvertCommand.class,
         DualSubtitleCommand.class,
+        FilterCommand.class,
+        NormalizeCommand.class,
+        PrintCommand.class,
+        RenumberCommand.class,
         ShiftCommand.class,
-    }
+    },
+    versionProvider = VersionProvider.class
 )
 public class Subtitler implements Callable<Integer> {
 
@@ -32,12 +42,18 @@ public class Subtitler implements Callable<Integer> {
     private CommandSpec spec;
 
     public static void main(String[] args) {
-        final int exitCode = new CommandLine(new Subtitler())
+        final CommandLine cmd = new CommandLine(new Subtitler())
             .setCaseInsensitiveEnumValuesAllowed(true)
             .setUsageHelpAutoWidth(true)
             .setUsageHelpLongOptionsMaxWidth(25)
-            .setExecutionExceptionHandler(new ExceptionHandler())
-            .execute(args);
+            .setExecutionExceptionHandler(new ExceptionHandler());
+
+        if (cmd.isVersionHelpRequested()) {
+            cmd.printVersionHelp(System.out);
+            return;
+        }
+
+        final int exitCode = cmd.execute(args);
 
         System.exit(exitCode);
     }

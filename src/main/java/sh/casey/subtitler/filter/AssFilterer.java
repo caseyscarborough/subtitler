@@ -18,7 +18,7 @@ class AssFilterer implements Filterer<AssSubtitleFile> {
     public void filter(AssSubtitleFile file, FilterType type, String filter) {
         Predicate<AssDialogue> dialogue = null;
         Predicate<AssStyle> style = null;
-        if (type == FilterType.FILTER_STYLE) {
+        if (type == FilterType.STYLE) {
             if (filter.contains(",")) {
                 List<String> filters = Arrays.stream(filter.split(",")).map(String::toLowerCase).collect(Collectors.toList());
                 dialogue = d -> filters.contains(d.getStyle().toLowerCase(Locale.ROOT));

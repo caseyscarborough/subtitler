@@ -1,26 +1,19 @@
 package sh.casey.subtitler.application.command;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.cli.CommandLine;
-import sh.casey.subtitler.application.exception.InvalidCommandException;
+import picocli.CommandLine.Command;
 import sh.casey.subtitler.util.FileUtils;
 
 import java.text.Normalizer;
 
 @Slf4j
-class NormalizeCommand extends BaseCommand {
-    public NormalizeCommand(CommandLine cmd) {
-        super(cmd);
-    }
+@Command(name = "normalize", aliases = "n", description = "Normalize subtitles (convert half-width kana to full width, etc.)", sortOptions = false)
+public class NormalizeCommand extends BaseCommand {
 
     @Override
-    public void execute() {
-        if (!cmd.hasOption('i')) {
-            throw new InvalidCommandException("Input file is required for normalization");
-        }
-
-        final String input = cmd.getOptionValue('i');
-        final String output = cmd.hasOption('o') ? cmd.getOptionValue('o') : input;
+    public void run() {
+        final String input = getInput();
+        final String output = getOutput();
 
         log.info("Normalizing text in file {}", input);
         String text = FileUtils.readFile(input);

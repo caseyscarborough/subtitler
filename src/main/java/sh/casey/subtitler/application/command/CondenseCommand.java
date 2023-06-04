@@ -1,6 +1,5 @@
 package sh.casey.subtitler.application.command;
 
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import sh.casey.subtitler.condenser.SubtitleCondenser;
 import sh.casey.subtitler.condenser.SubtitleCondenserFactory;
@@ -12,7 +11,7 @@ import sh.casey.subtitler.writer.SubtitleWriter;
 import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
 @Command(name = "condense", description = "Condense a subtitle file by putting common lines (of the same start/end times) into a single subtitle line. Also combines adjacent subtitles having the same text.", sortOptions = false)
-public class CondenseCommand extends BasePicocliCommand {
+public class CondenseCommand extends BaseCommand {
 
     @Override
     public void run() {

@@ -12,8 +12,8 @@ import sh.casey.subtitler.writer.SubtitleWriter;
 import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
 @Slf4j
-@Command(name = "convert", description = "Convert a subtitle file from one format to another.", sortOptions = false)
-public class ConvertCommand extends BasePicocliCommand {
+@Command(name = "convert", aliases = "c", description = "Convert a subtitle file from one format to another.", sortOptions = false)
+public class ConvertCommand extends BaseCommand {
 
     @Override
     public void run() {
