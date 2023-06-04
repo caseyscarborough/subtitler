@@ -3,6 +3,7 @@ plugins {
     id 'idea'
     id 'application'
     id 'maven-publish'
+    id("com.palantir.graal") version "0.12.0"
 }
 
 group 'sh.casey.subtitler'
@@ -50,6 +51,11 @@ jar {
     manifest {
         attributes 'Implementation-Version': archiveVersion
     }
+}
+
+graal {
+    mainClass 'sh.casey.subtitler.application.Subtitler'
+    outputName 'subtitler'
 }
 
 publishing {
