@@ -100,7 +100,7 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                             if (line.startsWith("Format:")) {
                                 final List<String> formatOrder = Arrays.stream(value.split(",")).map(String::trim).collect(Collectors.toList());
                                 file.setEventsFormatOrder(formatOrder);
-                            } else if (line.startsWith("Dialogue:") || line.startsWith("Comment:")) {
+                            } else if (line.startsWith("Dialogue:") || line.startsWith("Comment:") || line.startsWith("Crumb:")) {
                                 if (file.getEventsFormatOrder().isEmpty()) {
                                     throw new SubtitleException(".ass subtitle is in the incorrect format. Did not find 'Format' field before 'Dialogue' field in [Events] section. See line number: " + lineCounter);
                                 }
