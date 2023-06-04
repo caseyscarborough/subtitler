@@ -1,12 +1,12 @@
 package sh.casey.subtitler.application;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.log4j.Logger;
 import sh.casey.subtitler.application.command.ApplicationCommand;
 import sh.casey.subtitler.application.command.CommandFactory;
 import sh.casey.subtitler.application.exception.CommandNotFoundException;
@@ -18,9 +18,8 @@ import sh.casey.subtitler.shifter.ShiftMode;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class Application {
-
-    private static final Logger log = Logger.getLogger(Application.class);
 
     public static void main(final String[] args) throws ParseException {
         final CommandLineParser parser = new DefaultParser();

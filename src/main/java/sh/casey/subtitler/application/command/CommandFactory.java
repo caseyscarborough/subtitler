@@ -17,8 +17,8 @@ public class CommandFactory {
             return new VersionCommand();
         } else if (cmd.hasOption("cn")) {
             return new CondenseCommand(cmd);
-        } else if (cmd.hasOption("s")) {
-            return new ShiftCommand(cmd);
+//        } else if (cmd.hasOption("s")) {
+//            return new ShiftCommand(cmd);
         } else if (cmd.hasOption("r")) {
             return new RenumberCommand(cmd);
         } else if (cmd.hasOption("c")) {
