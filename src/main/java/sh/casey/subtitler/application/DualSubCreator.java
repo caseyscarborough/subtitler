@@ -1,6 +1,7 @@
 package sh.casey.subtitler.application;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.cli.CommandLine;
 import sh.casey.subtitler.converter.SubtitleConverter;
 import sh.casey.subtitler.converter.SubtitleConverterFactory;
 import sh.casey.subtitler.model.AssDialogue;
@@ -28,8 +29,10 @@ public class DualSubCreator {
     private final SubtitleType bottomType;
     private final String outputPath;
     private final AssScriptInfo scriptInfo;
+    private final CommandLine cmd;
 
-    private DualSubCreator(final DualSubConfig config, final String topPath, final String bottomPath, final SubtitleType topType, final SubtitleType bottomType, final String outputPath, final AssScriptInfo scriptInfo) {
+    private DualSubCreator(final CommandLine cmd, final DualSubConfig config, final String topPath, final String bottomPath, final SubtitleType topType, final SubtitleType bottomType, final String outputPath, final AssScriptInfo scriptInfo) {
+        this.cmd = cmd;
         this.config = config;
         this.topPath = topPath;
         this.bottomPath = bottomPath;
@@ -77,21 +80,31 @@ public class DualSubCreator {
         }
 
         // configure top style
-        final AssStyle topStyle = AssDefaults.getDefaultTopStyle();
-        if (config.getFont() != null) {
-            topStyle.setFontName(config.getFont());
+        boolean keepTopStyles = cmd.hasOption("--keep-top-styles") && topType == SubtitleType.ASS;
+        if (keepTopStyles) {
+            // prefix the styles with Top_, so they don't clash with the bottom file.
+            top.getStyles().forEach(s -> {
+                s.setName("Top_" + s.getName());
+                s.setAlignment("8");
+            });
+            top.getDialogues().forEach(d -> d.setStyle("Top_" + d.getStyle()));
+            output.getStyles().addAll(top.getStyles());
+        } else {
+            final AssStyle topStyle = AssDefaults.getDefaultTopStyle();
+            if (config.getFont() != null) {
+                topStyle.setFontName(config.getFont());
+            }
+            if (config.getSize() != null) {
+                topStyle.setFontSize(config.getSize());
+            }
+            if (config.getOutline() != null) {
+                topStyle.setOutline(String.valueOf(config.getOutline()));
+            }
+            topStyle.setBold(config.isBold());
+            output.getStyles().add(topStyle);
+            // set all dialogues for the top file to the top style
+            top.getDialogues().forEach(d -> d.setStyle("Top"));
         }
-        if (config.getSize() != null) {
-            topStyle.setFontSize(config.getSize());
-        }
-        if (config.getOutline() != null) {
-            topStyle.setOutline(String.valueOf(config.getOutline()));
-        }
-        topStyle.setBold(config.isBold());
-        output.getStyles().add(topStyle);
-
-        // set all dialogues for the top file to the top style
-        top.getDialogues().forEach(d -> d.setStyle("Top"));
 
         final List<AssDialogue> dialogues = new ArrayList<>();
         dialogues.addAll(top.getDialogues());
@@ -112,8 +125,14 @@ public class DualSubCreator {
         private SubtitleType bottomType;
         private String output;
         private AssScriptInfo scriptInfo;
+        private CommandLine cmd;
 
         Builder() {
+        }
+
+        public Builder cmd(final CommandLine cmd) {
+            this.cmd = cmd;
+            return this;
         }
 
         public Builder config(final DualSubConfig config) {
@@ -177,7 +196,7 @@ public class DualSubCreator {
             if (config == null) {
                 config = DualSubConfig.builder().build();
             }
-            return new DualSubCreator(config, top, bottom, topType, bottomType, output, scriptInfo);
+            return new DualSubCreator(cmd, config, top, bottom, topType, bottomType, output, scriptInfo);
         }
     }
 }

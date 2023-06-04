@@ -42,6 +42,7 @@ public class Application {
         options.addOption("tf", "top", true, "Top file for dual sub creation");
         options.addOption("bf", "bottom", true, "Bottom file for dual sub creation");
         options.addOption("dc", "dual-subs-config", true, "Configuration for dual subs (modifies the top subtitle only). Option keys are font, size, and bold. The format is key=value,key=value, e.g. --dual-subs-config 'font=Arial,size=64,bold=false'");
+        options.addOption(null, "keep-top-styles", false, "Keep the styles for the top file from the input subtitle during dual subtitle creation.");
 
         // shift options
         options.addOption("sm", "shift-mode", true, "Shift mode, default is 'FROM_TO'. Options are " + Arrays.stream(ShiftMode.values()).map(ShiftMode::toString).collect(Collectors.joining(", ")));

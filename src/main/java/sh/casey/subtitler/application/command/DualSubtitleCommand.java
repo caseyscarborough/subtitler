@@ -64,6 +64,7 @@ class DualSubtitleCommand extends BaseCommand {
         }
 
         DualSubCreator.builder()
+            .cmd(cmd)
             .topFile(cmd.getOptionValue("tf"))
             .bottomFile(cmd.getOptionValue("bf"))
             .outputFile(cmd.getOptionValue("o"))
