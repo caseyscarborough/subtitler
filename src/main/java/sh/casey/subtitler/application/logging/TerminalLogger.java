@@ -12,6 +12,7 @@ import java.io.Serializable;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class TerminalLogger implements Logger, Serializable {
 
+    public static boolean isTraceEnabled = false;
     private final String name;
 
     public static TerminalLogger getLogger(String name) {
@@ -274,7 +275,7 @@ public class TerminalLogger implements Logger, Serializable {
 
     @Override
     public boolean isTraceEnabled() {
-        return false;
+        return isTraceEnabled;
     }
 
     public void trace(String message) {
@@ -341,6 +342,9 @@ public class TerminalLogger implements Logger, Serializable {
 
     private String replaceArgs(String message, Object... args) {
         for (Object arg : args) {
+            if (arg == null) {
+                continue;
+            }
             message = message.replaceFirst("\\{}", arg.toString());
         }
         return message;
