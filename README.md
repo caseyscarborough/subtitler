@@ -10,6 +10,7 @@ It currently supports the following subtitle types:
 - `.ass` - [Advanced SubStation Alpha](https://fileformats.fandom.com/wiki/SubStation_Alpha) (SSAv4+)
 - `.ttml` - [Timed Text Markup Language](https://www.speechpad.com/captions/ttml)
 - `.dfxp` - [Distribution Format Exchange Profile](https://www.speechpad.com/captions/dfxp)
+- `.vtt` - [WebVTT](https://en.wikipedia.org/wiki/WebVTT)
 
 It supports the following features for each subtitle type:
 
@@ -26,12 +27,13 @@ you are trying to use. For example, if you would like to shift a `.dfxp` file, t
 
 For conversions, the following conversions are available:
 
-|Converting|`.srt`|`.ass`|`.ttml`|`.dfxp`|
-|----|----|----|----|----|
-|`.srt`|N/A|✅|❌|❌|
-|`.ass`|✅|N/A|❌|❌|
-|`.ttml`|✅|🔄|N/A|❌|
-|`.dfxp`|🔄|✅|❌|N/A|
+| ⬇️ From - To ➡️ |`.srt`|`.ass`|`.ttml`|`.dfxp`|`.vtt`|
+|-----------------|----|----|----|----|----|
+| `.srt`          |N/A|✅|❌|❌|❌|
+| `.ass`          |✅|N/A|❌|❌|❌|
+| `.ttml`         |✅|🔄|N/A|❌|❌|
+| `.dfxp`         |🔄|✅|❌|N/A|❌|
+| `.vtt`          |✅|🔄|❌|❌|N/A|
 
 Legend:
 
