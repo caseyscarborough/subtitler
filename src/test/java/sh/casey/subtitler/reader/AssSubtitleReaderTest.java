@@ -1,6 +1,6 @@
 package sh.casey.subtitler.reader;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -18,9 +18,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+@Slf4j
 public class AssSubtitleReaderTest {
 
-    private static final Logger LOGGER = Logger.getLogger(AssSubtitleReaderTest.class);
     private static final List<String> files = new ArrayList<>();
     private AssSubtitleReader reader;
     private AssSubtitleWriter writer;
@@ -83,8 +83,8 @@ public class AssSubtitleReaderTest {
             assertEquals(read1.getDialogues().size(), read2.getDialogues().size());
             assertFalse(read1.getDialogues().isEmpty());
             assertFalse(read1.getStyles().isEmpty());
-            LOGGER.debug("Took " + timer.stop() + "ms");
+            log.debug("Took " + timer.stop() + "ms");
         }
-        LOGGER.info("Successfully tested " + files.size() + " files.");
+        log.info("Successfully tested " + files.size() + " files.");
     }
 }

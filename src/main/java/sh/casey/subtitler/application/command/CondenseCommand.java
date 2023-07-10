@@ -14,7 +14,7 @@ import sh.casey.subtitler.writer.SubtitleWriterFactory;
 public class CondenseCommand extends BaseCommand {
 
     @Override
-    public void run() {
+    public void doRun() {
         final String input = getInput();
         final String output = getOutput();
         final SubtitleType type = getInputType();

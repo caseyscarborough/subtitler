@@ -11,7 +11,7 @@ import sh.casey.subtitler.reader.SubtitleReaderFactory;
 public class PrintCommand extends BaseCommand {
 
     @Override
-    public void run() {
+    public void doRun() {
         final String input = getInput();
         final SubtitleType subtitleType = getInputType();
         final SubtitleReader<SubtitleFile> reader = new SubtitleReaderFactory().getInstance(subtitleType);

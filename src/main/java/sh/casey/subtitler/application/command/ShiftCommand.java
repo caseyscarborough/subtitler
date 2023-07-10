@@ -36,7 +36,7 @@ public class ShiftCommand extends BaseCommand {
     private ShiftMode mode;
 
     @Override
-    public void run() {
+    public void doRun() {
         String input = getInput();
         SubtitleType inputType = getInputType();
         final SubtitleReader<SubtitleFile> reader = new SubtitleReaderFactory().getInstance(inputType);

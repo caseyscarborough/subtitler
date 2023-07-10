@@ -11,6 +11,8 @@ public class FiltererFactory {
             return (Filterer<T>) new AssFilterer();
         } else if (type == SubtitleType.SSA) {
             return (Filterer<T>) new AssFilterer();
+        } else if (type == SubtitleType.SRT) {
+            return (Filterer<T>) new SrtFilterer();
         } else {
             throw new IllegalStateException("Could not find filterer for subtitle type " + type);
         }

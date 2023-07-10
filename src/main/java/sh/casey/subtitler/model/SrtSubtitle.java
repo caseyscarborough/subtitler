@@ -1,5 +1,7 @@
 package sh.casey.subtitler.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import sh.casey.subtitler.util.TimeUtil;
 
 import java.util.ArrayList;
@@ -92,5 +94,28 @@ public class SrtSubtitle implements Subtitle, Comparable<SrtSubtitle> {
     @Override
     public SubtitleType getType() {
         return SubtitleType.SRT;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SrtSubtitle)) return false;
+        SrtSubtitle that = (SrtSubtitle) o;
+        return new EqualsBuilder()
+            .append(number, that.number)
+            .append(start, that.start)
+            .append(end, that.end)
+            .append(lines, that.lines)
+            .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+            .append(number)
+            .append(start)
+            .append(end)
+            .append(lines)
+            .toHashCode();
     }
 }

@@ -15,30 +15,30 @@ import java.util.stream.Collectors;
 class AssFilterer implements Filterer<AssSubtitleFile> {
 
     @Override
-    public void filter(AssSubtitleFile file, FilterType type, String filter) {
+    //TODO: Improve this API, it's not very flexible in its current state.
+    public void filter(AssSubtitleFile file, String filters, FilterMode mode) {
         Predicate<AssDialogue> dialogue = null;
         Predicate<AssStyle> style = null;
-        if (type == FilterType.STYLE) {
-            if (filter.contains(",")) {
-                List<String> filters = Arrays.stream(filter.split(",")).map(String::toLowerCase).collect(Collectors.toList());
-                dialogue = d -> filters.contains(d.getStyle().toLowerCase(Locale.ROOT));
-                style = d -> filters.contains(d.getName().toLowerCase(Locale.ROOT));
-            } else {
-                dialogue = d -> d.getStyle().equalsIgnoreCase(filter);
-                style = d -> d.getName().equalsIgnoreCase(filter);
+        for (String filter : filters.split(";")) {
+            final String[] parts = filter.split("=");
+            if (parts.length != 2) {
+                throw new IllegalArgumentException("Filter argument was invalid: " + filter);
             }
-        }
-
-        if (dialogue == null && style == null) {
-            return;
+            String key = parts[0];
+            List<String> values = Arrays.stream(parts[1].split(",")).map(String::toLowerCase).collect(Collectors.toList());
+            if (key.equals(FilterType.STYLE.getName())) {
+                dialogue = d -> values.contains(d.getStyle().toLowerCase(Locale.ROOT));
+                style = d -> values.contains(d.getName().toLowerCase(Locale.ROOT));
+            }
         }
 
         if (dialogue != null) {
             final int before = file.getDialogues().size();
+            Predicate<AssDialogue> predicate = mode == FilterMode.INCLUDE ? dialogue : dialogue.negate();
             file.setDialogues(
                 file.getDialogues()
                     .stream()
-                    .filter(dialogue)
+                    .filter(predicate)
                     .collect(Collectors.toList())
             );
             log.info("Filtered dialogues from {} to {} dialogues.", before, file.getDialogues().size());
@@ -46,9 +46,8 @@ class AssFilterer implements Filterer<AssSubtitleFile> {
 
         if (style != null) {
             final int before = file.getStyles().size();
-            file.setStyles(
-                file.getStyles().stream().filter(style).collect(Collectors.toList())
-            );
+            Predicate<AssStyle> predicate = mode == FilterMode.INCLUDE ? style : style.negate();
+            file.setStyles(file.getStyles().stream().filter(predicate).collect(Collectors.toList()));
             log.info("Filtered styles from {} to {} styles.", before, file.getStyles().size());
         }
     }

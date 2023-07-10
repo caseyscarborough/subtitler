@@ -11,7 +11,7 @@ import java.text.Normalizer;
 public class NormalizeCommand extends BaseCommand {
 
     @Override
-    public void run() {
+    public void doRun() {
         final String input = getInput();
         final String output = getOutput();
 

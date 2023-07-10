@@ -4,5 +4,5 @@ import sh.casey.subtitler.model.SubtitleFile;
 
 public interface Filterer<T extends SubtitleFile> {
 
-    void filter(T file, FilterType type, String filter);
+    void filter(T file, String filters, FilterMode mode);
 }

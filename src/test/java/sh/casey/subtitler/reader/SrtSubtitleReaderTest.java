@@ -1,6 +1,6 @@
 package sh.casey.subtitler.reader;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -15,8 +15,8 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+@Slf4j
 public class SrtSubtitleReaderTest {
-    private static final Logger LOGGER = Logger.getLogger(SrtSubtitleReaderTest.class);
     private static final List<String> files = new ArrayList<>();
     private SrtSubtitleReader reader;
     private SrtSubtitleWriter writer;
@@ -58,7 +58,7 @@ public class SrtSubtitleReaderTest {
             assertFalse(read.getSubtitles().isEmpty());
             assertEquals(read.getSubtitles().size(), read2.getSubtitles().size());
         }
-        LOGGER.info("Successfully tested " + files.size() + " files.");
+        log.info("Successfully tested " + files.size() + " files.");
     }
 
     @Test

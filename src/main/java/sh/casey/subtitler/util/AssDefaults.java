@@ -125,14 +125,14 @@ public class AssDefaults {
 
     public static AssStyle getDefaultTopStyle() {
         final AssStyle top = AssDefaults.getDefaultStyling();
-        top.setName("Top");
+        top.setName("Top_Default");
         top.setAlignment("8");
         return top;
     }
 
     public static AssStyle getDefaultBottomStyle() {
         final AssStyle bottom = AssDefaults.getDefaultStyling();
-        bottom.setName("Bottom");
+        bottom.setName("Bottom_Default");
         bottom.setAlignment("2");
         return bottom;
     }

@@ -16,7 +16,7 @@ import sh.casey.subtitler.writer.SubtitleWriterFactory;
 public class ConvertCommand extends BaseCommand {
 
     @Override
-    public void run() {
+    public void doRun() {
         final String input = getInput();
         final SubtitleType inputType = getInputType();
         String output = getOutput();

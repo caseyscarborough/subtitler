@@ -1,13 +1,21 @@
 package sh.casey.subtitler.application.command;
 
+import lombok.AccessLevel;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
 import sh.casey.subtitler.application.command.completer.FileCompleter;
 import sh.casey.subtitler.application.command.completer.SubtitleTypeCompleter;
+import sh.casey.subtitler.application.logging.TerminalLogger;
 import sh.casey.subtitler.model.SubtitleType;
 
+@Slf4j
+@Setter(AccessLevel.PACKAGE)
 abstract class BaseCommand implements Runnable {
 
     @Spec
@@ -27,6 +35,19 @@ abstract class BaseCommand implements Runnable {
 
     @Option(names = {"-O", "--output-type"}, description = "The type of subtitle file to write to. If not specified, the input type will be used. Valid options: ${COMPLETION-CANDIDATES}", completionCandidates = SubtitleTypeCompleter.class, paramLabel = "<type>")
     private SubtitleType outputType;
+
+    @Option(names = {"--trace"}, description = "Enable trace logging.")
+    private boolean trace;
+
+    public abstract void doRun();
+
+    @Override
+    public void run() {
+        if (trace) {
+            TerminalLogger.isTraceEnabled = true;
+        }
+        doRun();
+    }
 
     public String getInput() {
         if (input != null) {

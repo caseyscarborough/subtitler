@@ -18,7 +18,7 @@ public class RenumberCommand extends BaseCommand {
     private int start;
 
     @Override
-    public void run() {
+    public void doRun() {
         final String input = getInput();
         final String output = getOutput();
         final SubtitleType subtitleType = getInputType();

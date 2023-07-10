@@ -9,6 +9,7 @@ import picocli.CommandLine.Spec;
 import sh.casey.subtitler.application.command.completer.StyleConfigCompleter;
 import sh.casey.subtitler.application.command.completer.SubtitleTypeCompleter;
 import sh.casey.subtitler.application.command.config.StyleConfig;
+import sh.casey.subtitler.application.logging.TerminalLogger;
 import sh.casey.subtitler.converter.SubtitleConverter;
 import sh.casey.subtitler.converter.SubtitleConverterFactory;
 import sh.casey.subtitler.model.AssDialogue;
@@ -58,8 +59,14 @@ public class DualSubtitleCommand implements Runnable {
     @Option(names = {"-k", "--keep-top-styles"}, description = "Keep the styles from the top file (only available for .ass and .ssa formats). If not set, default styles in combination with the configuration will be applied.")
     private boolean keepTopStyles;
 
+    @Option(names = {"--trace"}, description = "Enable trace logging.")
+    private boolean trace;
+
     @Override
     public void run() {
+        if (trace) {
+            TerminalLogger.isTraceEnabled = true;
+        }
         // Parse the dual subtitles configuration
         Map<StyleConfig, String> styles = new EnumMap<>(StyleConfig.class);
         if (cfg != null) {
@@ -118,7 +125,7 @@ public class DualSubtitleCommand implements Runnable {
             // Otherwise we'll create a new one with defaults
             output = AssDefaults.getDefaultAssSubtitleFile();
             output.getStyles().add(AssDefaults.getDefaultBottomStyle());
-            bottom.getDialogues().forEach(d -> d.setStyle("Bottom"));
+            bottom.getDialogues().forEach(d -> d.setStyle("Bottom_Default"));
         }
 
         // configure top style
@@ -132,13 +139,13 @@ public class DualSubtitleCommand implements Runnable {
             output.getStyles().addAll(top.getStyles());
         } else {
             final AssStyle topStyle = AssDefaults.getDefaultTopStyle();
-            topStyle.setName("Top");
+            topStyle.setName("Top_Default");
             for (Map.Entry<StyleConfig, String> entry : styles.entrySet()) {
                 entry.getKey().getConsumer().accept(topStyle, entry.getValue());
             }
             output.getStyles().add(topStyle);
             // set all dialogues for the top file to the top style
-            top.getDialogues().forEach(d -> d.setStyle("Top"));
+            top.getDialogues().forEach(d -> d.setStyle("Top_Default"));
         }
 
         final List<AssDialogue> dialogues = new ArrayList<>();
@@ -146,6 +153,16 @@ public class DualSubtitleCommand implements Runnable {
         dialogues.addAll(bottom.getDialogues());
         Collections.sort(dialogues);
         output.setDialogues(dialogues);
+
+        // Move all top subtitles from the bottom file to the bottom
+        output.getStyles()
+            .stream()
+            .filter(s -> !s.getName().startsWith("Top_") && s.getAlignment().equals("8"))
+            .forEach(s -> s.setAlignment("2"));
+        output.getDialogues()
+            .stream()
+            .filter(d -> d.getText().contains("{\\an8}"))
+            .forEach(d -> d.setText(d.getText().replace("{\\an8}", "")));
 
         final AssSubtitleWriter writer = new AssSubtitleWriter();
         writer.write(output, outputPath);

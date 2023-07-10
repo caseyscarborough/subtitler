@@ -3,7 +3,9 @@ package sh.casey.subtitler.application.command;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+import sh.casey.subtitler.application.command.completer.FilterModeCompleter;
 import sh.casey.subtitler.application.command.completer.FilterTypeCompleter;
+import sh.casey.subtitler.filter.FilterMode;
 import sh.casey.subtitler.filter.FilterType;
 import sh.casey.subtitler.filter.Filterer;
 import sh.casey.subtitler.filter.FiltererFactory;
@@ -19,21 +21,21 @@ import sh.casey.subtitler.writer.SubtitleWriterFactory;
     aliases = "f",
     description = {
         "Filter a subtitle file by removing lines that match a specific criteria.",
-        "Example: subs filter --type STYLE \"op,ed,signs,songs\"",
+        "Example: subs filter --filters \"style=op,ed,signs,songs\"",
     },
     sortOptions = false,
     sortSynopsis = false
 )
 public class FilterCommand extends BaseCommand {
 
-    @Option(names = {"-t", "--type"}, description = "The type of filter to use. Options are: ${COMPLETION-CANDIDATES}.", required = true, completionCandidates = FilterTypeCompleter.class)
-    private FilterType type;
+    @Option(names = {"-m", "--mode"}, description = "The filter mode to use. Modes are: ${COMPLETION-CANDIDATES}. (Default is OMIT)", completionCandidates = FilterModeCompleter.class)
+    private FilterMode mode = FilterMode.OMIT;
 
-    @Parameters(index = "0", description = "The filter to use. This should match the type of filter specified with the -t option.", arity = "1")
-    private String filter;
+    @Option(names = {"-f", "--filters"}, description = "The type of filters to use. Filters should be key/value pairs separated with a semicolon, and multiple values can be specified with commas, e.g. --filters \"style=op,ed,songs,signs\". Filters are: ${COMPLETION-CANDIDATES}.", required = true, completionCandidates = FilterTypeCompleter.class)
+    private String filters;
 
     @Override
-    public void run() {
+    public void doRun() {
         final String input = getInput();
         final String output = getOutput();
         final SubtitleType inputType = getInputType();
@@ -42,7 +44,7 @@ public class FilterCommand extends BaseCommand {
         final SubtitleFile file = reader.read(input);
         final FiltererFactory factory = new FiltererFactory();
         Filterer<SubtitleFile> filterer = factory.getInstance(inputType);
-        filterer.filter(file, type, filter);
+        filterer.filter(file, filters, mode);
 
         SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(outputType);
         writer.write(file, output);
