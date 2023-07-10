@@ -19,6 +19,7 @@ It supports the following features for each subtitle type:
 |`.ass`|✅|✅|✅|✅| |
 |`.ttml`|✅| | | | |
 |`.dfxp`|✅| | | | |
+|`.vtt`|✅| | | | |
 
 Most of the functions can be performed by converting to another subtitle type first that is supported with the feature
 you are trying to use. For example, if you would like to shift a `.dfxp` file, then convert it to `.ass` first.

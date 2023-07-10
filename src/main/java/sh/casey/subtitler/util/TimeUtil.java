@@ -15,6 +15,9 @@ public class TimeUtil {
             return srtFormatTimeToMilliseconds(time);
         } else if (type == SubtitleType.ASS) {
             return assFormatTimeToMilliseconds(time);
+        } else if (type == SubtitleType.VTT) {
+            // TODO: verify this works
+            return timeToMilliseconds(".", time, 1);
         } else {
             throw new IllegalArgumentException("Could not format time for type " + type);
         }
@@ -25,8 +28,10 @@ public class TimeUtil {
             return srtMillisecondsToTime(time);
         } else if (type == SubtitleType.ASS) {
             return assMillisecondsToTime(time);
+        } else if (type == SubtitleType.VTT) {
+            return vttMillisecondsToTime(time);
         } else {
-            throw new IllegalArgumentException("Could not format time for type " + type);
+            throw new IllegalArgumentException("Could not format time for type " + type + " as the conversion has not been implemented");
         }
     }
 
@@ -42,6 +47,14 @@ public class TimeUtil {
     }
 
     public static String srtMillisecondsToTime(Long time) {
+        return millisecondsToTime(time, ",");
+    }
+
+    public static String vttMillisecondsToTime(Long time) {
+        return millisecondsToTime(time, ".");
+    }
+
+    private static String millisecondsToTime(Long time, String separator) {
         long hours = time / HOURS;
         time %= HOURS;
         long minutes = time / MINUTES;
@@ -49,7 +62,7 @@ public class TimeUtil {
         long seconds = time / SECONDS;
         time %= SECONDS;
         long ms = time;
-        return String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds) + "," + String.format("%03d", ms);
+        return String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds) + separator + String.format("%03d", ms);
     }
 
     public static Long srtFormatTimeToMilliseconds(final String time) {

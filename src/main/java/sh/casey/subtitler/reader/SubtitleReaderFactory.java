@@ -17,6 +17,8 @@ public class SubtitleReaderFactory {
             return (SubtitleReader<T>) new DfxpSubtitleReader();
         }  else if (type.equals(SubtitleType.SSA)) {
             return (SubtitleReader<T>) new AssSubtitleReader();
+        } else if (type.equals(SubtitleType.VTT)) {
+            return (SubtitleReader<T>) new VttSubtitleReader();
         } else {
             throw new IllegalStateException("No reader found for type " + type);
         }
