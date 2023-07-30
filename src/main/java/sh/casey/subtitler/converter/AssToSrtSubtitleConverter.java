@@ -27,7 +27,7 @@ public class AssToSrtSubtitleConverter implements SubtitleConverter<AssSubtitleF
         input.getStyles().forEach(s -> styles.put(s.getName(), s));
 
         for (AssDialogue dialogue : input.getSubtitles()) {
-            if (StringUtils.isBlank(dialogue.getText())) {
+            if (StringUtils.isBlank(dialogue.getText()) || dialogue.isComment()) {
                 continue;
             }
             final AssStyle style = styles.get(dialogue.getStyle());
