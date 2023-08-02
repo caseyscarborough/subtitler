@@ -29,6 +29,8 @@ class AssFilterer implements Filterer<AssSubtitleFile> {
             if (key.equals(FilterType.STYLE.getName())) {
                 dialogue = d -> values.contains(d.getStyle().toLowerCase(Locale.ROOT));
                 style = d -> values.contains(d.getName().toLowerCase(Locale.ROOT));
+            } else if (key.equals(FilterType.TEXT.getName())) {
+                dialogue = d -> values.contains(d.getText().toLowerCase(Locale.ROOT));
             }
         }
 
