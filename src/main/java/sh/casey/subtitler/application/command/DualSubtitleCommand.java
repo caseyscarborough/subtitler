@@ -59,6 +59,9 @@ public class DualSubtitleCommand implements Runnable {
     @Option(names = {"-k", "--keep-top-styles"}, description = "Keep the styles from the top file (only available for .ass and .ssa formats). If not set, default styles in combination with the configuration will be applied.")
     private boolean keepTopStyles;
 
+    @Option(names = {"-a", "--align"}, description = "Align all subtitles from the original bottom file to the bottom, so as not to clash with the top file.")
+    private boolean align = false;
+
     @Option(names = {"--trace"}, description = "Enable trace logging.")
     private boolean trace;
 
@@ -154,15 +157,17 @@ public class DualSubtitleCommand implements Runnable {
         Collections.sort(dialogues);
         output.setDialogues(dialogues);
 
-        // Move all top subtitles from the bottom file to the bottom
-        output.getStyles()
-            .stream()
-            .filter(s -> !s.getName().startsWith("Top_") && s.getAlignment().equals("8"))
-            .forEach(s -> s.setAlignment("2"));
-        output.getDialogues()
-            .stream()
-            .filter(d -> d.getText().contains("{\\an8}"))
-            .forEach(d -> d.setText(d.getText().replace("{\\an8}", "")));
+        if (align) {
+            // Move all top subtitles from the bottom file to the bottom
+            output.getStyles()
+                .stream()
+                .filter(s -> !s.getName().startsWith("Top_") && s.getAlignment().equals("8"))
+                .forEach(s -> s.setAlignment("2"));
+            output.getDialogues()
+                .stream()
+                .filter(d -> d.getText().contains("\\an8"))
+                .forEach(d -> d.setText(d.getText().replace("{\\an8}", "").replace("\\an8", "")));
+        }
 
         final AssSubtitleWriter writer = new AssSubtitleWriter();
         writer.write(output, outputPath);
