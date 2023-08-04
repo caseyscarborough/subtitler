@@ -20,10 +20,10 @@ public class ShiftCommand extends BaseCommand {
     @Option(names = {"-t", "--time"}, description = "The amount of time to shift the subtitles in milliseconds.", required = true)
     private String time;
 
-    @Option(names = {"-b", "--before"}, description = "Only shift subtitles in the file before this time (format HH:mm:ss,SSS).", paramLabel = "<time>")
+    @Option(names = {"-b", "--before"}, description = "Only shift subtitles in the file before this time or subtitle number (format HH:mm:ss,SSS for time or DDD for number).", paramLabel = "<time|number>")
     private String before;
 
-    @Option(names = {"-a", "--after"}, description = "Only shift subtitles in the file after this time (format HH:mm:ss,SSS).", paramLabel = "<time>")
+    @Option(names = {"-a", "--after"}, description = "Only shift subtitles in the file after this time or subtitle number (format HH:mm:ss,SSS for time or DDD for number).", paramLabel = "<time|number>")
     private String after;
 
     @Option(names = {"-n", "--number"}, description = "The number of a specific subtitle to shift.")
@@ -45,7 +45,7 @@ public class ShiftCommand extends BaseCommand {
         final SubtitleFile file = reader.read(input);
 
         final ShiftConfig config = ShiftConfig.builder()
-            .ms(Integer.parseInt(time))
+            .ms(Long.parseLong(time))
             .before(before)
             .after(after)
             .number(number)

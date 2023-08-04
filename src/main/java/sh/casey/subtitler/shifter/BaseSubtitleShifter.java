@@ -12,26 +12,30 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
 
     @Override
     public void shift(T file, final ShiftConfig config) {
-        final Integer ms = config.getMs();
+        final Long ms = config.getMs();
         if (ms == null) {
             throw new SubtitleException("You must specify a time in milliseconds to shift the subtitles.");
         }
         log.info("Shifting subtitles in file {} by {}ms.", file.getPath(), ms);
         Long beforeDate = null;
         Long afterDate = null;
-        if (StringUtils.isNotBlank(config.getBefore())) {
+        if (StringUtils.isNotBlank(config.getBefore()) && !StringUtils.isNumeric(config.getBefore())) {
+            // Only convert to milliseconds if the time is not numeric (uses the 00:00:00,000 format)
             beforeDate = TimeUtil.srtFormatTimeToMilliseconds(config.getBefore());
         }
-        if (StringUtils.isNotBlank(config.getAfter())) {
+        if (StringUtils.isNotBlank(config.getAfter()) && !StringUtils.isNumeric(config.getAfter())) {
+            // Only convert to milliseconds if the time is not numeric (uses the 00:00:00,000 format)
             afterDate = TimeUtil.srtFormatTimeToMilliseconds(config.getAfter());
         }
         Integer beforeNumber = null;
         Integer afterNumber = null;
         if (StringUtils.isNumeric(config.getBefore())) {
+            // If the before time is numeric, we know it's a subtitle number
             beforeNumber = Integer.parseInt(config.getBefore());
         }
 
         if (StringUtils.isNumeric(config.getAfter())) {
+            // If the after time is numeric, we know it's a subtitle number
             afterNumber = Integer.parseInt(config.getAfter());
         }
 
@@ -60,21 +64,25 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
 
             // If it's not after the "after" time, don't shift it.
             if ((afterDate != null && from < afterDate) || (afterNumber != null && subtitle.getNumber() <= afterNumber)) {
+                log.trace("Skipping subtitle {} because it is not after the \"after\" time or number.", subtitle.getNumber());
                 continue;
             }
 
             // If it's not before the "before" time, don't shift it.
             if ((beforeDate != null && from > beforeDate) || (beforeNumber != null && subtitle.getNumber() >= beforeNumber)) {
+                log.trace("Skipping subtitle {} because it is not before the \"before\" time or number.", subtitle.getNumber());
                 continue;
             }
 
             // If the user specified a number of a subtitle to shift, don't shift unless this is that number.
             if (config.getNumber() != null && (subtitle.getNumber() == null || !subtitle.getNumber().equals(config.getNumber()))) {
+                log.trace("Skipping subtitle number {} because it is not the number specified to shift.", subtitle.getNumber());
                 continue;
             }
 
             // If the text doesn't contain the specified matching text, don't shift it.
             if (StringUtils.isNotBlank(config.getMatches()) && !subtitle.getText().contains(config.getMatches())) {
+                log.trace("Skipping subtitle number {} because it does not contain the specified matching text.", subtitle.getNumber());
                 continue;
             }
 

@@ -6,10 +6,10 @@ public class ShiftConfig {
     private final String before;
     private final String matches;
     private final Integer number;
-    private final Integer ms;
+    private final Long ms;
     private final ShiftMode shiftMode;
 
-    ShiftConfig(final String after, final String before, final String matches, final Integer number, final Integer ms, final ShiftMode shiftMode) {
+    ShiftConfig(final String after, final String before, final String matches, final Integer number, final Long ms, final ShiftMode shiftMode) {
         this.after = after;
         this.before = before;
         this.matches = matches;
@@ -38,7 +38,7 @@ public class ShiftConfig {
         return number;
     }
 
-    public Integer getMs() {
+    public Long getMs() {
         return ms;
     }
 
@@ -51,7 +51,7 @@ public class ShiftConfig {
         private String before;
         private String matches;
         private Integer number;
-        private Integer ms;
+        private Long ms;
         private ShiftMode shiftMode = ShiftMode.FROM_TO;
 
         Builder() {
@@ -77,7 +77,7 @@ public class ShiftConfig {
             return this;
         }
 
-        public Builder ms(final Integer ms) {
+        public Builder ms(final Long ms) {
             this.ms = ms;
             return this;
         }
