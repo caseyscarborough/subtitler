@@ -86,7 +86,7 @@ public class AssDefaults {
         style.setAlignment("2");
         style.setMarginL("60");
         style.setMarginR("60");
-        style.setMarginV("15");
+        style.setMarginV("45");
         style.setEncoding("0");
         return style;
     }
@@ -125,6 +125,7 @@ public class AssDefaults {
 
     public static AssStyle getDefaultTopStyle() {
         final AssStyle top = AssDefaults.getDefaultStyling();
+        top.setMarginV("15");
         top.setName("Top_Default");
         top.setAlignment("8");
         return top;
