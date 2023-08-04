@@ -32,6 +32,7 @@ public class VttSubtitleReader implements SubtitleReader<VttSubtitleFile> {
         final VttSubtitleFile file = new VttSubtitleFile();
         file.setPath(filename);
         int lineCounter = 0;
+        int number = 1;
         try (BOMInputStream bis = new BOMInputStream(new FileInputStream(filename));
              BufferedReader br = new BufferedReader(new InputStreamReader(bis))) {
 
@@ -55,6 +56,7 @@ public class VttSubtitleReader implements SubtitleReader<VttSubtitleFile> {
                     VttSubtitle subtitle = new VttSubtitle();
                     subtitle.setStart(start);
                     subtitle.setEnd(end);
+                    subtitle.setNumber(number++);
 
                     while (true) {
                         line = br.readLine();
