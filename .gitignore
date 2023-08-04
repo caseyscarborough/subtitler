@@ -12,4 +12,5 @@ out/
 *.ass
 *.dfxp
 *.srt
+*.vtt
 build.sh
