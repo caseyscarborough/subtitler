@@ -45,7 +45,7 @@ public class VttSubtitle implements Subtitle, Comparable<VttSubtitle> {
 
     @Override
     public Long getEndMilliseconds() {
-        return TimeUtil.srtFormatTimeToMilliseconds(getEnd());
+        return TimeUtil.formatTimeToMilliseconds(SubtitleType.VTT, getEnd());
     }
 
     @Override
@@ -93,7 +93,7 @@ public class VttSubtitle implements Subtitle, Comparable<VttSubtitle> {
 
     @Override
     public SubtitleType getType() {
-        return SubtitleType.SRT;
+        return SubtitleType.VTT;
     }
 
     @Override
