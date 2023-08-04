@@ -36,17 +36,6 @@ public class AssToSrtSubtitleConverterTest {
     }
 
     @Test
-    public void testConvert2() {
-        AssSubtitleFile file = reader.read("src/test/resources/ass/test1.ass");
-        final SrtSubtitleFile converted = converter.convert(file);
-        new SrtSubtitleWriter().write(converted, "/Users/casey/Downloads/Dr. Slump & Arale-chan E001 V3 [8bit - 720x544 - H264 - AAC][8519061B] [n'chasubs].srt");
-        final SrtSubtitle first = converted.getSubtitles().get(1);
-        assertEquals("<font color=\"#be201f\">Tori = Bird</font>", first.getText());
-        assertEquals("00:01:11,030", first.getStart());
-        assertEquals("00:01:17,300", first.getEnd());
-    }
-
-    @Test
     public void testConvert3() {
         AssSubtitleFile file = reader.read("src/test/resources/ass/Terrace.House.Boys.x.Girls.Next.Door.S01E01.Week01.2012.1080p.NF.WEB-DL.AAC-IRENEBRO.en.ass");
         SrtSubtitleFile converted = converter.convert(file);

@@ -18,10 +18,18 @@ public class AssFiltererTest {
     }
 
     @Test
-    public void testName() {
-        final AssSubtitleFile file = new AssSubtitleReader().read("src/test/resources/ass/[Judas] Enen no Shouboutai (Fire Force) S01E01.en.ass");
-        assertEquals(298, file.getDialogues().size());
-        filterer.filter(file, FilterType.STYLE.getName(), FilterMode.OMIT);
-        assertEquals(228, file.getDialogues().size());
+    public void testIncludingStyle() {
+        final AssSubtitleFile file = new AssSubtitleReader().read("src/test/resources/ass/test1.ass");
+        assertEquals(328, file.getDialogues().size());
+        filterer.filter(file, FilterType.STYLE.getName() + "=Style1", FilterMode.INCLUDE);
+        assertEquals(317, file.getDialogues().size());
+    }
+
+    @Test
+    public void testOmittingStyle() {
+        final AssSubtitleFile file = new AssSubtitleReader().read("src/test/resources/ass/test1.ass");
+        assertEquals(328, file.getDialogues().size());
+        filterer.filter(file, FilterType.STYLE.getName() + "=Style1", FilterMode.OMIT);
+        assertEquals(11, file.getDialogues().size());
     }
 }

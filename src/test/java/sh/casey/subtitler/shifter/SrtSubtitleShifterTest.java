@@ -23,7 +23,7 @@ public class SrtSubtitleShifterTest {
     public void testShiftingWithAfter() {
         final SubtitleFile file = reader.read("src/test/resources/tester.srt");
         ShiftConfig config = ShiftConfig.builder()
-            .ms(10000)
+            .ms(10000L)
             .after("00:01:34,000")
             .build();
         shifter.shift(file, config);

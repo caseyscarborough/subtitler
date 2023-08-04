@@ -18,6 +18,6 @@ public class DfxpSubtitleReaderTest {
     @Test
     public void testRead() {
         DfxpSubtitleFile file = reader.read("src/test/resources/dfxp/test1.dfxp");
-        assertEquals(455, file.getSubtitles().size());
+        assertEquals(23, file.getSubtitles().size());
     }
 }
