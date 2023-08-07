@@ -150,7 +150,7 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                         }
                     } else {
                         // We don't support this type.
-                        log.info("Found type " + line + " which is not supported. Skipping this section.");
+                        log.warn("Found type " + line + " which is not supported. Skipping this section.");
                         lineCounter++;
                         line = br.readLine();
                     }
