@@ -8,6 +8,6 @@ import java.util.Iterator;
 public class FilterTypeCompleter implements Iterable<String> {
     @Override
     public Iterator<String> iterator() {
-        return Arrays.stream(FilterType.values()).map(FilterType::toString).iterator();
+        return Arrays.stream(FilterType.values()).map(f -> "\n  - " + f).iterator();
     }
 }

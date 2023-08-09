@@ -2,11 +2,9 @@ package sh.casey.subtitler.application.command;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import picocli.CommandLine.Parameters;
 import sh.casey.subtitler.application.command.completer.FilterModeCompleter;
 import sh.casey.subtitler.application.command.completer.FilterTypeCompleter;
 import sh.casey.subtitler.filter.FilterMode;
-import sh.casey.subtitler.filter.FilterType;
 import sh.casey.subtitler.filter.Filterer;
 import sh.casey.subtitler.filter.FiltererFactory;
 import sh.casey.subtitler.model.SubtitleFile;
@@ -20,33 +18,36 @@ import sh.casey.subtitler.writer.SubtitleWriterFactory;
     name = "filter",
     aliases = "f",
     description = {
-        "Filter a subtitle file by removing lines that match a specific criteria.",
-        "Example: subs filter --filters \"style=op,ed,signs,songs\"",
+        "Filter a subtitle file by removing lines that match (or don't match) a specific criteria.",
+        "Examples:\n" +
+            "  subs filter --filters \"style=op,ed,signs,songs\" --mode OMIT (remove subtitles with the op, ed, signs, or songs styles)\n" +
+            "  subs filter --filters \"after=00:30:00,000\" --mode OMIT (remove subtitles after 30 minutes)\n" +
+            "  subs filter --filters \"text=♪♪～\" --mode OMIT (remove subtitles matching ♪♪～)\n" +
+            "  subs filter --filters \"style=Main,Default\" --mode RETAIN (remove subtitles that aren't the Main or Default style)"
     },
     sortOptions = false,
     sortSynopsis = false
 )
 public class FilterCommand extends BaseCommand {
 
+    private final FiltererFactory factory = new FiltererFactory();
+
     @Option(names = {"-m", "--mode"}, description = "The filter mode to use. Modes are: ${COMPLETION-CANDIDATES}. (Default is OMIT)", completionCandidates = FilterModeCompleter.class)
     private FilterMode mode = FilterMode.OMIT;
 
-    @Option(names = {"-f", "--filters"}, description = "The type of filters to use. Filters should be key/value pairs separated with a semicolon, and multiple values can be specified with commas, e.g. --filters \"style=op,ed,songs,signs\". Filters are: ${COMPLETION-CANDIDATES}.", required = true, completionCandidates = FilterTypeCompleter.class)
+    @Option(names = {"-f", "--filters"}, description = "The type of filters to use. Filters should be key/value pairs separated with a semicolon, and multiple values can be specified with commas. Multiple filters are executed with 'OR' logic (all filters are applied).\nExample: --filters \"style=op,ed,songs,signs;after=00:30:00,000\" --mode OMIT (remove all subtitles matching the specified styles or after 30 minutes).\nFilters: ${COMPLETION-CANDIDATES}.", required = true, completionCandidates = FilterTypeCompleter.class)
     private String filters;
 
     @Override
     public void doRun() {
-        final String input = getInput();
-        final String output = getOutput();
         final SubtitleType inputType = getInputType();
-        final SubtitleType outputType = getOutputType();
         final SubtitleReader<SubtitleFile> reader = new SubtitleReaderFactory().getInstance(inputType);
-        final SubtitleFile file = reader.read(input);
-        final FiltererFactory factory = new FiltererFactory();
-        Filterer<SubtitleFile> filterer = factory.getInstance(inputType);
+        final Filterer<SubtitleFile> filterer = factory.getInstance(inputType);
+        final SubtitleFile file = reader.read(getInput());
+
         filterer.filter(file, filters, mode);
 
-        SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(outputType);
-        writer.write(file, output);
+        final SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(getOutputType());
+        writer.write(file, getOutput());
     }
 }

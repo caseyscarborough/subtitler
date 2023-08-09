@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum FilterMode {
-    INCLUDE("remove all filters except the ones specified"),
+    RETAIN("remove all filters except the ones specified"),
     OMIT("remove only the filters specified");
 
     private final String description;
