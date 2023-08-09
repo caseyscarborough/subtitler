@@ -38,8 +38,8 @@ public class FilterCommand extends BaseCommand {
     @Option(names = {"-f", "--filters"}, description = "The type of filters to use. Filters should be key/value pairs separated with a semicolon, and multiple values can be specified with commas. Multiple filters are executed with 'OR' logic (all filters are applied).\nExample: --filters \"style=op,ed,songs,signs;after=00:30:00.000\" --mode OMIT (remove all subtitles matching the specified styles or after 30 minutes).\nFilters: ${COMPLETION-CANDIDATES}.", required = true, completionCandidates = FilterTypeCompleter.class)
     private String filters;
 
-    @Option(names = {"-t", "--threshold"}, description = "The threshold below which to filter. This will prevent filtering if the number of subtitles that would be removed exceeds the threshold.")
-    private int threshold = Integer.MAX_VALUE;
+    @Option(names = {"-t", "--threshold"}, description = "The threshold below which to filter. This will prevent filtering if the number of subtitles that would be removed exceeds the threshold.", defaultValue = "2147483647")
+    private int threshold;
 
     @Override
     public void doRun() {

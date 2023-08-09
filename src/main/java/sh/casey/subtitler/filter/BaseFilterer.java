@@ -76,9 +76,9 @@ abstract class BaseFilterer<T extends SubtitleFile> implements Filterer<T> {
 
         final Predicate<Subtitle> p = mode == OMIT ? predicate : predicate.negate();
         int before = file.getSubtitles().size();
-        long after = file.getSubtitles().stream().filter(p).count();
+        long after = file.getSubtitles().stream().filter(p.negate()).count();
         if (before - after > threshold) {
-            log.warn("Filtering subtitles by {} would remove {} subtitles, which exceeds the threshold ({}) by {} subtitles. Skipping filtering.", type.getName(), before - after, threshold, threshold - (before - after));
+            log.warn("Filtering subtitles by {} would remove {} subtitles, which exceeds the threshold ({}) by {} subtitles. Skipping filtering.", type.getName(), before - after, threshold, (before - after) - threshold);
             return;
         }
         file.getSubtitles().removeIf(p);

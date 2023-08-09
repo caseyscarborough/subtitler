@@ -33,7 +33,7 @@ class AssFilterer extends BaseFilterer<AssSubtitleFile> {
             .collect(Collectors.toList());
 
         if (before - after.size() > threshold) {
-            log.warn("Filtering subtitles by style would remove {} subtitles, which exceeds the threshold ({}) by {} subtitles. Skipping filtering.", before - after.size(), threshold, threshold - (before - after.size()));
+            log.warn("Filtering subtitles by style would remove {} subtitles, which exceeds the threshold ({}) by {} subtitles. Skipping filtering.", before - after.size(), threshold, (before - after.size()) - threshold);
             return;
         }
         file.setDialogues(after);
