@@ -18,13 +18,13 @@ abstract class BaseFilterer<T extends SubtitleFile> implements Filterer<T> {
     abstract void cleanup(T file);
 
     @Override
-    public void filter(T file, String filters, FilterMode mode) {
+    public void filter(T file, String filters, FilterMode mode, int threshold) {
         final String[] parts = filters.split(";");
-        Arrays.stream(parts).forEach(filter -> handleFilters(file, filter, mode));
+        Arrays.stream(parts).forEach(filter -> handleFilters(file, filter, mode, threshold));
         cleanup(file);
     }
 
-    private void handleFilters(T file, String filter, FilterMode mode) {
+    private void handleFilters(T file, String filter, FilterMode mode, int threshold) {
         final String[] keyValue = filter.split("=");
         if (keyValue.length != 2) {
             throw new IllegalArgumentException("Filters argument was invalid: " + filter + ". Filters must be in the format of key1=value1,value2;key2=value3,value4");
@@ -35,10 +35,10 @@ abstract class BaseFilterer<T extends SubtitleFile> implements Filterer<T> {
             return;
         }
         final List<String> values = Arrays.stream(keyValue[1].split(",")).collect(Collectors.toList());
-        filter(file, key, values, mode);
+        filter(file, key, values, mode, threshold);
     }
 
-    private void filter(T file, FilterType type, List<String> filters, FilterMode mode) {
+    private void filter(T file, FilterType type, List<String> filters, FilterMode mode, int threshold) {
         if (filters.isEmpty()) {
             return;
         }
@@ -49,7 +49,7 @@ abstract class BaseFilterer<T extends SubtitleFile> implements Filterer<T> {
         Predicate<Subtitle> predicate = null;
         switch (type) {
             case STYLE:
-                filterStyles(file, filters, mode);
+                filterStyles(file, filters, mode, threshold);
                 return;
             case TEXT:
                 log.info("{} all subtitles where the text is in {}...", verb, filters);
@@ -73,13 +73,19 @@ abstract class BaseFilterer<T extends SubtitleFile> implements Filterer<T> {
             log.warn("An unsupported filter attempt was made for {} file, ignoring...", file.getType().getExtension());
             return;
         }
+
+        final Predicate<Subtitle> p = mode == OMIT ? predicate : predicate.negate();
         int before = file.getSubtitles().size();
-        file.getSubtitles().removeIf(mode == OMIT ? predicate : predicate.negate());
-        int after = file.getSubtitles().size();
+        long after = file.getSubtitles().stream().filter(p).count();
+        if (before - after > threshold) {
+            log.warn("Filtering subtitles by {} would remove {} subtitles, which exceeds the threshold ({}) by {} subtitles. Skipping filtering.", type.getName(), before - after, threshold, threshold - (before - after));
+            return;
+        }
+        file.getSubtitles().removeIf(p);
         log.debug("Filtered out {} subtitles...", before - after);
     }
 
-    protected void filterStyles(T file, List<String> styles, FilterMode mode) {
+    protected void filterStyles(T file, List<String> styles, FilterMode mode, int threshold) {
         // This should be overriden for Aegisub subtitles
     }
 }

@@ -7,38 +7,42 @@ import org.junit.runners.Parameterized;
 import sh.casey.subtitler.model.SrtSubtitle;
 import sh.casey.subtitler.model.SrtSubtitleFile;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 @AllArgsConstructor
 public class SrtFiltererTest {
 
+    private final SrtFilterer filterer = new SrtFilterer();
     private String filters;
     private FilterMode mode;
     private int expected;
-    private final SrtFilterer filterer = new SrtFilterer();
+    private int threshold;
 
     @Parameterized.Parameters
-    public static Collection parameters() {
-        return Arrays.asList(new Object[][] {
-            {"text=Subtitle,File", FilterMode.OMIT, 8},
-            {"text=Subtitle,File", FilterMode.RETAIN, 2},
-            {"after=00:00:05.000", FilterMode.OMIT, 3},
-            {"after=00:00:05.000", FilterMode.RETAIN, 7},
-            {"before=00:00:05.000", FilterMode.OMIT, 8},
-            {"before=00:00:05.000", FilterMode.RETAIN, 2},
-            {"style=Default", FilterMode.RETAIN, 10},
-            {"style=Default", FilterMode.OMIT, 10},
-        });
+    public static Object[][] parameters() {
+        return new Object[][]{
+            {"text=Subtitle,File", FilterMode.OMIT, 8, Integer.MAX_VALUE},
+            {"text=Subtitle,File", FilterMode.RETAIN, 2, Integer.MAX_VALUE},
+            {"after=00:00:05.000", FilterMode.OMIT, 3, Integer.MAX_VALUE},
+            {"after=00:00:05.000", FilterMode.RETAIN, 7, Integer.MAX_VALUE},
+            {"before=00:00:05.000", FilterMode.OMIT, 8, Integer.MAX_VALUE},
+            {"before=00:00:05.000", FilterMode.RETAIN, 2, Integer.MAX_VALUE},
+            {"style=Default", FilterMode.RETAIN, 10, Integer.MAX_VALUE},
+            {"style=Default", FilterMode.OMIT, 10, Integer.MAX_VALUE},
+            {"text=Subtitle,File", FilterMode.OMIT, 10, 1},
+            {"text=Subtitle,File", FilterMode.RETAIN, 10, 1},
+            {"after=00:00:05.000", FilterMode.OMIT, 10, 1},
+            {"after=00:00:05.000", FilterMode.RETAIN, 10, 1},
+            {"before=00:00:05.000", FilterMode.OMIT, 10, 1},
+            {"before=00:00:05.000", FilterMode.RETAIN, 10, 1},
+        };
     }
 
     @Test
     public void testFilter() {
         SrtSubtitleFile file = getSubtitleFile();
-        filterer.filter(file, filters, mode);
+        filterer.filter(file, filters, mode, threshold);
         assertEquals(expected, file.getSubtitles().size());
     }
 

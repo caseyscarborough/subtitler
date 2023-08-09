@@ -20,7 +20,7 @@ public class AssFiltererTest {
     public void testIncludingStyle() {
         final AssSubtitleFile file = new AssSubtitleReader().read("src/test/resources/ass/test1.ass");
         assertEquals(328, file.getDialogues().size());
-        filterer.filter(file, FilterType.STYLE.getName() + "=Style1,Style2", FilterMode.RETAIN);
+        filterer.filter(file, FilterType.STYLE.getName() + "=Style1,Style2", FilterMode.RETAIN, Integer.MAX_VALUE);
         assertEquals(318, file.getDialogues().size());
     }
 
@@ -28,7 +28,7 @@ public class AssFiltererTest {
     public void testOmittingStyle() {
         final AssSubtitleFile file = new AssSubtitleReader().read("src/test/resources/ass/test1.ass");
         assertEquals(328, file.getDialogues().size());
-        filterer.filter(file, FilterType.STYLE.getName() + "=Style1,Style2", FilterMode.OMIT);
+        filterer.filter(file, FilterType.STYLE.getName() + "=Style1,Style2", FilterMode.OMIT, Integer.MAX_VALUE);
         assertEquals(10, file.getDialogues().size());
     }
 }

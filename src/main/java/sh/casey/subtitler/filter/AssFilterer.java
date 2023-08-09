@@ -19,7 +19,7 @@ class AssFilterer extends BaseFilterer<AssSubtitleFile> {
     }
 
     @Override
-    protected void filterStyles(AssSubtitleFile file, List<String> filters, FilterMode mode) {
+    protected void filterStyles(AssSubtitleFile file, List<String> filters, FilterMode mode, int threshold) {
         List<String> styles = filters.stream().map(String::toLowerCase).collect(Collectors.toList());
         Predicate<AssDialogue> dialogue = d -> styles.contains(d.getStyle().toLowerCase(Locale.ROOT));
         Predicate<AssStyle> style = d -> styles.contains(d.getName().toLowerCase(Locale.ROOT));
@@ -27,12 +27,16 @@ class AssFilterer extends BaseFilterer<AssSubtitleFile> {
         String verb = mode == FilterMode.OMIT ? "Omitting" : "Retaining";
         log.info("{} all styles and dialogues where the style is in {}...", verb, filters);
         int before = file.getDialogues().size();
-        file.setDialogues(
-            file.getDialogues()
-                .stream()
-                .filter(mode == FilterMode.RETAIN ? dialogue : dialogue.negate())
-                .collect(Collectors.toList())
-        );
+        List<AssDialogue> after = file.getDialogues()
+            .stream()
+            .filter(mode == FilterMode.RETAIN ? dialogue : dialogue.negate())
+            .collect(Collectors.toList());
+
+        if (before - after.size() > threshold) {
+            log.warn("Filtering subtitles by style would remove {} subtitles, which exceeds the threshold ({}) by {} subtitles. Skipping filtering.", before - after.size(), threshold, threshold - (before - after.size()));
+            return;
+        }
+        file.setDialogues(after);
         log.debug("Filtered dialogues from {} to {} dialogues.", before, file.getDialogues().size());
 
         before = file.getStyles().size();
