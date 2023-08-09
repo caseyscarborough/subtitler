@@ -21,7 +21,7 @@ import sh.casey.subtitler.writer.SubtitleWriterFactory;
         "Filter a subtitle file by removing lines that match (or don't match) a specific criteria.",
         "Examples:\n" +
             "  subs filter --filters \"style=op,ed,signs,songs\" --mode OMIT (remove subtitles with the op, ed, signs, or songs styles)\n" +
-            "  subs filter --filters \"after=00:30:00,000\" --mode OMIT (remove subtitles after 30 minutes)\n" +
+            "  subs filter --filters \"after=00:30:00.000\" --mode OMIT (remove subtitles after 30 minutes)\n" +
             "  subs filter --filters \"text=♪♪～\" --mode OMIT (remove subtitles matching ♪♪～)\n" +
             "  subs filter --filters \"style=Main,Default\" --mode RETAIN (remove subtitles that aren't the Main or Default style)"
     },
@@ -35,7 +35,7 @@ public class FilterCommand extends BaseCommand {
     @Option(names = {"-m", "--mode"}, description = "The filter mode to use. Modes are: ${COMPLETION-CANDIDATES}. (Default is OMIT)", completionCandidates = FilterModeCompleter.class)
     private FilterMode mode = FilterMode.OMIT;
 
-    @Option(names = {"-f", "--filters"}, description = "The type of filters to use. Filters should be key/value pairs separated with a semicolon, and multiple values can be specified with commas. Multiple filters are executed with 'OR' logic (all filters are applied).\nExample: --filters \"style=op,ed,songs,signs;after=00:30:00,000\" --mode OMIT (remove all subtitles matching the specified styles or after 30 minutes).\nFilters: ${COMPLETION-CANDIDATES}.", required = true, completionCandidates = FilterTypeCompleter.class)
+    @Option(names = {"-f", "--filters"}, description = "The type of filters to use. Filters should be key/value pairs separated with a semicolon, and multiple values can be specified with commas. Multiple filters are executed with 'OR' logic (all filters are applied).\nExample: --filters \"style=op,ed,songs,signs;after=00:30:00.000\" --mode OMIT (remove all subtitles matching the specified styles or after 30 minutes).\nFilters: ${COMPLETION-CANDIDATES}.", required = true, completionCandidates = FilterTypeCompleter.class)
     private String filters;
 
     @Override
