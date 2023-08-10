@@ -2,6 +2,8 @@
 
 ![Build](https://github.com/caseyscarborough/subtitler/actions/workflows/release.yml/badge.svg)
 
+⚠️ This README has not yet been updated for v2 of this library. It will be updated soon. ⚠️
+
 This is a cross-platform, full-featured Java library and CLI utility for working with subtitles.
 
 It currently supports the following subtitle types:
