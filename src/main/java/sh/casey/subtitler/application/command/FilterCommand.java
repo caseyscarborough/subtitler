@@ -1,10 +1,12 @@
 package sh.casey.subtitler.application.command;
 
+import lombok.extern.slf4j.Slf4j;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import sh.casey.subtitler.application.command.completer.FilterModeCompleter;
 import sh.casey.subtitler.application.command.completer.FilterTypeCompleter;
 import sh.casey.subtitler.filter.FilterMode;
+import sh.casey.subtitler.filter.FilterType;
 import sh.casey.subtitler.filter.Filterer;
 import sh.casey.subtitler.filter.FiltererFactory;
 import sh.casey.subtitler.model.SubtitleFile;
@@ -13,6 +15,12 @@ import sh.casey.subtitler.reader.SubtitleReader;
 import sh.casey.subtitler.reader.SubtitleReaderFactory;
 import sh.casey.subtitler.writer.SubtitleWriter;
 import sh.casey.subtitler.writer.SubtitleWriterFactory;
+
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Command(
     name = "filter",
@@ -28,6 +36,7 @@ import sh.casey.subtitler.writer.SubtitleWriterFactory;
     sortOptions = false,
     sortSynopsis = false
 )
+@Slf4j
 public class FilterCommand extends BaseCommand {
 
     private final FiltererFactory factory = new FiltererFactory();
@@ -48,9 +57,28 @@ public class FilterCommand extends BaseCommand {
         final Filterer<SubtitleFile> filterer = factory.getInstance(inputType);
         final SubtitleFile file = reader.read(getInput());
 
-        filterer.filter(file, filters, mode, threshold);
+        filterer.filter(file, getFilterMap(file, filters), mode, threshold);
 
         final SubtitleWriter<SubtitleFile> writer = new SubtitleWriterFactory().getInstance(getOutputType());
         writer.write(file, getOutput());
+    }
+
+    private Map<FilterType, List<String>> getFilterMap(SubtitleFile file, String filters) {
+        final String[] parts = filters.split(";");
+        Map<FilterType, List<String>> output = new EnumMap<>(FilterType.class);
+        for (String filter : parts) {
+            final String[] keyValue = filter.split("=");
+            if (keyValue.length != 2) {
+                throw new IllegalArgumentException("Filters argument was invalid: " + filter + ". Filters must be in the format of key1=value1,value2;key2=value3,value4");
+            }
+            final FilterType key = FilterType.findByName(keyValue[0]);
+            if (!key.getSupportedTypes().contains(file.getType())) {
+                log.warn("Filter \"{}\" is not supported with {} subtitles, ignoring...", key.getName(), file.getType().getExtension());
+                return output;
+            }
+            final List<String> values = Arrays.stream(keyValue[1].split(",")).collect(Collectors.toList());
+            output.put(key, values);
+        }
+        return output;
     }
 }
