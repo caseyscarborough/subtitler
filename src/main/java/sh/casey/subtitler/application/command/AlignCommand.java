@@ -194,8 +194,8 @@ public class AlignCommand extends BaseCommand {
             // - Do nothing and let the user fix it manually.
             if (endModified.containsKey(current.getNumber()) && startModified.containsKey(next.getNumber())) {
                 // the overlap here is likely significant, i.e. two dialogues happening at the same time, so we will do nothing.
-                String end = TimeUtil.millsecondsToTime(current.getType(), originalCurrentEnd);
-                String start = TimeUtil.millsecondsToTime(next.getType(), originalNextStart);
+                String end = TimeUtil.millisecondsToTime(current.getType(), originalCurrentEnd);
+                String start = TimeUtil.millisecondsToTime(next.getType(), originalNextStart);
                 log.trace("Resetting the end time of the first subtitle from {} to {}.", current.getEnd(), end);
                 current.setEnd(end);
                 log.trace("Resetting the start time of the second subtitle from {} to {}.", next.getStart(), start);

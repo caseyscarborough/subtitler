@@ -1,6 +1,6 @@
 package sh.casey.subtitler.model;
 
-public class TtmlSubtitle implements Subtitle {
+public class TtmlSubtitle extends BaseSubtitle {
 
     private Integer number;
     private String text;
@@ -37,11 +37,6 @@ public class TtmlSubtitle implements Subtitle {
     }
 
     @Override
-    public Long getStartMilliseconds() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void setStart(final String start) {
         this.start = start;
     }
@@ -49,11 +44,6 @@ public class TtmlSubtitle implements Subtitle {
     @Override
     public String getEnd() {
         return end;
-    }
-
-    @Override
-    public Long getEndMilliseconds() {
-        throw new UnsupportedOperationException();
     }
 
     @Override

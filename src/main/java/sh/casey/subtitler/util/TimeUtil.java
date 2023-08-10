@@ -10,32 +10,35 @@ public class TimeUtil {
     private static final Long MINUTES = SECONDS * 60;
     private static final Long HOURS = MINUTES * 60;
 
-    public static Long formatTimeToMilliseconds(SubtitleType type, String time) {
+    public static Long timeToMilliseconds(SubtitleType type, String time) {
         if (type == SubtitleType.SRT) {
-            return srtFormatTimeToMilliseconds(time);
+            return timeToMilliseconds(",", time, 1);
         } else if (type == SubtitleType.ASS) {
-            return assFormatTimeToMilliseconds(time);
+            return timeToMilliseconds(".", time, 10);
         } else if (type == SubtitleType.VTT) {
-            // TODO: verify this works
+            return timeToMilliseconds(".", time, 1);
+        } else if (type == SubtitleType.DFXP) {
             return timeToMilliseconds(".", time, 1);
         } else {
             throw new IllegalArgumentException("Could not format time for type " + type);
         }
     }
 
-    public static String millsecondsToTime(SubtitleType type, Long time) {
+    public static String millisecondsToTime(SubtitleType type, long time) {
         if (type == SubtitleType.SRT) {
-            return srtMillisecondsToTime(time);
+            return millisecondsToTime(time, 2, 3,",");
         } else if (type == SubtitleType.ASS) {
-            return assMillisecondsToTime(time);
+            return millisecondsToTime(time, 1, 2, ".");
         } else if (type == SubtitleType.VTT) {
-            return vttMillisecondsToTime(time);
+            return millisecondsToTime(time, 2, 3, ".");
+        } else if (type == SubtitleType.DFXP) {
+            return millisecondsToTime(time, 2, 3, ".");
         } else {
             throw new IllegalArgumentException("Could not format time for type " + type + " as the conversion has not been implemented");
         }
     }
 
-    public static String assMillisecondsToTime(Long time) {
+    private static String millisecondsToTime(long time, int hoursDigits, int msDigits, String separator) {
         long hours = time / HOURS;
         time %= HOURS;
         long minutes = time / MINUTES;
@@ -43,34 +46,11 @@ public class TimeUtil {
         long seconds = time / SECONDS;
         time %= SECONDS;
         long ms = time;
-        return hours + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds) + "." + String.format("%03d", ms).substring(0, 2);
-    }
-
-    public static String srtMillisecondsToTime(Long time) {
-        return millisecondsToTime(time, ",");
-    }
-
-    public static String vttMillisecondsToTime(Long time) {
-        return millisecondsToTime(time, ".");
-    }
-
-    private static String millisecondsToTime(Long time, String separator) {
-        long hours = time / HOURS;
-        time %= HOURS;
-        long minutes = time / MINUTES;
-        time %= MINUTES;
-        long seconds = time / SECONDS;
-        time %= SECONDS;
-        long ms = time;
-        return String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds) + separator + String.format("%03d", ms);
-    }
-
-    public static Long srtFormatTimeToMilliseconds(final String time) {
-        return timeToMilliseconds(",", time, 1);
-    }
-
-    public static Long assFormatTimeToMilliseconds(final String time) {
-        return timeToMilliseconds(".", time, 10);
+        for (int i = 3 - msDigits; i > 0; i--) {
+            ms /= 10;
+        }
+        String format = String.format("%%0%dd:%%02d:%%02d%%s%%0%dd", hoursDigits, msDigits);
+        return String.format(format, hours, minutes, seconds, separator, ms);
     }
 
     public static Long timeToMilliseconds(final String replace, final String time, Integer msFactor) {

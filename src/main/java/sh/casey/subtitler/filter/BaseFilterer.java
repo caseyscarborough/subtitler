@@ -5,10 +5,9 @@ import sh.casey.subtitler.model.Subtitle;
 import sh.casey.subtitler.model.SubtitleFile;
 import sh.casey.subtitler.util.TimeUtil;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static sh.casey.subtitler.filter.FilterMode.OMIT;
 
@@ -18,24 +17,11 @@ abstract class BaseFilterer<T extends SubtitleFile> implements Filterer<T> {
     abstract void cleanup(T file);
 
     @Override
-    public void filter(T file, String filters, FilterMode mode, int threshold) {
-        final String[] parts = filters.split(";");
-        Arrays.stream(parts).forEach(filter -> handleFilters(file, filter, mode, threshold));
+    public void filter(T file, Map<FilterType, List<String>> filters, FilterMode mode, int threshold) {
+        for (Map.Entry<FilterType, List<String>> filter : filters.entrySet()) {
+            filter(file, filter.getKey(), filter.getValue(), mode, threshold);
+        }
         cleanup(file);
-    }
-
-    private void handleFilters(T file, String filter, FilterMode mode, int threshold) {
-        final String[] keyValue = filter.split("=");
-        if (keyValue.length != 2) {
-            throw new IllegalArgumentException("Filters argument was invalid: " + filter + ". Filters must be in the format of key1=value1,value2;key2=value3,value4");
-        }
-        final FilterType key = FilterType.findByName(keyValue[0]);
-        if (!key.getSupportedTypes().contains(file.getType())) {
-            log.warn("Filter \"{}\" is not supported with {} subtitles, ignoring...", key.getName(), file.getType().getExtension());
-            return;
-        }
-        final List<String> values = Arrays.stream(keyValue[1].split(",")).collect(Collectors.toList());
-        filter(file, key, values, mode, threshold);
     }
 
     private void filter(T file, FilterType type, List<String> filters, FilterMode mode, int threshold) {
@@ -64,6 +50,10 @@ abstract class BaseFilterer<T extends SubtitleFile> implements Filterer<T> {
                 log.info("{} all subtitles where the end time is before {}...", verb, filters.get(0));
                 final Long before = TimeUtil.timeToMilliseconds(".", filters.get(0), 1);
                 predicate = subtitle -> subtitle.getEndMilliseconds() < before;
+                break;
+            case MATCHES:
+                log.info("{} all subtitles where the text matches {}...", verb, filters.get(0));
+                predicate = subtitle -> subtitle.getText().matches(filters.get(0));
                 break;
             default:
                 log.warn("Missing implementation for \"{}\" filter for \"{}\" files...", type.getName(), file.getType().getExtension());

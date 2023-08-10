@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import sh.casey.subtitler.model.AssDialogue;
 import sh.casey.subtitler.model.AssSubtitleFile;
+import sh.casey.subtitler.model.SubtitleType;
 import sh.casey.subtitler.reader.AssSubtitleReader;
 import sh.casey.subtitler.util.TimeUtil;
 
@@ -28,7 +29,7 @@ public class AssSubtitleShifterTest {
         final String filePath = "src/test/resources/ass/[Judas] Bleach - S01E04 - 004.en.ass";
         final AssSubtitleFile file = reader.read(filePath);
         final AssSubtitleFile shifted = reader.read(filePath);
-        ShiftConfig config = new ShiftConfig(TimeUtil.srtMillisecondsToTime(after), TimeUtil.srtMillisecondsToTime(before), null, null, shift, ShiftMode.FROM_TO);
+        ShiftConfig config = new ShiftConfig(TimeUtil.millisecondsToTime(SubtitleType.SRT, after), TimeUtil.millisecondsToTime(SubtitleType.SRT, before), null, null, shift, ShiftMode.FROM_TO);
         shifter.shift(shifted, config);
         assertEquals(file.getDialogues().size(), shifted.getDialogues().size());
         for (int i = 0; i < shifted.getDialogues().size(); i++) {

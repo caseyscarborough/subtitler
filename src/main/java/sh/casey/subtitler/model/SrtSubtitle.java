@@ -7,7 +7,7 @@ import sh.casey.subtitler.util.TimeUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SrtSubtitle implements Subtitle, Comparable<SrtSubtitle> {
+public class SrtSubtitle extends BaseSubtitle implements Comparable<SrtSubtitle> {
 
     private Integer number;
     private String start;
@@ -29,11 +29,6 @@ public class SrtSubtitle implements Subtitle, Comparable<SrtSubtitle> {
     }
 
     @Override
-    public Long getStartMilliseconds() {
-        return TimeUtil.srtFormatTimeToMilliseconds(getStart());
-    }
-
-    @Override
     public void setStart(final String start) {
         this.start = start;
     }
@@ -41,11 +36,6 @@ public class SrtSubtitle implements Subtitle, Comparable<SrtSubtitle> {
     @Override
     public String getEnd() {
         return end;
-    }
-
-    @Override
-    public Long getEndMilliseconds() {
-        return TimeUtil.srtFormatTimeToMilliseconds(getEnd());
     }
 
     @Override

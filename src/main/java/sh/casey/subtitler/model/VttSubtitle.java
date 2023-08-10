@@ -7,7 +7,7 @@ import sh.casey.subtitler.util.TimeUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VttSubtitle implements Subtitle, Comparable<VttSubtitle> {
+public class VttSubtitle extends BaseSubtitle implements Comparable<VttSubtitle> {
 
     private Integer number;
     private String start;
@@ -29,11 +29,6 @@ public class VttSubtitle implements Subtitle, Comparable<VttSubtitle> {
     }
 
     @Override
-    public Long getStartMilliseconds() {
-        return TimeUtil.formatTimeToMilliseconds(SubtitleType.VTT, getStart());
-    }
-
-    @Override
     public void setStart(final String start) {
         this.start = start;
     }
@@ -41,11 +36,6 @@ public class VttSubtitle implements Subtitle, Comparable<VttSubtitle> {
     @Override
     public String getEnd() {
         return end;
-    }
-
-    @Override
-    public Long getEndMilliseconds() {
-        return TimeUtil.formatTimeToMilliseconds(SubtitleType.VTT, getEnd());
     }
 
     @Override

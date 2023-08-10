@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.Subtitle;
 import sh.casey.subtitler.model.SubtitleFile;
+import sh.casey.subtitler.model.SubtitleType;
 import sh.casey.subtitler.util.TimeUtil;
 
 @Slf4j
@@ -21,11 +22,11 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
         Long afterDate = null;
         if (StringUtils.isNotBlank(config.getBefore()) && !StringUtils.isNumeric(config.getBefore())) {
             // Only convert to milliseconds if the time is not numeric (uses the 00:00:00,000 format)
-            beforeDate = TimeUtil.srtFormatTimeToMilliseconds(config.getBefore());
+            beforeDate = TimeUtil.timeToMilliseconds(SubtitleType.SRT, config.getBefore());
         }
         if (StringUtils.isNotBlank(config.getAfter()) && !StringUtils.isNumeric(config.getAfter())) {
             // Only convert to milliseconds if the time is not numeric (uses the 00:00:00,000 format)
-            afterDate = TimeUtil.srtFormatTimeToMilliseconds(config.getAfter());
+            afterDate = TimeUtil.timeToMilliseconds(SubtitleType.SRT, config.getAfter());
         }
         Integer beforeNumber = null;
         Integer afterNumber = null;
@@ -87,11 +88,11 @@ abstract class BaseSubtitleShifter<T extends SubtitleFile> implements SubtitleSh
             }
 
             if (config.getShiftMode().equals(ShiftMode.FROM) || config.getShiftMode().equals(ShiftMode.FROM_TO)) {
-                subtitle.setStart(TimeUtil.millsecondsToTime(subtitle.getType(), from + ms));
+                subtitle.setStart(TimeUtil.millisecondsToTime(subtitle.getType(), from + ms));
             }
 
             if (config.getShiftMode().equals(ShiftMode.TO) || config.getShiftMode().equals(ShiftMode.FROM_TO)) {
-                subtitle.setEnd(TimeUtil.millsecondsToTime(subtitle.getType(), to + ms));
+                subtitle.setEnd(TimeUtil.millisecondsToTime(subtitle.getType(), to + ms));
             }
 
             shiftCount++;

@@ -21,7 +21,7 @@ public class DfxpToAssSubtitleConverterTest {
 
     @Test
     public void testConvert() {
-        DfxpSubtitleFile input = reader.read("src/test/resources/dfxp/test1.dfxp");
+        DfxpSubtitleFile input = reader.read("src/test/resources/dfxp/test1.en.dfxp");
         AssSubtitleFile output = converter.convert(input);
         assertEquals(23, output.getDialogues().size());
     }
