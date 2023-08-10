@@ -2,14 +2,14 @@
 <Configuration>
     <Appenders>
         <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+            <PatternLayout pattern="%d %-5p [%t] %C{2}:%L - %m%n"/>
         </Console>
     </Appenders>
     <Loggers>
         <Logger name="sh.casey" level="debug">
             <AppenderRef ref="STDOUT"/>
         </Logger>
-        <Root level="info">
+        <Root level="debug">
             <AppenderRef ref="STDOUT"/>
         </Root>
     </Loggers>
