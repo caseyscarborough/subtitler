@@ -76,6 +76,7 @@ public class AssSubtitleWriter extends BaseSubtitleWriter<AssSubtitleFile> {
 
         try {
             writer.write(sb.toString().trim());
+            writer.flush();
         } catch (IOException e) {
             throw new SubtitleException("Couldn't write file", e);
         }
