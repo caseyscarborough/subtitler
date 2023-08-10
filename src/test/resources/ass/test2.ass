@@ -5,8 +5,8 @@ WrapStyle: 0
 PlayResX: 720
 PlayResY: 480
 ScaledBorderAndShadow: yes
-Audio File: 
-Video File: 
+Audio File:
+Video File:
 Video Aspect Ratio: 0
 Video Zoom: 6
 Video Position: 0
@@ -15,7 +15,7 @@ Video Position: 0
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Dialogue1,Tahoma,32,&H00FDFDFD,&H000000FF,&H1F000000,&HC7000000,0,0,0,0,100,100,0,0,1,1.4,1.7,2,60,60,15,1
 Style: Dialogue4,Tahoma,31,&H00FDFDFD,&H000000FF,&H1F000000,&HC7000000,0,0,0,0,100,100,0,0,1,1.4,1.7,2,60,60,15,1
-Style: Dialogue2,Tahoma,31,&H00FDFDFD,&H000000FF,&H1F000000,&HC7000000,0,0,0,0,100,100,0,0,1,1.4,1.7,2,60,60,15,1
+Style: Dialogue2,Tahoma,31,&H00FDFDFD,&H000000FF,&H1F000000,&HC7000000,0,0,0,0,100,100,0,0,1,1.4,1.7,8,60,60,15,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
