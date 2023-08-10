@@ -10,6 +10,14 @@ public class AssScriptInfo {
     private final List<String> comments = new ArrayList<>();
     private final List<String> attributes = new ArrayList<>();
 
+    public AssScriptInfo() {
+    }
+
+    public AssScriptInfo(AssScriptInfo info) {
+        this.comments.addAll(info.getComments());
+        this.attributes.addAll(info.getAttributes());
+    }
+
     public List<String> getComments() {
         return comments;
     }

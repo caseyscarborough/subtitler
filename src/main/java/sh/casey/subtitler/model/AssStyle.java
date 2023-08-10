@@ -1,11 +1,19 @@
 package sh.casey.subtitler.model;
 
+import lombok.NoArgsConstructor;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+@NoArgsConstructor
 public class AssStyle {
 
-    private Map<String, String> attributes = new HashMap<>();
+    private final Map<String, String> attributes = new HashMap<>();
+
+    public AssStyle(AssStyle style) {
+        this.attributes.putAll(style.getAttributes());
+    }
 
     public Map<String, String> getAttributes() {
         return attributes;

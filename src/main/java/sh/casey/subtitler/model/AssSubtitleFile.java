@@ -1,10 +1,14 @@
 package sh.casey.subtitler.model;
 
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // See this document for information on ASS subtitle tags:
 // http://docs.aegisub.org/3.2/ASS_Tags/
+@NoArgsConstructor
 public class AssSubtitleFile extends BaseSubtitleFile {
 
     // Script Info
@@ -18,6 +22,16 @@ public class AssSubtitleFile extends BaseSubtitleFile {
     private List<String> eventsFormatOrder = new ArrayList<>();
     private List<AssDialogue> dialogues = new ArrayList<>();
     private AssStyleVersion styleVersion;
+
+    // Copy Constructor
+    public AssSubtitleFile(AssSubtitleFile file) {
+        setEventsFormatOrder(new ArrayList<>(file.getEventsFormatOrder()));
+        setStylesFormatOrder(new ArrayList<>(file.getStylesFormatOrder()));
+        setDialogues(file.getDialogues().stream().map(AssDialogue::new).collect(Collectors.toList()));
+        setStyles(file.getStyles().stream().map(AssStyle::new).collect(Collectors.toList()));
+        setStyleVersion(file.getStyleVersion());
+        setScriptInfo(new AssScriptInfo(file.getScriptInfo()));
+    }
 
     public AssScriptInfo getScriptInfo() {
         return scriptInfo;

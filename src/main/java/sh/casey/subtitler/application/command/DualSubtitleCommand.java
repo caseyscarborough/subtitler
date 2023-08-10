@@ -10,22 +10,16 @@ import sh.casey.subtitler.application.command.completer.StyleConfigCompleter;
 import sh.casey.subtitler.application.command.completer.SubtitleTypeCompleter;
 import sh.casey.subtitler.application.command.config.StyleConfig;
 import sh.casey.subtitler.application.logging.TerminalLogger;
-import sh.casey.subtitler.converter.SubtitleConverter;
-import sh.casey.subtitler.converter.SubtitleConverterFactory;
-import sh.casey.subtitler.model.AssDialogue;
-import sh.casey.subtitler.model.AssStyle;
-import sh.casey.subtitler.model.AssSubtitleFile;
+import sh.casey.subtitler.dual.DualSubtitleConfig;
+import sh.casey.subtitler.dual.DualSubtitleCreator;
 import sh.casey.subtitler.model.SubtitleFile;
 import sh.casey.subtitler.model.SubtitleType;
 import sh.casey.subtitler.reader.SubtitleReader;
 import sh.casey.subtitler.reader.SubtitleReaderFactory;
-import sh.casey.subtitler.util.AssDefaults;
-import sh.casey.subtitler.writer.AssSubtitleWriter;
+import sh.casey.subtitler.writer.SubtitleWriter;
+import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -70,7 +64,53 @@ public class DualSubtitleCommand implements Runnable {
         if (trace) {
             TerminalLogger.isTraceEnabled = true;
         }
-        // Parse the dual subtitles configuration
+
+        final SubtitleReaderFactory readerFactory = new SubtitleReaderFactory();
+        final SubtitleWriterFactory writerFactory = new SubtitleWriterFactory();
+        final DualSubtitleCreator creator = new DualSubtitleCreator();
+
+        log.info("Creating dual subtitle file using top file '" + topPath + "' and bottom file '" + bottomPath + "'");
+        final SubtitleReader<SubtitleFile> topReader = readerFactory.getInstance(getTopType());
+        final SubtitleReader<SubtitleFile> bottomReader = readerFactory.getInstance(getBottomType());
+        SubtitleFile topFile = topReader.read(topPath);
+        SubtitleFile bottomFile = bottomReader.read(bottomPath);
+
+        final Map<StyleConfig, String> styles = parseStyleConfiguration();
+        final DualSubtitleConfig config = DualSubtitleConfig.builder()
+            .keepTopStyles(keepTopStyles)
+            .align(align)
+            .topStyles(styles)
+            .build();
+        SubtitleFile output = creator.create(topFile, bottomFile, config);
+        final SubtitleWriter<SubtitleFile> writer = writerFactory.getInstance(SubtitleType.ASS);
+        writer.write(output, outputPath);
+    }
+
+    private SubtitleType getTopType() {
+        if (topType != null) {
+            return topType;
+        }
+        return getTypeFromFilename(topPath);
+    }
+
+    private SubtitleType getBottomType() {
+        if (bottomType != null) {
+            return bottomType;
+        }
+        return getTypeFromFilename(bottomPath);
+    }
+
+    private SubtitleType getTypeFromFilename(String filename) {
+        if (filename == null) {
+            return null;
+        }
+
+        final String[] parts = filename.split("\\.");
+        final String extension = parts[parts.length - 1];
+        return SubtitleType.find(extension);
+    }
+
+    private Map<StyleConfig, String> parseStyleConfiguration() {
         Map<StyleConfig, String> styles = new EnumMap<>(StyleConfig.class);
         if (cfg != null) {
             final String[] options = cfg.split(",");
@@ -97,103 +137,6 @@ public class DualSubtitleCommand implements Runnable {
                 styles.put(found, value);
             }
         }
-
-        log.info("Creating dual subtitle file using top file '" + topPath + "' and bottom file '" + bottomPath + "'");
-        final SubtitleType topType = getTopType();
-        final SubtitleType bottomType = getBottomType();
-        final SubtitleReader<SubtitleFile> topReader = new SubtitleReaderFactory().getInstance(topType);
-        final SubtitleReader<SubtitleFile> bottomReader = new SubtitleReaderFactory().getInstance(bottomType);
-        SubtitleFile topFile = topReader.read(topPath);
-        SubtitleFile bottomFile = bottomReader.read(bottomPath);
-
-        if (topType != SubtitleType.ASS) {
-            final SubtitleConverter<SubtitleFile, SubtitleFile> converter = new SubtitleConverterFactory().getInstance(topType, SubtitleType.ASS);
-            topFile = converter.convert(topFile);
-        }
-
-        if (bottomType != SubtitleType.ASS) {
-            final SubtitleConverter<SubtitleFile, SubtitleFile> converter = new SubtitleConverterFactory().getInstance(bottomType, SubtitleType.ASS);
-            bottomFile = converter.convert(bottomFile);
-        }
-
-        final AssSubtitleFile top = (AssSubtitleFile) topFile;
-        final AssSubtitleFile bottom = (AssSubtitleFile) bottomFile;
-
-        AssSubtitleFile output;
-        if (bottomType == SubtitleType.ASS) {
-            // If the bottom file is ASS format, we will reuse all the styles
-            // in the output file
-            output = bottom;
-        } else {
-            // Otherwise we'll create a new one with defaults
-            output = AssDefaults.getDefaultAssSubtitleFile();
-            output.getStyles().add(AssDefaults.getDefaultBottomStyle());
-            bottom.getDialogues().forEach(d -> d.setStyle("Bottom_Default"));
-        }
-
-        // configure top style
-        if (keepTopStyles && topType == SubtitleType.ASS) {
-            // prefix the styles with Top_, so they don't clash with the bottom file.
-            top.getStyles().forEach(s -> {
-                s.setName("Top_" + s.getName());
-                s.setAlignment("8");
-            });
-            top.getDialogues().forEach(d -> d.setStyle("Top_" + d.getStyle()));
-            output.getStyles().addAll(top.getStyles());
-        } else {
-            final AssStyle topStyle = AssDefaults.getDefaultTopStyle();
-            topStyle.setName("Top_Default");
-            for (Map.Entry<StyleConfig, String> entry : styles.entrySet()) {
-                entry.getKey().getConsumer().accept(topStyle, entry.getValue());
-            }
-            output.getStyles().add(topStyle);
-            // set all dialogues for the top file to the top style
-            top.getDialogues().forEach(d -> d.setStyle("Top_Default"));
-        }
-
-        final List<AssDialogue> dialogues = new ArrayList<>();
-        dialogues.addAll(top.getDialogues());
-        dialogues.addAll(bottom.getDialogues());
-        Collections.sort(dialogues);
-        output.setDialogues(dialogues);
-
-        if (align) {
-            // Move all top subtitles from the bottom file to the bottom
-            output.getStyles()
-                .stream()
-                .filter(s -> !s.getName().startsWith("Top_") && s.getAlignment().equals("8"))
-                .forEach(s -> s.setAlignment("2"));
-            output.getDialogues()
-                .stream()
-                .filter(d -> d.getText().contains("\\an8"))
-                .forEach(d -> d.setText(d.getText().replace("{\\an8}", "").replace("\\an8", "")));
-        }
-
-        final AssSubtitleWriter writer = new AssSubtitleWriter();
-        writer.write(output, outputPath);
-    }
-
-    private SubtitleType getTopType() {
-        if (topType != null) {
-            return topType;
-        }
-        return getTypeFromFilename(topPath);
-    }
-
-    private SubtitleType getBottomType() {
-        if (bottomType != null) {
-            return bottomType;
-        }
-        return getTypeFromFilename(bottomPath);
-    }
-
-    private SubtitleType getTypeFromFilename(String filename) {
-        if (filename == null) {
-            return null;
-        }
-
-        final String[] parts = filename.split("\\.");
-        final String extension = parts[parts.length - 1];
-        return SubtitleType.find(extension);
+        return styles;
     }
 }

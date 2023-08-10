@@ -1,5 +1,6 @@
 package sh.casey.subtitler.model;
 
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import sh.casey.subtitler.util.TimeUtil;
 
@@ -7,10 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ToString
-public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
+@NoArgsConstructor
+public class AssDialogue extends BaseSubtitle implements Comparable<AssDialogue> {
 
     private final Map<String, String> attributes = new HashMap<>();
     private boolean comment = false;
+
+    public AssDialogue(AssDialogue dialogue) {
+        this.attributes.putAll(dialogue.getAttributes());
+        this.comment = dialogue.isComment();
+    }
 
     @Override
     public Integer getNumber() {
@@ -41,11 +48,6 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
     }
 
     @Override
-    public Long getStartMilliseconds() {
-        return TimeUtil.assFormatTimeToMilliseconds(getStart());
-    }
-
-    @Override
     public String getEnd() {
         return attributes.get("End");
     }
@@ -53,11 +55,6 @@ public class AssDialogue implements Subtitle, Comparable<AssDialogue> {
     @Override
     public void setEnd(final String end) {
         attributes.put("End", end);
-    }
-
-    @Override
-    public Long getEndMilliseconds() {
-        return TimeUtil.assFormatTimeToMilliseconds(getEnd());
     }
 
     public String getStyle() {
