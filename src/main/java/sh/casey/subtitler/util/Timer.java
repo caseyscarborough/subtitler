@@ -1,5 +1,7 @@
 package sh.casey.subtitler.util;
 
+import java.util.concurrent.TimeUnit;
+
 public class Timer {
 
     private Long start;
@@ -8,15 +10,15 @@ public class Timer {
         if (start != null) {
             throw new IllegalStateException("Timer must be stopped to start it.");
         }
-        start = System.currentTimeMillis();
+        start = System.nanoTime();
     }
 
     public long stop() {
         if (start == null) {
             throw new IllegalStateException("Timer must be started to stop it.");
         }
-        final long elapsed = System.currentTimeMillis() - start;
+        final long elapsed = System.nanoTime() - start;
         start = null;
-        return elapsed;
+        return TimeUnit.NANOSECONDS.toMillis(elapsed);
     }
 }
