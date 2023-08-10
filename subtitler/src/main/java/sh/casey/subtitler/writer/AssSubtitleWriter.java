@@ -1,17 +1,22 @@
 package sh.casey.subtitler.writer;
 
+import lombok.extern.slf4j.Slf4j;
+import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.AssDialogue;
 import sh.casey.subtitler.model.AssStyle;
 import sh.casey.subtitler.model.AssStyleVersion;
 import sh.casey.subtitler.model.AssSubtitleFile;
-import sh.casey.subtitler.util.FileUtils;
 
-public class AssSubtitleWriter implements SubtitleWriter<AssSubtitleFile> {
+import java.io.IOException;
+import java.io.Writer;
+
+@Slf4j
+public class AssSubtitleWriter extends BaseSubtitleWriter<AssSubtitleFile> {
 
     private static final String CRLF = System.lineSeparator();
 
     @Override
-    public void write(final AssSubtitleFile file, final String outputPath) {
+    public void write(final AssSubtitleFile file, final Writer writer) {
         final StringBuilder sb = new StringBuilder();
         sb.append("[Script Info]").append(CRLF);
 
@@ -69,6 +74,10 @@ public class AssSubtitleWriter implements SubtitleWriter<AssSubtitleFile> {
             }
         }
 
-        FileUtils.writeFile(outputPath, sb.toString());
+        try {
+            writer.write(sb.toString().trim());
+        } catch (IOException e) {
+            throw new SubtitleException("Couldn't write file", e);
+        }
     }
 }

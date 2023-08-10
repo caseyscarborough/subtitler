@@ -1,12 +1,15 @@
 package sh.casey.subtitler.writer;
 
+import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.SrtSubtitle;
 import sh.casey.subtitler.model.SrtSubtitleFile;
-import sh.casey.subtitler.util.FileUtils;
 
-public class SrtSubtitleWriter implements SubtitleWriter<SrtSubtitleFile> {
+import java.io.IOException;
+import java.io.Writer;
+
+public class SrtSubtitleWriter extends BaseSubtitleWriter<SrtSubtitleFile> {
     @Override
-    public void write(final SrtSubtitleFile file, final String outputPath) {
+    public void write(final SrtSubtitleFile file, final Writer writer) {
         final StringBuilder sb = new StringBuilder();
         for (final SrtSubtitle sub : file.getSubtitles()) {
             sb.append(sub.getNumber())
@@ -19,8 +22,10 @@ public class SrtSubtitleWriter implements SubtitleWriter<SrtSubtitleFile> {
                 .append(System.lineSeparator())
                 .append(System.lineSeparator());
         }
-
-        final String output = sb.toString().trim();
-        FileUtils.writeFile(outputPath, output);
+        try {
+            writer.write(sb.toString().trim());
+        } catch (IOException e) {
+            throw new SubtitleException("Couldn't write subtitle file", e);
+        }
     }
 }

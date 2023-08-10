@@ -2,6 +2,12 @@ package sh.casey.subtitler.writer;
 
 import sh.casey.subtitler.model.SubtitleFile;
 import sh.casey.subtitler.model.SubtitleType;
+import sh.casey.subtitler.reader.SubtitleReader;
+import sh.casey.subtitler.reader.SubtitleReaderFactory;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringWriter;
 
 public class SubtitleWriterFactory {
 
