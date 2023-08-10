@@ -2,7 +2,6 @@ package sh.casey.subtitler.model;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import sh.casey.subtitler.util.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +64,7 @@ public class VttSubtitle extends BaseSubtitle implements Comparable<VttSubtitle>
         if (!getStart().equals(getEnd())) {
             return
                 getStart() + " --> " + getEnd() + "\n" +
-                getLines() + "\n\n";
+                    getLines() + "\n\n";
         }
         return "";
     }

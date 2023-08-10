@@ -37,6 +37,4 @@ allprojects {
             attributes 'Implementation-Version': archiveVersion
         }
     }
-
-
 }

@@ -14,10 +14,10 @@ import static sh.casey.subtitler.model.SubtitleType.SSA;
 @Getter
 @RequiredArgsConstructor
 public enum FilterType {
-    STYLE("style", Arrays.asList(ASS, ASS), Multiplicity.MANY,"Filter subtitles with specific Aegisub style names (only available for .ass and .ssa subtitles). Styles should be separated by comma and are case-insensitive, e.g. \"style=op,ed,signs,songs\" (filter dialogues with op, ed, signs, or song as the style)"),
+    STYLE("style", Arrays.asList(ASS, ASS), Multiplicity.MANY, "Filter subtitles with specific Aegisub style names (only available for .ass and .ssa subtitles). Styles should be separated by comma and are case-insensitive, e.g. \"style=op,ed,signs,songs\" (filter dialogues with op, ed, signs, or song as the style)"),
     TEXT("text", Arrays.asList(ASS, SSA, SRT), Multiplicity.MANY, "Filter subtitles with specific text, e.g. \"text=♪♪～\" --mode OMIT (filter subtitles where the text is exactly ♪♪～)"),
     AFTER("after", Arrays.asList(ASS, SSA, SRT), Multiplicity.ONE, "Filter subtitles after a specific time, e.g. \"after=00:30:00.000\" --mode OMIT (filter subtitles after the 30 minute mark)"),
-    BEFORE("before", Arrays.asList(ASS, SSA, SRT), Multiplicity.ONE ,"Filter subtitles before a specific time, e.g. \"before=00:01:00.000\" --mode OMIT (filter subtitles before the 1 minute mark)"),
+    BEFORE("before", Arrays.asList(ASS, SSA, SRT), Multiplicity.ONE, "Filter subtitles before a specific time, e.g. \"before=00:01:00.000\" --mode OMIT (filter subtitles before the 1 minute mark)"),
     MATCHES("matches", Arrays.asList(ASS, SSA, SRT), Multiplicity.ONE, "Filter subtitles based on a regex, e.g. \"matches=[A-z0-9]\" (filter subtitles that are alphanumeric)");
 
     private final String name;

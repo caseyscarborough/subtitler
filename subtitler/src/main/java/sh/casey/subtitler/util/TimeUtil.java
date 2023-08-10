@@ -26,7 +26,7 @@ public class TimeUtil {
 
     public static String millisecondsToTime(SubtitleType type, long time) {
         if (type == SubtitleType.SRT) {
-            return millisecondsToTime(time, 2, 3,",");
+            return millisecondsToTime(time, 2, 3, ",");
         } else if (type == SubtitleType.ASS) {
             return millisecondsToTime(time, 1, 2, ".");
         } else if (type == SubtitleType.VTT) {

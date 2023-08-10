@@ -2,7 +2,6 @@ package sh.casey.subtitler.dual;
 
 import org.junit.Before;
 import org.junit.Test;
-import sh.casey.subtitler.dual.StyleConfig;
 import sh.casey.subtitler.model.AssStyle;
 import sh.casey.subtitler.model.AssSubtitleFile;
 import sh.casey.subtitler.model.SubtitleFile;

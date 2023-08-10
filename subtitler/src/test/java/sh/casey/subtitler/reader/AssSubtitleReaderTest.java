@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import sh.casey.subtitler.model.AssScriptInfo;
-import sh.casey.subtitler.util.Timer;
 import sh.casey.subtitler.model.AssSubtitleFile;
+import sh.casey.subtitler.util.Timer;
 import sh.casey.subtitler.writer.AssSubtitleWriter;
 
 import java.io.File;

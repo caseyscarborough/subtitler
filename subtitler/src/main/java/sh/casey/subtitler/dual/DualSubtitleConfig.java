@@ -3,7 +3,6 @@ package sh.casey.subtitler.dual;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import sh.casey.subtitler.dual.StyleConfig;
 
 import java.util.EnumMap;
 import java.util.Map;

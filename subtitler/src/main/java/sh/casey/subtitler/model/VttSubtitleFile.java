@@ -5,7 +5,7 @@ import java.util.List;
 
 public class VttSubtitleFile extends BaseSubtitleFile {
 
-    private List<VttSubtitle> subtitles = new ArrayList<>();
+    private final List<VttSubtitle> subtitles = new ArrayList<>();
 
     @Override
     public List<VttSubtitle> getSubtitles() {

@@ -1,7 +1,5 @@
 package sh.casey.subtitler.model;
 
-import sh.casey.subtitler.util.TimeUtil;
-
 public class DxfpSubtitle extends BaseSubtitle {
 
     private String id;

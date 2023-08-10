@@ -5,11 +5,12 @@ import org.junit.Test;
 import sh.casey.subtitler.model.SrtSubtitle;
 import sh.casey.subtitler.model.SrtSubtitleFile;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class SrtSubtitleCondenserTest {
 
     SrtSubtitleCondenser condenser;
+
     @Before
     public void setUp() throws Exception {
         condenser = new SrtSubtitleCondenser();

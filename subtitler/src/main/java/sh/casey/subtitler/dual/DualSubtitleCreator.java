@@ -1,6 +1,5 @@
 package sh.casey.subtitler.dual;
 
-import sh.casey.subtitler.dual.StyleConfig;
 import sh.casey.subtitler.converter.SubtitleConverterFactory;
 import sh.casey.subtitler.model.AssDialogue;
 import sh.casey.subtitler.model.AssStyle;

@@ -2,7 +2,6 @@ package sh.casey.subtitler.model;
 
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import sh.casey.subtitler.util.TimeUtil;
 
 import java.util.HashMap;
 import java.util.Map;
