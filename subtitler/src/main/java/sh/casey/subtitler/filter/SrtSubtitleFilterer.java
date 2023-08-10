@@ -5,7 +5,7 @@ import sh.casey.subtitler.model.SrtSubtitleFile;
 import sh.casey.subtitler.renumberer.SrtSubtitleRenumberer;
 
 @Slf4j
-class SrtFilterer extends BaseFilterer<SrtSubtitleFile> {
+public class SrtSubtitleFilterer extends BaseSubtitleFilterer<SrtSubtitleFile> {
 
     private final SrtSubtitleRenumberer renumberer = new SrtSubtitleRenumberer();
 

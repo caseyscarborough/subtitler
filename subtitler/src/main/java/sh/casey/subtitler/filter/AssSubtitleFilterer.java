@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Slf4j
-class AssFilterer extends BaseFilterer<AssSubtitleFile> {
+public class AssSubtitleFilterer extends BaseSubtitleFilterer<AssSubtitleFile> {
 
     @Override
     void cleanup(AssSubtitleFile file) {

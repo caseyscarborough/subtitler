@@ -21,9 +21,9 @@ import static sh.casey.subtitler.filter.FilterType.TEXT;
 
 @RunWith(Parameterized.class)
 @AllArgsConstructor
-public class SrtFiltererTest {
+public class SrtSubtitleFiltererTest {
 
-    private final SrtFilterer filterer = new SrtFilterer();
+    private final SrtSubtitleFilterer filterer = new SrtSubtitleFilterer();
     private Map<FilterType, List<String>> filters;
     private FilterMode mode;
     private int expected;

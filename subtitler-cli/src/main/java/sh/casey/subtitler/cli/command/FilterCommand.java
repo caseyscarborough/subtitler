@@ -7,8 +7,8 @@ import sh.casey.subtitler.cli.command.completer.FilterModeCompleter;
 import sh.casey.subtitler.cli.command.completer.FilterTypeCompleter;
 import sh.casey.subtitler.filter.FilterMode;
 import sh.casey.subtitler.filter.FilterType;
-import sh.casey.subtitler.filter.Filterer;
-import sh.casey.subtitler.filter.FiltererFactory;
+import sh.casey.subtitler.filter.SubtitleFilterer;
+import sh.casey.subtitler.filter.SubtitleFiltererFactory;
 import sh.casey.subtitler.model.SubtitleFile;
 import sh.casey.subtitler.model.SubtitleType;
 import sh.casey.subtitler.reader.SubtitleReader;
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FilterCommand extends BaseCommand {
 
-    private final FiltererFactory factory = new FiltererFactory();
+    private final SubtitleFiltererFactory factory = new SubtitleFiltererFactory();
 
     @Option(names = {"-m", "--mode"}, description = "The filter mode to use. Modes are: ${COMPLETION-CANDIDATES}. (Default is OMIT)", completionCandidates = FilterModeCompleter.class)
     private FilterMode mode = FilterMode.OMIT;
@@ -54,7 +54,7 @@ public class FilterCommand extends BaseCommand {
     public void doRun() {
         final SubtitleType inputType = getInputType();
         final SubtitleReader<SubtitleFile> reader = new SubtitleReaderFactory().getInstance(inputType);
-        final Filterer<SubtitleFile> filterer = factory.getInstance(inputType);
+        final SubtitleFilterer<SubtitleFile> filterer = factory.getInstance(inputType);
         final SubtitleFile file = reader.read(getInput());
 
         filterer.filter(file, getFilterMap(file, filters), mode, threshold);

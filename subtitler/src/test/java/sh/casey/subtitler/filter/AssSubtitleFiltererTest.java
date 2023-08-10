@@ -12,14 +12,14 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class AssFiltererTest {
+public class AssSubtitleFiltererTest {
 
     private Map<FilterType, List<String>> filters;
-    private AssFilterer filterer;
+    private AssSubtitleFilterer filterer;
 
     @Before
     public void setUp() throws Exception {
-        filterer = new AssFilterer();
+        filterer = new AssSubtitleFilterer();
         filters = new EnumMap<>(FilterType.class);
     }
 

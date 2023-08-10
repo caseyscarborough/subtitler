@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 import static sh.casey.subtitler.filter.FilterMode.OMIT;
 
 @Slf4j
-abstract class BaseFilterer<T extends SubtitleFile> implements Filterer<T> {
+abstract class BaseSubtitleFilterer<T extends SubtitleFile> implements SubtitleFilterer<T> {
 
     abstract void cleanup(T file);
 
