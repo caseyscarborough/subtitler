@@ -1,0 +1,29 @@
+plugins {
+    id 'maven-publish'
+}
+
+dependencies {
+    implementation 'commons-codec:commons-codec:1.15'
+    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'org.apache.commons:commons-text:1.10.0'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'org.jsoup:jsoup:1.14.1'
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/caseyscarborough/subtitler"
+            credentials {
+                username = System.getenv("GITHUB_USERNAME")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
