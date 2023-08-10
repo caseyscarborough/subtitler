@@ -12,4 +12,5 @@ dependencies {
 
 application {
     mainClass = 'sh.casey.subtitler.cli.Subtitler'
+    applicationName = 'subtitler'
 }

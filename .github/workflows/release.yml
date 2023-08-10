@@ -36,7 +36,7 @@ jobs:
         run: |
           echo "Building distribution file for version ${{ steps.extract_version.outputs.tag_name }}..."
           ./gradlew -b subtitler-cli/build.gradle -Pversion=${{ steps.extract_version.outputs.tag_name }} distZip
-          mv subtitler-cli/build/distributions/subtitler-cli-${{ steps.extract_version.outputs.tag_name }}.zip subtitler-cli.zip
+          mv subtitler-cli/build/distributions/subtitler-${{ steps.extract_version.outputs.tag_name }}.zip subtitler-cli.zip
           shasum -a 256 subtitler-cli.zip > subtitler-cli.zip.sha256
       - name: Generate Release Notes
         run: |
