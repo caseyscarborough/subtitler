@@ -2,8 +2,6 @@ plugins {
     id 'application'
 }
 
-
-
 dependencies {
     implementation project(':subtitler')
     implementation 'info.picocli:picocli:4.7.4'
