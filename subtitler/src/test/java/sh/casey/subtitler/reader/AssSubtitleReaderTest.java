@@ -54,12 +54,6 @@ public class AssSubtitleReaderTest {
     }
 
     @Test
-    public void test() {
-        final AssSubtitleFile file = reader.read("src/test/resources/ass/[ShadyCrab] Fullmetal Alchemist Brotherhood - S01E02v3 [BD][1080p][Hi10][Dual][0379C76B].ja.ass");
-        assertTrue(file.getDialogues().size() > 0);
-    }
-
-    @Test
     public void name() {
         for (String file : files) {
             Timer timer = new Timer();

@@ -26,7 +26,7 @@ public class AssSubtitleShifterTest {
         final Long after = 728000L;
         final Long before = 780000L;
         final Long shift = 12480L;
-        final String filePath = "src/test/resources/ass/[Judas] Bleach - S01E04 - 004.en.ass";
+        final String filePath = "src/test/resources/ass/test1.ass";
         final AssSubtitleFile file = reader.read(filePath);
         final AssSubtitleFile shifted = reader.read(filePath);
         ShiftConfig config = new ShiftConfig(TimeUtil.millisecondsToTime(SubtitleType.SRT, after), TimeUtil.millisecondsToTime(SubtitleType.SRT, before), null, null, shift, ShiftMode.FROM_TO);

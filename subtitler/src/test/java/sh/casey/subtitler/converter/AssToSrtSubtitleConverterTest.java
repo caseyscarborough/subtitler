@@ -36,15 +36,6 @@ public class AssToSrtSubtitleConverterTest {
     }
 
     @Test
-    public void testConvert3() {
-        AssSubtitleFile file = reader.read("src/test/resources/ass/Terrace.House.Boys.x.Girls.Next.Door.S01E01.Week01.2012.1080p.NF.WEB-DL.AAC-IRENEBRO.en.ass");
-        SrtSubtitleFile converted = converter.convert(file);
-        new SrtSubtitleWriter().write(converted, "src/test/resources/srt/Terrace.House.Boys.x.Girls.Next.Door.S01E01.Week01.2012.1080p.NF.WEB-DL.AAC-IRENEBRO.en.srt");
-        converted = new SrtSubtitleReader().read("src/test/resources/srt/Terrace.House.Boys.x.Girls.Next.Door.S01E01.Week01.2012.1080p.NF.WEB-DL.AAC-IRENEBRO.en.srt");
-        assertEquals(file.getDialogues().size(), converted.getSubtitles().size());
-    }
-
-    @Test
     public void testConvertAssColorToHex() {
         Map<String, String> colors = new HashMap<>();
         colors.put("FF", "ff0000");

@@ -73,7 +73,8 @@ Dialogue: 0,0:04:03.88,0:04:04.74,Style1,Senbei,0000,0000,0000,,What?
 Dialogue: 0,0:04:05.10,0:04:06.67,Style1,Arale,0000,0000,0000,,I can't fly.
 Dialogue: 0,0:04:09.48,0:04:11.82,Style1,Senbei,0000,0000,0000,,You don't really need to do that!
 Dialogue: 0,0:04:11.82,0:04:12.58,Style1,Arale,0000,0000,0000,,I don't fly?
-Dialogue: 0,0:04:15.19,0:04:17.38,Style1,Arale,0000,0000,0000,,Can I launch missiles out of my stomach?
+Dialogue: 0,0:04:15.19,0:04:16.38,Style1,Arale,0000,0000,0000,,Can I launch missiles out of my stomach?
+Dialogue: 0,0:04:16.38,0:04:17.38,Style1,Arale,0000,0000,0000,,Can I launch missiles out of my stomach?
 Dialogue: 0,0:04:18.95,0:04:20.26,Style1,Senbei,0000,0000,0000,,No! No, you can't!
 Dialogue: 0,0:04:20.66,0:04:23.95,Style1,Arale,0000,0000,0000,,Then, I can fire lasers from my eyes.
 Dialogue: 1,0:04:22.22,0:04:23.95,Style1,Senbei,0000,0000,0000,,{\fscx107.5\fscy231.25\pos(99,257)}Not that either!
@@ -89,7 +90,8 @@ Dialogue: 0,0:04:42.26,0:04:43.54,Style1,Senbei,0000,0000,0000,,Ok. Whats this?
 Dialogue: 0,0:04:43.89,0:04:44.70,Style1,Arale,0000,0000,0000,,Ki..
 Dialogue: 0,0:04:44.70,0:04:47.58,Style1,Senbei,0000,0000,0000,,What? And this?
 Dialogue: 0,0:04:48.25,0:04:49.02,Style1,Arale,0000,0000,0000,,N..
-Dialogue: 0,0:04:49.38,0:04:51.90,Style1,Senbei,0000,0000,0000,,Not a single one correct. Let's see....this!
+Dialogue: 0,0:04:49.38,0:04:50.90,Style1,Senbei,0000,0000,0000,,Not a single one correct. Let's see....this!
+Dialogue: 0,0:04:50.90,0:04:51.90,Style1,Senbei,0000,0000,0000,,Not a single one correct. Let's see....this!
 Dialogue: 0,0:04:52.69,0:04:53.34,Style1,Senbei,0000,0000,0000,,ta?
 Dialogue: 0,0:04:54.33,0:04:56.66,Style2,Senbei,0000,0000,0000,,Kinta - word for testicles in japan
 Dialogue: 0,0:04:54.33,0:04:55.80,Style1,Senbei,0000,0000,0000,,Ki-n-ta!
@@ -139,7 +141,8 @@ Dialogue: 0,0:07:25.23,0:07:26.02,Style1,Senbei,0000,0000,0000,,I'm sorry!
 Dialogue: 0,0:07:26.02,0:07:28.42,Style1,Store Clerk,0000,0000,0000,,D-D-D-Deep voice!
 Dialogue: 0,0:07:32.80,0:07:34.49,Style1,Senbei,0000,0000,0000,,So..?!
 Dialogue: 0,0:07:34.49,0:07:35.10,Style1,Arale,0000,0000,0000,,Fantastic!
-Dialogue: 0,0:07:35.10,0:07:37.49,Style1,Senbei,0000,0000,0000,,For real?
+Dialogue: 0,0:07:35.10,0:07:36.49,Style1,Senbei,0000,0000,0000,,For real?
+Dialogue: 0,0:07:36.49,0:07:37.49,Style1,Senbei,0000,0000,0000,,For real?
 Dialogue: 0,0:07:37.49,0:07:39.28,Style1,Senbei,0000,0000,0000,,Thank God.
 Dialogue: 0,0:07:39.28,0:07:40.58,Style1,Bird,0000,0000,0000,,Oh! He has a mustache again.
 Dialogue: 0,0:07:42.30,0:07:44.67,Style1,Senbei,0000,0000,0000,,Alright!.. Let's go for a walk. Okay?
