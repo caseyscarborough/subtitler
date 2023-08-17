@@ -1,23 +1,23 @@
 package sh.casey.subtitler.condenser;
 
 import lombok.extern.slf4j.Slf4j;
-import sh.casey.subtitler.model.SrtSubtitle;
-import sh.casey.subtitler.model.SrtSubtitleFile;
+import sh.casey.subtitler.model.AssDialogue;
+import sh.casey.subtitler.model.AssSubtitleFile;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
-public class SrtSubtitleCondenser implements SubtitleCondenser<SrtSubtitleFile> {
-
+public class AssSubtitleCondenser implements SubtitleCondenser<AssSubtitleFile> {
     @Override
-    public SrtSubtitleFile condense(final SrtSubtitleFile input) {
-        log.info("Condensing .srt subtitle file...");
-        final SrtSubtitleFile output = new SrtSubtitleFile();
+    public AssSubtitleFile condense(AssSubtitleFile input) {
+        final AssSubtitleFile output = new AssSubtitleFile(input);
+        output.getSubtitles().clear();
+        log.info("Condensing .ass subtitle file...");
         final Set<Integer> removed = new HashSet<>();
         for (int i = 0; i < input.getSubtitles().size(); i++) {
-            final SrtSubtitle current = input.getSubtitles().get(i);
-            if (removed.contains(current.getNumber())) continue;
+            final AssDialogue current = input.getSubtitles().get(i);
+            if (removed.contains(i)) continue;
 
             // If two adjacent subtitles have the same contents, then we can combine the two subtitle
             // lines into a single line with the start time of the first subtitle and the end time of
@@ -27,13 +27,17 @@ public class SrtSubtitleCondenser implements SubtitleCondenser<SrtSubtitleFile> 
             // will become:
             //   00:00:01,450 --> 00:00:05,420: "This is a subtitle"
             for (int j = i + 1; j < input.getSubtitles().size(); j++) {
-                final SrtSubtitle compare = input.getSubtitles().get(j);
-                if (!removed.contains(compare.getNumber()) &&
+                final AssDialogue compare = input.getSubtitles().get(j);
+                if (!removed.contains(j) &&
+                    compare.getText() != null &&
+                    current.getText() != null &&
+                    compare.getLayer().equals(current.getLayer()) &&
+                    compare.getStyle().equals(current.getStyle()) &&
                     compare.getStart().equals(current.getEnd()) &&
                     compare.getText().equals(current.getText())) {
-                    log.debug("Lines {} and {} have the same text - concatenating them.", current.getNumber(), compare.getNumber());
+                    log.debug("Lines {} and {} have the same text ({}) - concatenating them.", i + 1, j + 1, current.getText());
                     current.setEnd(compare.getEnd());
-                    removed.add(compare.getNumber());
+                    removed.add(j);
                 }
             }
 
@@ -41,7 +45,7 @@ public class SrtSubtitleCondenser implements SubtitleCondenser<SrtSubtitleFile> 
         }
         // Update the numbers of the subtitles to be sequential.
         int counter = 0;
-        for (final SrtSubtitle subtitle : output.getSubtitles()) {
+        for (final AssDialogue subtitle : output.getSubtitles()) {
             subtitle.setNumber(++counter);
         }
         final int originalLines = input.getSubtitles().size();

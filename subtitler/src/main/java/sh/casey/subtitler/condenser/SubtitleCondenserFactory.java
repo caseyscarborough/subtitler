@@ -9,6 +9,8 @@ public class SubtitleCondenserFactory {
     public <T extends SubtitleFile> SubtitleCondenser<T> getInstance(final SubtitleType type) {
         if (type == SubtitleType.SRT) {
             return (SubtitleCondenser<T>) new SrtSubtitleCondenser();
+        } else if (type == SubtitleType.ASS || type == SubtitleType.SSA) {
+            return (SubtitleCondenser<T>) new AssSubtitleCondenser();
         } else {
             throw new IllegalArgumentException("No condenser found for type " + type);
         }
