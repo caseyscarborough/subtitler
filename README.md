@@ -17,7 +17,7 @@ It supports the following features for each subtitle type:
 |         | Reading | Writing | Renumbering | Shifting | Filtering | Condensing |
 |---------|---------|---------|-------------|----------|-----------|------------|
 | `.srt`  | ✅       | ✅       | ✅           | ✅        | ✅         | ✅          |
-| `.ass`  | ✅       | ✅       | ✅           | ✅        | ✅         |            |
+| `.ass`  | ✅       | ✅       | ✅           | ✅        | ✅         | ✅          |
 | `.ttml` | ✅       |         |             |          |           |            |
 | `.dfxp` | ✅       |         |             |          |           |            |
 | `.vtt`  | ✅       |         |             |          |           |            |
