@@ -98,7 +98,7 @@ public class AssStyle {
 
     public void setBold(String bold) {
         // -1 is true, 0 is false
-        attributes.put("Bold", bold.equals("true") || bold.equals("-1") ? "-1" : "0");
+        setBold(bold.equals("true") || bold.equals("-1"));
     }
 
     public boolean isItalic() {

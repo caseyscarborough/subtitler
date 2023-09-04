@@ -67,10 +67,10 @@ public class DualSubtitleCreatorTest {
         AssSubtitleFile top = (AssSubtitleFile) assReader.read("src/test/resources/ass/test1.ass");
         AssSubtitleFile bottom = (AssSubtitleFile) assReader.read("src/test/resources/ass/test2.ass");
         DualSubtitleConfig config = DualSubtitleConfig.builder()
-            .topStyle(StyleConfig.FONT, "Kosugi Maru")
-            .topStyle(StyleConfig.BOLD, "true")
-            .topStyle(StyleConfig.OUTLINE, "5")
-            .topStyle(StyleConfig.SIZE, "53")
+            .topStyle("Fontname", "Kosugi Maru")
+            .topStyle("Bold", "true")
+            .topStyle("Outline", "5")
+            .topStyle("Fontsize", "53")
             .build();
 
         final AssSubtitleFile file = (AssSubtitleFile) creator.create(top, bottom, config);
@@ -85,4 +85,6 @@ public class DualSubtitleCreatorTest {
         assertEquals("53", style.getFontSize());
         assertTrue(style.isBold());
     }
+
+    // TODO: Add test for copying styles
 }

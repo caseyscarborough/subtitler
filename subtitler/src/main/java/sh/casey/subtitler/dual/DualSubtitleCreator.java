@@ -65,7 +65,7 @@ public class DualSubtitleCreator {
             }
             topStyle.setName("Top_Default");
             for (Map.Entry<String, String> entry : config.getTopStyleConfig().entrySet()) {
-                topStyle.setAttribute(entry.getKey(), entry.getValue());
+                topStyle.setAttribute(entry.getKey(), handleBoolean(entry.getValue()));
             }
             output.getStyles().add(topStyle);
             // set all dialogues for the top file to the top style
@@ -100,5 +100,15 @@ public class DualSubtitleCreator {
             return new AssSubtitleFile((AssSubtitleFile) file);
         }
         return (AssSubtitleFile) converterFactory.getInstance(file.getType(), SubtitleType.ASS).convert(file);
+    }
+
+    private String handleBoolean(final String value) {
+        if ("true".equalsIgnoreCase(value)) {
+            return "-1";
+        }
+        if ("false".equalsIgnoreCase(value)) {
+            return "0";
+        }
+        return value;
     }
 }
