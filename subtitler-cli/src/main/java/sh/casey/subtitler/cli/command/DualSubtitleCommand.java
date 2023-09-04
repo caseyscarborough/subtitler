@@ -45,7 +45,7 @@ public class DualSubtitleCommand implements Runnable {
     @Option(names = {"-o", "--output-file"}, description = "The output file.", required = true, paramLabel = "<file>")
     private String outputPath;
 
-    @Option(names = {"-s", "--style"}, description = "Style configuration in the format \"key=value,key=value\", for example. \"bold=true,font=Arial,size=32,outline=3\". This is ignored when using -k/--keep-top-styles. Options are ${COMPLETION-CANDIDATES}.", completionCandidates = StyleConfigCompleter.class, paramLabel = "<config>")
+    @Option(names = {"-s", "--style"}, description = "Style configuration in the format \"key=value,key=value\", for example. \"Bold=true,Fontname=Arial,Fontsize=32,Outline=3\". This is ignored when using -k/--keep-top-styles. Options are ${COMPLETION-CANDIDATES}.", completionCandidates = StyleConfigCompleter.class, paramLabel = "<config>")
     private String cfg;
 
     @Option(names = {"-k", "--keep-top-styles"}, description = "Keep the styles from the top file (only available for .ass and .ssa formats). If not set, default styles in combination with the configuration will be applied.")
@@ -54,7 +54,7 @@ public class DualSubtitleCommand implements Runnable {
     @Option(names = {"-a", "--align"}, description = "Align all subtitles from the original bottom file to the bottom, so as not to clash with the top file.")
     private boolean align = false;
 
-    @Option(names = {"-c", "--copy-style-from"}, description = "The bottom style to apply to the top subtitle.", paramLabel = "<style>")
+    @Option(names = {"-c", "--copy-style-from"}, description = "The bottom style to apply to the top subtitle. This is ignored when using -k/--keep-top-styles.", paramLabel = "<style>")
     private String copyStyleFrom;
 
     @Option(names = {"--trace"}, description = "Enable trace logging.")

@@ -31,35 +31,36 @@ public class AssDefaults {
 
     public static List<String> getDefaultStylingFormatOrder() {
         return Arrays.asList(
-            "Name",
-            "Fontname",
-            "Fontsize",
-            "PrimaryColour",
-            "SecondaryColour",
-            "OutlineColour",
-            "BackColour",
-            "Bold",
-            "Italic",
-            "Underline",
-            "StrikeOut",
-            "ScaleX",
-            "ScaleY",
-            "Spacing",
-            "Angle",
-            "BorderStyle",
-            "Outline",
-            "Shadow",
-            "Alignment",
-            "MarginL",
-            "MarginR",
-            "MarginV",
-            "Encoding");
+            AssStyle.NAME,
+            AssStyle.FONTNAME,
+            AssStyle.FONTSIZE,
+            AssStyle.PRIMARY_COLOUR,
+            AssStyle.SECONDARY_COLOUR,
+            AssStyle.OUTLINE_COLOUR,
+            AssStyle.BACK_COLOUR,
+            AssStyle.BOLD,
+            AssStyle.ITALIC,
+            AssStyle.UNDERLINE,
+            AssStyle.STRIKE_OUT,
+            AssStyle.SCALE_X,
+            AssStyle.SCALE_Y,
+            AssStyle.SPACING,
+            AssStyle.ANGLE,
+            AssStyle.BORDER_STYLE,
+            AssStyle.OUTLINE,
+            AssStyle.SHADOW,
+            AssStyle.ALIGNMENT,
+            AssStyle.MARGIN_L,
+            AssStyle.MARGIN_R,
+            AssStyle.MARGIN_V,
+            AssStyle.ENCODING
+        );
     }
 
     public static AssStyle getItalicStyling() {
         final AssStyle styling = getDefaultStyling();
         styling.setItalic(true);
-        styling.setName("Italic");
+        styling.setName(AssStyle.ITALIC);
         return styling;
     }
 
@@ -119,7 +120,7 @@ public class AssDefaults {
 
     public static AssDialogue getItalicDialogue() {
         final AssDialogue dialogue = getDefaultDialogue();
-        dialogue.setStyle("Italic");
+        dialogue.setStyle(AssStyle.ITALIC);
         return dialogue;
     }
 
