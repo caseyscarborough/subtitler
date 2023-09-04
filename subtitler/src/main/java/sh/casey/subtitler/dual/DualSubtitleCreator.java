@@ -1,5 +1,6 @@
 package sh.casey.subtitler.dual;
 
+import lombok.extern.slf4j.Slf4j;
 import sh.casey.subtitler.converter.SubtitleConverterFactory;
 import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.AssDialogue;
@@ -18,6 +19,7 @@ import java.util.Map;
  * This class works for the majority of cases, but it may cause
  * strange results in the following situations:
  */
+@Slf4j
 public class DualSubtitleCreator {
 
     private final SubtitleConverterFactory converterFactory = new SubtitleConverterFactory();
@@ -52,18 +54,22 @@ public class DualSubtitleCreator {
             topFile.getDialogues().forEach(d -> d.setStyle("Top_" + d.getStyle()));
             output.getStyles().addAll(topFile.getStyles());
         } else {
-            final AssStyle topStyle;
+            final AssStyle topStyle = AssDefaults.getDefaultTopStyle();
             if (config.getCopyStyleFrom() != null) {
-                topStyle = bottomFile
+                // Copy the specified style from the bottom file
+                log.debug("Using {} style from bottom file for the top file", config.getCopyStyleFrom());
+                final AssStyle bottomStyle = bottomFile
                     .getStyles()
                     .stream()
                     .filter(s -> s.getName().equals(config.getCopyStyleFrom()))
                     .findFirst()
                     .orElseThrow(() -> new SubtitleException("Could not find " + config.getCopyStyleFrom() + " style in the bottom file!"));
-            } else {
-                topStyle = AssDefaults.getDefaultTopStyle();
+                for (Map.Entry<String, String> entry : bottomStyle.getAttributes().entrySet()) {
+                    topStyle.getAttributes().put(entry.getKey(), entry.getValue());
+                }
             }
             topStyle.setName("Top_Default");
+            // Override the specified styles
             for (Map.Entry<String, String> entry : config.getTopStyleConfig().entrySet()) {
                 topStyle.setAttribute(entry.getKey(), handleBoolean(entry.getValue()));
             }

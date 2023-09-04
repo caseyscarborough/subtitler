@@ -81,6 +81,7 @@ public class DualSubtitleCommand implements Runnable {
             .keepTopStyles(keepTopStyles)
             .align(align)
             .topStyles(styles)
+            .copyStyleFrom(copyStyleFrom)
             .build();
         SubtitleFile output = creator.create(topFile, bottomFile, config);
         final SubtitleWriter<SubtitleFile> writer = writerFactory.getInstance(SubtitleType.ASS);
