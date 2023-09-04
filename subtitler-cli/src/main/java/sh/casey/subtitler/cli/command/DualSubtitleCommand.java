@@ -1,7 +1,6 @@
 package sh.casey.subtitler.cli.command;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
@@ -11,7 +10,6 @@ import sh.casey.subtitler.cli.command.completer.SubtitleTypeCompleter;
 import sh.casey.subtitler.cli.logging.TerminalLogger;
 import sh.casey.subtitler.dual.DualSubtitleConfig;
 import sh.casey.subtitler.dual.DualSubtitleCreator;
-import sh.casey.subtitler.dual.StyleConfig;
 import sh.casey.subtitler.model.SubtitleFile;
 import sh.casey.subtitler.model.SubtitleType;
 import sh.casey.subtitler.reader.SubtitleReader;
@@ -19,7 +17,7 @@ import sh.casey.subtitler.reader.SubtitleReaderFactory;
 import sh.casey.subtitler.writer.SubtitleWriter;
 import sh.casey.subtitler.writer.SubtitleWriterFactory;
 
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -56,6 +54,9 @@ public class DualSubtitleCommand implements Runnable {
     @Option(names = {"-a", "--align"}, description = "Align all subtitles from the original bottom file to the bottom, so as not to clash with the top file.")
     private boolean align = false;
 
+    @Option(names = {"-c", "--copy-style-from"}, description = "The bottom style to apply to the top subtitle.", paramLabel = "<style>")
+    private String copyStyleFrom;
+
     @Option(names = {"--trace"}, description = "Enable trace logging.")
     private boolean trace;
 
@@ -75,7 +76,7 @@ public class DualSubtitleCommand implements Runnable {
         SubtitleFile topFile = topReader.read(topPath);
         SubtitleFile bottomFile = bottomReader.read(bottomPath);
 
-        final Map<StyleConfig, String> styles = parseStyleConfiguration();
+        final Map<String, String> styles = parseStyleConfiguration();
         final DualSubtitleConfig config = DualSubtitleConfig.builder()
             .keepTopStyles(keepTopStyles)
             .align(align)
@@ -110,8 +111,8 @@ public class DualSubtitleCommand implements Runnable {
         return SubtitleType.find(extension);
     }
 
-    private Map<StyleConfig, String> parseStyleConfiguration() {
-        Map<StyleConfig, String> styles = new EnumMap<>(StyleConfig.class);
+    private Map<String, String> parseStyleConfiguration() {
+        Map<String, String> styles = new HashMap<>();
         if (cfg != null) {
             final String[] options = cfg.split(",");
             for (String option : options) {
@@ -124,17 +125,7 @@ public class DualSubtitleCommand implements Runnable {
                 }
                 String key = keyValue[0].trim();
                 String value = keyValue[1].trim();
-                final StyleConfig found = StyleConfig.find(key);
-                if (found == null) {
-                    throw new IllegalArgumentException("Invalid dual subs option \"" + key + "\".");
-                }
-                if (found.getClazz().equals(Integer.class) && !StringUtils.isNumeric(value)) {
-                    throw new IllegalArgumentException("Invalid value for option \"" + key + "\": " + value + ". Expected integer, got " + value.getClass().getSimpleName() + ".");
-                }
-                if (found.getClazz().equals(Boolean.class) && !value.equalsIgnoreCase("true") && !value.equalsIgnoreCase("false")) {
-                    throw new IllegalArgumentException("Invalid value for option \"" + key + "\": " + value + ". Expected boolean, got " + value.getClass().getSimpleName() + ".");
-                }
-                styles.put(found, value);
+                styles.put(key, value);
             }
         }
         return styles;

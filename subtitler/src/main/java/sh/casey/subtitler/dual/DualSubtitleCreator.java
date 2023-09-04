@@ -1,6 +1,7 @@
 package sh.casey.subtitler.dual;
 
 import sh.casey.subtitler.converter.SubtitleConverterFactory;
+import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.AssDialogue;
 import sh.casey.subtitler.model.AssStyle;
 import sh.casey.subtitler.model.AssSubtitleFile;
@@ -51,10 +52,20 @@ public class DualSubtitleCreator {
             topFile.getDialogues().forEach(d -> d.setStyle("Top_" + d.getStyle()));
             output.getStyles().addAll(topFile.getStyles());
         } else {
-            final AssStyle topStyle = AssDefaults.getDefaultTopStyle();
+            final AssStyle topStyle;
+            if (config.getCopyStyleFrom() != null) {
+                topStyle = bottomFile
+                    .getStyles()
+                    .stream()
+                    .filter(s -> s.getName().equals(config.getCopyStyleFrom()))
+                    .findFirst()
+                    .orElseThrow(() -> new SubtitleException("Could not find " + config.getCopyStyleFrom() + " style in the bottom file!"));
+            } else {
+                topStyle = AssDefaults.getDefaultTopStyle();
+            }
             topStyle.setName("Top_Default");
-            for (Map.Entry<StyleConfig, String> entry : config.getTopStyleConfig().entrySet()) {
-                entry.getKey().getConsumer().accept(topStyle, entry.getValue());
+            for (Map.Entry<String, String> entry : config.getTopStyleConfig().entrySet()) {
+                topStyle.setAttribute(entry.getKey(), entry.getValue());
             }
             output.getStyles().add(topStyle);
             // set all dialogues for the top file to the top style

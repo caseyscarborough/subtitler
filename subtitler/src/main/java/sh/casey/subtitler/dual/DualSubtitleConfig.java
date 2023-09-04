@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 @Getter
@@ -18,16 +19,20 @@ public class DualSubtitleConfig {
     private final boolean align;
 
     // The style config for the top file
-    private final Map<StyleConfig, String> topStyleConfig;
+    private final Map<String, String> topStyleConfig;
+
+    // The bottom style to apply to the top subtitle
+    private final String copyStyleFrom;
 
     public static Builder builder() {
         return new Builder();
     }
 
     public static class Builder {
-        private final Map<StyleConfig, String> topStyleConfig = new EnumMap<>(StyleConfig.class);
+        private final Map<String, String> topStyleConfig = new HashMap<>();
         private boolean keepTopStyles = false;
         private boolean align = false;
+        private String copyStyleFrom;
 
         public Builder keepTopStyles(boolean keepTopStyles) {
             this.keepTopStyles = keepTopStyles;
@@ -39,18 +44,23 @@ public class DualSubtitleConfig {
             return this;
         }
 
-        public Builder topStyles(Map<StyleConfig, String> topStyleConfig) {
+        public Builder topStyles(Map<String, String> topStyleConfig) {
             this.topStyleConfig.putAll(topStyleConfig);
             return this;
         }
 
-        public Builder topStyle(StyleConfig config, String value) {
+        public Builder topStyle(String config, String value) {
             topStyleConfig.put(config, value);
             return this;
         }
 
+        public Builder copyStyleFrom(String copyStyleFrom) {
+            this.copyStyleFrom = copyStyleFrom;
+            return this;
+        }
+
         public DualSubtitleConfig build() {
-            return new DualSubtitleConfig(keepTopStyles, align, topStyleConfig);
+            return new DualSubtitleConfig(keepTopStyles, align, topStyleConfig, copyStyleFrom);
         }
     }
 }

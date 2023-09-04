@@ -14,6 +14,10 @@ public class AssStyle {
         this.attributes.putAll(style.getAttributes());
     }
 
+    public void setAttribute(String key, String value) {
+        attributes.put(key, value);
+    }
+
     public Map<String, String> getAttributes() {
         return attributes;
     }
