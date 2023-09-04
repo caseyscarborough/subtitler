@@ -13,3 +13,6 @@ out/
 *.srt
 *.vtt
 build.sh
+
+subtitler/bin
+subtitler/lib
