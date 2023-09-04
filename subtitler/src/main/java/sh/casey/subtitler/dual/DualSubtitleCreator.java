@@ -11,6 +11,7 @@ import sh.casey.subtitler.model.SubtitleType;
 import sh.casey.subtitler.util.AssDefaults;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +70,8 @@ public class DualSubtitleCreator {
                 }
             }
             topStyle.setName("Top_Default");
+            topStyle.setAlignment("8");
+            topStyle.setMarginV("15");
             // Override the specified styles
             for (Map.Entry<String, String> entry : config.getTopStyleConfig().entrySet()) {
                 topStyle.setAttribute(entry.getKey(), handleBoolean(entry.getValue()));
