@@ -38,9 +38,9 @@ public class DfxpToAssSubtitleConverter implements SubtitleConverter<DfxpSubtitl
                 dialogue.setEnd(end);
                 dialogue.setNumber(subtitle.getNumber());
                 final String dialogueText = subtitle.getText()
-                    .replaceAll("<br>", "\\\\N")
-                    .replaceAll("<br />", "\\\\N")
-                    .replaceAll("<br/>", "\\\\N");
+                    .replace("<br>", "\\N")
+                    .replace("<br />", "\\N")
+                    .replace("<br/>", "\\N");
                 dialogue.setText(StringEscapeUtils.unescapeHtml4(Jsoup.clean(dialogueText, Safelist.none())));
                 dialogue.setStyle(subtitle.getRegion().startsWith("top") ? "Top" : "Bottom");
                 output.getDialogues().add(dialogue);
