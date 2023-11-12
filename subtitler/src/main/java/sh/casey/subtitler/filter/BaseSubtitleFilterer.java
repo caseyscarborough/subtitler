@@ -39,7 +39,7 @@ abstract class BaseSubtitleFilterer<T extends SubtitleFile> implements SubtitleF
                 return;
             case TEXT:
                 log.info("{} all subtitles where the text is in {}...", verb, filters);
-                predicate = subtitle -> filters.contains(subtitle.getText().trim());
+                predicate = subtitle -> subtitle.getText() != null && filters.contains(subtitle.getText().trim());
                 break;
             case AFTER:
                 log.info("{} all subtitles where the start time is after {}...", verb, filters.get(0));
