@@ -1,8 +1,12 @@
 package sh.casey.subtitler.reader;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
 import sh.casey.subtitler.exception.SubtitleException;
+import sh.casey.subtitler.model.DfxpSubtitleFile;
+import sh.casey.subtitler.model.TtmlSubtitleFile;
 import sh.casey.subtitler.model.VttSubtitle;
 import sh.casey.subtitler.model.VttSubtitleFile;
 
@@ -10,7 +14,13 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 
 @Slf4j
 public class VttSubtitleReader implements SubtitleReader<VttSubtitleFile> {
@@ -24,22 +34,40 @@ public class VttSubtitleReader implements SubtitleReader<VttSubtitleFile> {
     }
 
     @Override
-    public VttSubtitleFile read(final String filename) {
+    @SneakyThrows
+    public VttSubtitleFile read(final InputStream inputStream, final String filePath) {
+
+        return parse(inputStream, filePath);
+
+    }
+
+    @Override
+    @SneakyThrows
+    public VttSubtitleFile read(final String filePath) {
+        log.info("Reading subtitle file " + filePath);
+
+        return parse(Files.newInputStream(Paths.get(filePath)), filePath);
+
+    }
+
+    private VttSubtitleFile parse(final InputStream inputStream, final String filePath) {
+
         // TODO: Implement this method
         // https://www.w3.org/TR/webvtt1/
         // https://sites.utexas.edu/cofawebteam/requirements/ada/captions/webvtt-files-for-video-subtitling/
-        log.info("Reading subtitle file " + filename);
+
+
         final VttSubtitleFile file = new VttSubtitleFile();
-        file.setPath(filename);
+        file.setPath(filePath);
         int lineCounter = 0;
         int number = 1;
-        try (BOMInputStream bis = new BOMInputStream(new FileInputStream(filename));
-             BufferedReader br = new BufferedReader(new InputStreamReader(bis))) {
+        try (BOMInputStream bis = new BOMInputStream(inputStream);
+                BufferedReader br = new BufferedReader(new InputStreamReader(bis))) {
 
             String line = br.readLine().trim();
             lineCounter++;
             if (!line.equals(WEBVTT_HEADER)) {
-                throw new IllegalStateException("Expected first line of file " + filename + " to be WEBVTT");
+                throw new IllegalStateException("Expected first line of file " + filePath + " to be WEBVTT");
             }
 
             while (line != null) {
@@ -47,7 +75,7 @@ public class VttSubtitleReader implements SubtitleReader<VttSubtitleFile> {
                     // we reached the start of a cue
                     final String[] parts = line.split(" --> ");
                     if (parts.length != 2) {
-                        throw new IllegalStateException("Invalid cue at line " + lineCounter + " for file " + filename);
+                        throw new IllegalStateException("Invalid cue at line " + lineCounter + " for file " + filePath);
                     }
 
                     final String start = parts[0];
@@ -75,12 +103,14 @@ public class VttSubtitleReader implements SubtitleReader<VttSubtitleFile> {
                 }
             }
 
-            log.debug("Read {} subtitles from file {} with {} lines", file.getSubtitles().size(), filename, lineCounter);
+            log.debug("Read {} subtitles from file {} with {} lines", file.getSubtitles().size(), filePath, lineCounter);
             return file;
         } catch (final FileNotFoundException e) {
-            throw new SubtitleException("Could not find file " + filename, e);
+            throw new SubtitleException("Could not find file " + filePath, e);
         } catch (final ArrayIndexOutOfBoundsException | NumberFormatException | NullPointerException | IOException e) {
-            throw new SubtitleException("An error occurred reading lines at line " + lineCounter + " for file " + filename + ". The file might be in an invalid format", e);
+            throw new SubtitleException("An error occurred reading lines at line " + lineCounter + " for file " + filePath + ". The file might be in an invalid format", e);
         }
+
     }
+
 }

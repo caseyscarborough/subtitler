@@ -1,19 +1,45 @@
 package sh.casey.subtitler.reader;
 
+import lombok.SneakyThrows;
+import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import sh.casey.subtitler.exception.SubtitleException;
+import sh.casey.subtitler.model.AssSubtitleFile;
 import sh.casey.subtitler.model.DfxpSubtitleFile;
 import sh.casey.subtitler.model.DxfpSubtitle;
+import sh.casey.subtitler.model.SrtSubtitleFile;
 import sh.casey.subtitler.util.FileUtils;
+
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
+
 
 public class DfxpSubtitleReader implements SubtitleReader<DfxpSubtitleFile> {
 
     @Override
-    public DfxpSubtitleFile read(final String filename) {
-        final String contents = FileUtils.readFile(filename);
+    @SneakyThrows
+    public DfxpSubtitleFile read(final InputStream inputStream, final String filePath) {
+
+        StringWriter writer = new StringWriter();
+        IOUtils.copy(inputStream, writer, Charset.defaultCharset());
+
+        return parse(writer.toString(), filePath);
+
+    }
+
+    @Override
+    public DfxpSubtitleFile read(final String filePath) {
+        final String contents = FileUtils.readFile(filePath);
+        return parse(contents, filePath);
+
+    }
+
+    private DfxpSubtitleFile parse(String contents, String filePath) {
+
         final Document document = Jsoup.parse(contents);
         final Elements bodyElements = document.getElementsByTag("body");
 
@@ -27,7 +53,7 @@ public class DfxpSubtitleReader implements SubtitleReader<DfxpSubtitleFile> {
 
         int counter = 1;
         final DfxpSubtitleFile file = new DfxpSubtitleFile();
-        file.setPath(filename);
+        file.setPath(filePath);
         for (final Element p : pElements) {
             final String begin = p.attr("begin");
             final String end = p.attr("end");
@@ -46,5 +72,7 @@ public class DfxpSubtitleReader implements SubtitleReader<DfxpSubtitleFile> {
             file.getSubtitles().add(subtitle);
         }
         return file;
+
     }
+
 }

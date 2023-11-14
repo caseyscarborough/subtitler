@@ -1,6 +1,8 @@
 package sh.casey.subtitler.reader;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -10,12 +12,18 @@ import sh.casey.subtitler.model.AssScriptInfo;
 import sh.casey.subtitler.model.AssStyle;
 import sh.casey.subtitler.model.AssStyleVersion;
 import sh.casey.subtitler.model.AssSubtitleFile;
+import sh.casey.subtitler.model.SrtSubtitleFile;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,16 +32,34 @@ import java.util.stream.Collectors;
 public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
 
     @Override
-    public AssSubtitleFile read(final String filename) {
-        log.info("Reading subtitle file: " + filename);
-        Validate.notBlank(filename);
+    @SneakyThrows
+    public AssSubtitleFile read(final InputStream inputStream, final String filePath) {
+
+        StringWriter writer = new StringWriter();
+        IOUtils.copy(inputStream, writer, Charset.defaultCharset());
+
+        return parse(inputStream, filePath);
+
+    }
+
+    @Override
+    @SneakyThrows
+    public AssSubtitleFile read(final String filePath) {
+        log.info("Reading subtitle file: " + filePath);
+        Validate.notBlank(filePath);
+        return parse(Files.newInputStream(Paths.get(filePath)), filePath);
+
+    }
+
+    private AssSubtitleFile parse(final InputStream inputStream, final String filePath) {
+
         final AssSubtitleFile file = new AssSubtitleFile();
-        file.setPath(filename);
+        file.setPath(filePath);
         final AssScriptInfo scriptInfo = new AssScriptInfo();
         int lineCounter = 0;
 
-        try (final BOMInputStream bis = new BOMInputStream(new FileInputStream(filename));
-             final BufferedReader br = new BufferedReader(new InputStreamReader(bis))) {
+        try (final BOMInputStream bis = new BOMInputStream(inputStream);
+                final BufferedReader br = new BufferedReader(new InputStreamReader(bis))) {
             log.debug("Reading first line...");
             lineCounter++;
             String line = br.readLine();
@@ -160,17 +186,18 @@ public class AssSubtitleReader implements SubtitleReader<AssSubtitleFile> {
                     line = br.readLine();
                 }
             }
-            log.debug("Read " + lineCounter + " lines from file " + filename);
+            log.debug("Read " + lineCounter + " lines from file " + filePath);
         } catch (final NullPointerException e) {
-            log.warn("Unexpected end of file after reading " + lineCounter + " lines for file " + filename, e);
+            log.warn("Unexpected end of file after reading " + lineCounter + " lines for file " + filePath, e);
         } catch (final FileNotFoundException e) {
-            throw new SubtitleException("Could not read subtitle file " + filename, e);
+            throw new SubtitleException("Could not read subtitle file " + filePath, e);
         } catch (final IOException e) {
-            throw new SubtitleException("An error occurred reading file " + filename, e);
+            throw new SubtitleException("An error occurred reading file " + filePath, e);
         }
 
         log.debug("Found " + file.getSubtitles().size() + " subtitles.");
         return file;
+
     }
 
     private String getValue(final String line) {
