@@ -1,29 +1,60 @@
 package sh.casey.subtitler.reader;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.lang3.StringUtils;
 import sh.casey.subtitler.exception.SubtitleException;
 import sh.casey.subtitler.model.SrtSubtitle;
 import sh.casey.subtitler.model.SrtSubtitleFile;
+import sh.casey.subtitler.model.TtmlSubtitleFile;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 
 @Slf4j
 public class SrtSubtitleReader implements SubtitleReader<SrtSubtitleFile> {
 
     @Override
-    public SrtSubtitleFile read(final String filename) {
-        log.info("Reading subtitle file " + filename);
+    @SneakyThrows
+    public SrtSubtitleFile read(final InputStream inputStream, final String filePath) {
+
+        StringWriter writer = new StringWriter();
+        IOUtils.copy(inputStream, writer, Charset.defaultCharset());
+
+        return parse(inputStream, filePath);
+
+    }
+
+    @Override
+    @SneakyThrows
+    public SrtSubtitleFile read(final String filePath) {
+        log.info("Reading subtitle file " + filePath);
         final SrtSubtitleFile file = new SrtSubtitleFile();
-        file.setPath(filename);
+
+        return parse(Files.newInputStream(Paths.get(filePath)), filePath);
+
+    }
+
+
+    private SrtSubtitleFile parse(final InputStream inputStream, final String filePath) {
+
+        final SrtSubtitleFile file = new SrtSubtitleFile();
+        file.setPath(filePath);
         int lineCounter = 0;
-        try (BOMInputStream bis = new BOMInputStream(new FileInputStream(filename));
-             BufferedReader br = new BufferedReader(new InputStreamReader(bis))) {
+
+        try (BOMInputStream bis = new BOMInputStream(inputStream);
+                BufferedReader br = new BufferedReader(new InputStreamReader(bis))) {
 
             String line = br.readLine();
             boolean first = true;
@@ -71,14 +102,16 @@ public class SrtSubtitleReader implements SubtitleReader<SrtSubtitleFile> {
                     line = br.readLine();
                 }
             }
-            log.debug("Read " + lineCounter + " lines from file " + filename);
+            log.debug("Read " + lineCounter + " lines from file " + filePath);
         } catch (final FileNotFoundException e) {
-            throw new SubtitleException("Could not find file " + filename, e);
+            throw new SubtitleException("Could not find file " + filePath, e);
         } catch (final ArrayIndexOutOfBoundsException | NumberFormatException | NullPointerException | IOException e) {
-            throw new SubtitleException("An error occurred reading lines at line " + lineCounter + " for file " + filename + ". The file might be in an invalid format", e);
+            throw new SubtitleException("An error occurred reading lines at line " + lineCounter + " for file " + filePath + ". The file might be in an invalid format", e);
         }
 
         log.debug("Found " + file.getSubtitles().size() + " subtitles.");
         return file;
+
     }
+
 }
