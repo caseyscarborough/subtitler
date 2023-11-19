@@ -1,16 +1,19 @@
 package sh.casey.subtitler.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+@Getter
 public class VttSubtitleFile extends BaseSubtitleFile {
 
-    private final List<VttSubtitle> subtitles = new ArrayList<>();
+    private final Map<String, String> metadata = new TreeMap<>();
 
-    @Override
-    public List<VttSubtitle> getSubtitles() {
-        return subtitles;
-    }
+    private final List<VttSubtitle> subtitles = new ArrayList<>();
 
     @Override
     public SubtitleType getType() {

@@ -17,12 +17,6 @@ public class VttSubtitleReader implements SubtitleReader<VttSubtitleFile> {
 
     private static final String WEBVTT_HEADER = "WEBVTT";
 
-    public static void main(String[] args) {
-        VttSubtitleReader reader = new VttSubtitleReader();
-        VttSubtitleFile file = reader.read("/Volumes/Audio/Music/Kenshi Yonezu/月を見ていた (2023)/01. 米津玄師 - 月を見ていた Kenshi Yonezu - Tsuki Wo Miteita ⧸ Moongazing-video.ja.vtt");
-        file.getSubtitles().stream().forEach(System.out::println);
-    }
-
     @Override
     public VttSubtitleFile read(final String filename) {
         // TODO: Implement this method
@@ -38,12 +32,14 @@ public class VttSubtitleReader implements SubtitleReader<VttSubtitleFile> {
 
             String line = br.readLine().trim();
             lineCounter++;
-            if (!line.equals(WEBVTT_HEADER)) {
+            if (!line.startsWith(WEBVTT_HEADER)) {
                 throw new IllegalStateException("Expected first line of file " + filename + " to be WEBVTT");
             }
 
+            boolean started = false;
             while (line != null) {
                 if (line.contains("-->")) {
+                    started = true;
                     // we reached the start of a cue
                     final String[] parts = line.split(" --> ");
                     if (parts.length != 2) {
@@ -61,15 +57,20 @@ public class VttSubtitleReader implements SubtitleReader<VttSubtitleFile> {
                     while (true) {
                         line = br.readLine();
                         lineCounter++;
-                        if (line == null || line.contains("-->")) {
+                        if (line == null || line.isEmpty() || line.contains("-->") || line.startsWith("NOTE ")) {
                             break;
                         }
-                        if (!line.isEmpty()) {
-                            subtitle.addLine(line.trim());
-                        }
+                        subtitle.addLine(line.trim());
                     }
                     file.getSubtitles().add(subtitle);
                 } else {
+                    if (!started && line.contains(":")) {
+                        int index = line.indexOf(":");
+                        String key = line.substring(0, index);
+                        String value = line.substring(index + 1).trim();
+                        file.getMetadata().put(key, value);
+                    }
+
                     line = br.readLine();
                     lineCounter++;
                 }
