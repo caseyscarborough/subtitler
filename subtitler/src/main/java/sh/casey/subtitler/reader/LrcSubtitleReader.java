@@ -20,6 +20,7 @@ public class LrcSubtitleReader implements SubtitleReader<LrcSubtitleFile> {
              BufferedReader br = new BufferedReader(new InputStreamReader(bis))) {
             final LrcSubtitleFile lrc = new LrcSubtitleFile();
             String line;
+            int number = 1;
             while ((line = br.readLine()) != null) {
                 line = line.trim();
                 if (StringUtils.isBlank(line)) {
@@ -30,6 +31,7 @@ public class LrcSubtitleReader implements SubtitleReader<LrcSubtitleFile> {
                     LrcSubtitle subtitle = new LrcSubtitle();
                     subtitle.setStart(line.substring(1, line.indexOf("]")));
                     subtitle.setText(line.substring(line.indexOf("]") + 1));
+                    subtitle.setNumber(number++);
                     lrc.getSubtitles().add(subtitle);
                 }
             }
