@@ -11,29 +11,32 @@ It currently supports the following subtitle types:
 - `.ttml` - [Timed Text Markup Language](https://www.speechpad.com/captions/ttml)
 - `.dfxp` - [Distribution Format Exchange Profile](https://www.speechpad.com/captions/dfxp)
 - `.vtt` - [WebVTT](https://en.wikipedia.org/wiki/WebVTT)
+- `.lrc` - [LyRiCs File Format](https://en.wikipedia.org/wiki/LRC_(file_format))
 
 It supports the following features for each subtitle type:
 
 |         | Reading | Writing | Renumbering | Shifting | Filtering | Condensing |
 |---------|---------|---------|-------------|----------|-----------|------------|
-| `.srt`  | ✅       | ✅       | ✅           | ✅        | ✅         | ✅          |
-| `.ass`  | ✅       | ✅       | ✅           | ✅        | ✅         | ✅          |
-| `.ttml` | ✅       |         |             |          |           |            |
-| `.dfxp` | ✅       |         |             |          |           |            |
-| `.vtt`  | ✅       |         |             |          |           |            |
+| `.srt`  | ✅      | ✅      | ✅          | ✅       | ✅        | ✅         |
+| `.ass`  | ✅      | ✅      | ✅          | ✅       | ✅        | ✅         |
+| `.ttml` | ✅      |         |             |          |           |            |
+| `.dfxp` | ✅      |         |             |          |           |            |
+| `.vtt`  | ✅      |         |             |          |           |            |
+| `.lrc`  | ✅      | ✅      |             |          |           |            |
 
 Most of the functions can be performed by converting to another subtitle type first that is supported with the feature
 you are trying to use. For example, if you would like to shift a `.vtt` file, then convert it to `.srt` or `.ass` first.
 
 For conversions, the following conversions are available:
 
-| ⬇️ From - To ➡️ | `.srt` | `.ass` | `.ttml` | `.dfxp` | `.vtt` |
-|-----------------|--------|--------|---------|---------|--------|
-| `.srt`          | N/A    | ✅      | ❌       | ❌       | ❌      |
-| `.ass`          | ✅      | N/A    | ❌       | ❌       | ❌      |
-| `.ttml`         | ✅      | 🔄     | N/A     | ❌       | ❌      |
-| `.dfxp`         | 🔄     | ✅      | ❌       | N/A     | ❌      |
-| `.vtt`          | ✅      | 🔄     | ❌       | ❌       | N/A    |
+| ⬇️ From - To ➡️ | `.srt` | `.ass` | `.ttml` | `.dfxp` | `.vtt` | `.lrc` |
+|-----------------|--------|--------|---------|---------|--------|--------|
+| `.srt`          | N/A    | ✅     | ❌      | ❌      | ❌     | ❌     |
+| `.ass`          | ✅     | N/A    | ❌      | ❌      | ❌     | ❌     |
+| `.ttml`         | ✅     | 🔄     | N/A     | ❌      | ❌     | ❌     |
+| `.dfxp`         | 🔄     | ✅     | ❌      | N/A     | ❌     | ❌     |
+| `.vtt`          | ✅     | 🔄     | ❌      | ❌      | N/A    | ❌     |
+| `.lrc`.         | ❌     | ❌     | ❌      | ❌      | ❌     | N/A    |
 
 Legend:
 
