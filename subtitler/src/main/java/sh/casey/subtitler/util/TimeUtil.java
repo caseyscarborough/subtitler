@@ -19,6 +19,8 @@ public class TimeUtil {
             return timeToMilliseconds(".", time, 1);
         } else if (type == SubtitleType.DFXP) {
             return timeToMilliseconds(".", time, 1);
+        } else if (type == SubtitleType.LRC) {
+            return timeToMilliseconds(".", time, 10);
         } else {
             throw new IllegalArgumentException("Could not format time for type " + type);
         }
@@ -33,6 +35,8 @@ public class TimeUtil {
             return millisecondsToTime(time, 2, 3, ".");
         } else if (type == SubtitleType.DFXP) {
             return millisecondsToTime(time, 2, 3, ".");
+        } else if (type == SubtitleType.LRC) {
+            return millisecondsToTime(time, 0, 2, ".");
         } else {
             throw new IllegalArgumentException("Could not format time for type " + type + " as the conversion has not been implemented");
         }
@@ -49,23 +53,29 @@ public class TimeUtil {
         for (int i = 3 - msDigits; i > 0; i--) {
             ms /= 10;
         }
-        String format = String.format("%%0%dd:%%02d:%%02d%%s%%0%dd", hoursDigits, msDigits);
-        return String.format(format, hours, minutes, seconds, separator, ms);
+        if (hoursDigits != 0) {
+            String format = String.format("%%0%dd:%%02d:%%02d%%s%%0%dd", hoursDigits, msDigits);
+            return String.format(format, hours, minutes, seconds, separator, ms);
+        } else {
+            String format = String.format("%%02d:%%02d%%s%%0%dd", msDigits);
+            return String.format(format, minutes, seconds, separator, ms);
+        }
     }
 
     public static Long timeToMilliseconds(final String replace, final String time, Integer msFactor) {
         final String[] parts = time.replace(replace, ":").split(":");
         long milliseconds = 0L;
+        long[] times = new long[]{3600000, 60000, 1000, msFactor};
         for (int i = 0; i < parts.length; i++) {
             final long amount = Long.parseLong(parts[i]);
             if (i == 0) {
-                milliseconds += amount * 3600000;
+                milliseconds += amount * times[times.length - parts.length];
             } else if (i == 1) {
-                milliseconds += amount * 60000;
+                milliseconds += amount * times[times.length - parts.length + 1];
             } else if (i == 2) {
-                milliseconds += amount * 1000;
+                milliseconds += amount * times[times.length - parts.length + 2];
             } else if (i == 3) {
-                milliseconds += amount * msFactor;
+                milliseconds += amount * times[times.length - parts.length + 3];
             }
         }
         return milliseconds;
