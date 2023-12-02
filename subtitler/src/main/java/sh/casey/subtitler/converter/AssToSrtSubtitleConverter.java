@@ -91,6 +91,11 @@ public class AssToSrtSubtitleConverter implements SubtitleConverter<AssSubtitleF
             output = "<font color=\"#" + newHex + "\">" + output + "</font>";
         }
 
+        // Retain the alignment from the style
+        if (!style.getAlignment().equals("2")) {
+            output = "{\\an" + style.getAlignment() + "}" + output;
+        }
+
         return output;
     }
 
