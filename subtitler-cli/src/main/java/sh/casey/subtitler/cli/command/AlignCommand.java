@@ -51,77 +51,59 @@ public class AlignCommand extends BaseCommand {
 
     @Override
     public void doRun() {
-        final String inputFilename = getInput();
         final SubtitleType inputType = getInputType();
-
         final SubtitleType referenceType = getTypeFromFilename(referenceFilename);
-        final SubtitleReaderFactory factory = new SubtitleReaderFactory();
-        final SubtitleReader<SubtitleFile> inputReader = factory.getInstance(inputType);
-        final SubtitleReader<SubtitleFile> referenceReader = factory.getInstance(referenceType);
-
-        final SubtitleFile input = inputReader.read(inputFilename);
-        final SubtitleFile reference = referenceReader.read(referenceFilename);
         if (inputType != referenceType) {
             throw new IllegalStateException("Only input and reference files of the same type are currently supported for alignment. First, convert one of the subtitles to the format of the other.");
         }
 
-        int i = 0;
-        int j = 0;
+        final String inputFilename = getInput();
+        final SubtitleReaderFactory factory = new SubtitleReaderFactory();
+        final SubtitleReader<SubtitleFile> inputReader = factory.getInstance(inputType);
+        final SubtitleReader<SubtitleFile> referenceReader = factory.getInstance(referenceType);
+        final SubtitleFile input = inputReader.read(inputFilename);
+        final SubtitleFile reference = referenceReader.read(referenceFilename);
 
         log.info("Aligning subtitles in \"{}\" to \"{}\"...", inputFilename, referenceFilename);
         log.debug("Using threshold of {}ms...", threshold);
+        int i = 0;
+        int j = 0;
 
         input.getSubtitles().sort(Comparator.comparing(Subtitle::getStartMilliseconds));
         reference.getSubtitles().sort(Comparator.comparing(Subtitle::getStartMilliseconds));
-        Map<Integer, Long> startModified = new HashMap<>();
-        Map<Integer, Long> endModified = new HashMap<>();
+        final Map<Integer, Long> startModified = new HashMap<>();
+        final Map<Integer, Long> endModified = new HashMap<>();
         while (i < input.getSubtitles().size() && j < reference.getSubtitles().size()) {
+            if (matchesFilter(input.getSubtitles().get(i))) {
+                i++;
+                continue;
+            }
             final Subtitle a = input.getSubtitles().get(i);
             final Subtitle b = reference.getSubtitles().get(j);
-            final Subtitle previous = i > 0 ? input.getSubtitles().get(i - 1) : null;
-            if (filters != null && a instanceof AssDialogue) {
-                AssDialogue ass = (AssDialogue) a;
-                boolean skipped = false;
-                for (String filter : filters.split(";")) {
-                    final String[] parts = filter.split("=");
-                    if (parts.length != 2) {
-                        throw new IllegalArgumentException("Filter was an invalid format: " + filter);
-                    }
-                    final String key = parts[0].toLowerCase();
-                    final List<String> values = Arrays.stream(parts[1].split(",")).map(String::toLowerCase).collect(Collectors.toList());
-                    if (key.equals(FilterType.STYLE.getName().toLowerCase()) && values.contains(ass.getStyle().toLowerCase())) {
-                        log.trace("Skipping dialogue at {} because it matches filter {}={}", ass.getStart(), key, ass.getStyle().toLowerCase());
-                        i++;
-                        skipped = true;
-                        break;
-                    }
-                }
-                if (skipped) {
-                    continue;
-                }
-            }
-            final long startDiff = Math.abs(a.getStartMilliseconds() - b.getStartMilliseconds());
-            final long endDiff = Math.abs(a.getEndMilliseconds() - b.getEndMilliseconds());
+            final Subtitle previousA = i > 0 ? input.getSubtitles().get(i - 1) : null;
+            final Subtitle nextB = j < reference.getSubtitles().size() - 1 ? reference.getSubtitles().get(j + 1) : null;
 
-            if (startDiff != 0 && startDiff <= threshold &&
-                (mode == ShiftMode.FROM_TO || mode == ShiftMode.FROM) &&
-                // ensure we don't lose the subtitle from making the start time after the end time
-                (a.getEndMilliseconds() > b.getStartMilliseconds()) &&
-                // don't let the length of the new subtitle be less than the threshold
-                (a.getEndMilliseconds() - b.getStartMilliseconds() > MIN_SUBTITLE_LENGTH) &&
+            if (!startModified.containsKey(a.getNumber()) &&
+                withinStartThreshold(a, b) &&
                 // This check will prevent two subtitles from overlapping if the first subtitle length is shorter than the threshold
-                !(previous != null && previous.getStartMilliseconds().equals(b.getStartMilliseconds()))) {
+                !(previousA != null && previousA.getStartMilliseconds().equals(b.getStartMilliseconds()))) {
                 log.trace("{} Setting subtitle '{}' from start {} to start {}.", a.getStart(), a.getText(), a.getStart(), b.getStart());
                 startModified.put(a.getNumber(), a.getStartMilliseconds());
                 a.setStart(b.getStart());
             }
 
-            if (endDiff != 0 && endDiff <= threshold &&
-                (mode == ShiftMode.FROM_TO || mode == ShiftMode.TO) &&
-                // make sure we don't lose the subtitle from making the end time before the start time
-                (a.getStartMilliseconds() < b.getEndMilliseconds()) &&
-                // don't let the length of the new subtitle be less than the threshold
-                (b.getEndMilliseconds() - a.getStartMilliseconds() > MIN_SUBTITLE_LENGTH)) {
+            boolean withinEndThreshold = withinEndThreshold(a, b);
+            if (withinEndThreshold && withinEndThreshold(a, nextB) &&
+                (a.getEndMilliseconds() > (b.getEndMilliseconds() + nextB.getEndMilliseconds()) / 2)) {
+                // If it's closer to the end threshold of the next subtitle, we will skip this round since it will get
+                // aligned on the next round. This helps when the dialogue is quick with short subtitle lengths, preventing
+                // a "top" subtitle that overlaps two bottom subtitles from being shortened to just the first "bottom" subtitle.
+                log.trace("Skipping alignment with the end time of subtitle '{}' because it's closer to the end time of subtitle '{}'", b.getNumber(), nextB.getNumber());
+                j++;
+                continue;
+            }
+
+            if (!endModified.containsKey(a.getNumber()) && withinEndThreshold) {
                 log.trace("{} Setting subtitle '{}' from end {} to end {}.", a.getStart(), a.getText(), a.getEnd(), b.getEnd());
                 endModified.put(a.getNumber(), a.getEndMilliseconds());
                 a.setEnd(b.getEnd());
@@ -157,6 +139,28 @@ public class AlignCommand extends BaseCommand {
         writer.write(input, outputFilename);
     }
 
+    private boolean withinStartThreshold(Subtitle a, Subtitle b) {
+        final long diff = Math.abs(a.getStartMilliseconds() - b.getStartMilliseconds());
+        return diff != 0 && diff <= threshold &&
+            (mode == ShiftMode.FROM_TO || mode == ShiftMode.FROM) &&
+            // ensure we don't lose the subtitle from making the start time after the end time
+            (a.getEndMilliseconds() > b.getStartMilliseconds()) &&
+            // don't let the length of the new subtitle be less than the threshold
+            (a.getEndMilliseconds() - b.getStartMilliseconds() > MIN_SUBTITLE_LENGTH);
+    }
+
+    private boolean withinEndThreshold(Subtitle a, Subtitle b) {
+        if (b == null) return false;
+
+        final long diff = Math.abs(a.getEndMilliseconds() - b.getEndMilliseconds());
+        return diff != 0 && diff <= threshold &&
+            (mode == ShiftMode.FROM_TO || mode == ShiftMode.TO) &&
+            // make sure we don't lose the subtitle from making the end time before the start time
+            (b.getEndMilliseconds() > a.getStartMilliseconds()) &&
+            // don't let the length of the new subtitle be less than the threshold
+            (b.getEndMilliseconds() - a.getStartMilliseconds() > MIN_SUBTITLE_LENGTH);
+    }
+
     private void resolveOverlaps(SubtitleFile input, Map<Integer, Long> startModified, Map<Integer, Long> endModified) {
         for (int i = 0; i < input.getSubtitles().size() - 1; i++) {
             final Subtitle current = input.getSubtitles().get(i);
@@ -170,7 +174,7 @@ public class AlignCommand extends BaseCommand {
             }
 
             if (log.isTraceEnabled()) {
-                log.warn("Subtitle at {} --> {} overlaps with subtitle at {} --> {} after modification.", current.getStart(), current.getEnd(), next.getStart(), next.getEnd());
+                log.trace("Subtitle at {} --> {} overlaps with subtitle at {} --> {} after modification.", current.getStart(), current.getEnd(), next.getStart(), next.getEnd());
             }
             long originalCurrentEnd = endModified.getOrDefault(current.getNumber(), current.getEndMilliseconds());
             long originalNextStart = startModified.getOrDefault(next.getNumber(), next.getStartMilliseconds());
@@ -211,9 +215,37 @@ public class AlignCommand extends BaseCommand {
                 log.trace("Fixing overlap by setting the start time of the second subtitle from {} to {}.", next.getStart(), current.getEnd());
                 next.setStart(current.getEnd());
             } else {
-                log.trace("Nothing to be done, this overlap existed in the original file and the subtitles were not modified.");
                 // the subtitles were not modified, which means that this is likely the intended behavior from the original file
+                log.trace("Nothing to be done, this overlap existed in the original file and the subtitles were not modified.");
             }
         }
+    }
+
+    // TODO: Improve this filter method to align more closely with the "filter" command
+    private boolean matchesFilter(Subtitle subtitle) {
+        if (filters == null) {
+            return false;
+        }
+
+        if (!(subtitle instanceof AssDialogue)) {
+            return false;
+        }
+
+        AssDialogue ass = (AssDialogue) subtitle;
+        boolean skipped = false;
+        for (String filter : filters.split(";")) {
+            final String[] parts = filter.split("=");
+            if (parts.length != 2) {
+                throw new IllegalArgumentException("Filter was an invalid format: " + filter);
+            }
+            final String key = parts[0].toLowerCase();
+            final List<String> values = Arrays.stream(parts[1].split(",")).map(String::toLowerCase).collect(Collectors.toList());
+            if (key.equals(FilterType.STYLE.getName().toLowerCase()) && values.contains(ass.getStyle().toLowerCase())) {
+                log.trace("Skipping dialogue at {} because it matches filter {}={}", ass.getStart(), key, ass.getStyle().toLowerCase());
+                skipped = true;
+                break;
+            }
+        }
+        return skipped;
     }
 }

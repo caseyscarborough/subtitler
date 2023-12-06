@@ -1,5 +1,6 @@
 package sh.casey.subtitler.cli.command;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,12 +14,12 @@ import sh.casey.subtitler.util.FileUtils;
 
 import static org.junit.Assert.assertEquals;
 
+@Slf4j
 public class AlignCommandTest {
 
     private static final String OUTPUT_FILE = "src/test/resources/align/output.srt";
     private static final String REFERENCE_FILE = "src/test/resources/align/reference.srt";
     private AlignCommand command;
-    private SubtitleReaderFactory factory;
     private SubtitleReader<SubtitleFile> reader;
 
     @Before
@@ -26,11 +27,11 @@ public class AlignCommandTest {
         command = new AlignCommand();
         command.setInput("src/test/resources/align/input.srt");
         command.setReferenceFilename(REFERENCE_FILE);
-        command.setThreshold(720);
+        command.setThreshold(900);
         command.setMode(ShiftMode.FROM_TO);
         command.setOutput(OUTPUT_FILE);
 
-        factory = new SubtitleReaderFactory();
+        SubtitleReaderFactory factory = new SubtitleReaderFactory();
         reader = factory.getInstance(SubtitleType.SRT);
     }
 
@@ -41,6 +42,11 @@ public class AlignCommandTest {
 
     @Test
     public void testAlign() {
+        if (!FileUtils.exists(REFERENCE_FILE)) {
+            log.warn("Reference file {} did not exist for alignment test", REFERENCE_FILE);
+            return;
+        }
+
         command.run();
 
         final SubtitleFile output = reader.read(OUTPUT_FILE);
@@ -49,7 +55,7 @@ public class AlignCommandTest {
         // This assertion checks that when two subtitles are close together
         // and "match", that the input subtitle has the same start/end times
         // as the reference file.
-        checkSubtitle(output, "リュカ？", "01:40:33,110","01:40:34,070");
+        checkSubtitle(output, "リュカ？", "01:40:33,110", "01:40:34,070");
 
         // This assertion checks that when a long input subtitle overlaps
         // multiple smaller reference subtitles, the last input subtitle
