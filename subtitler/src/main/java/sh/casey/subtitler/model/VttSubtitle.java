@@ -4,7 +4,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VttSubtitle extends BaseSubtitle implements Comparable<VttSubtitle> {
 
@@ -12,6 +14,7 @@ public class VttSubtitle extends BaseSubtitle implements Comparable<VttSubtitle>
     private String start;
     private String end;
     private List<String> lines = new ArrayList<>();
+    private final Map<String, String> styles = new HashMap<>();
 
     @Override
     public Integer getNumber() {
@@ -63,8 +66,9 @@ public class VttSubtitle extends BaseSubtitle implements Comparable<VttSubtitle>
     public String toString() {
         if (!getStart().equals(getEnd())) {
             return
-                getStart() + " --> " + getEnd() + "\n" +
-                    getLines() + "\n\n";
+                getStart() + " --> " +
+                getEnd() + "\n" +
+                getLines() + "\n\n";
         }
         return "";
     }
@@ -83,6 +87,10 @@ public class VttSubtitle extends BaseSubtitle implements Comparable<VttSubtitle>
     @Override
     public SubtitleType getType() {
         return SubtitleType.VTT;
+    }
+
+    public Map<String, String> getStyles() {
+        return styles;
     }
 
     @Override

@@ -46,10 +46,25 @@ public class VttSubtitleReader implements SubtitleReader<VttSubtitleFile> {
                         throw new IllegalStateException("Invalid cue at line " + lineCounter + " for file " + filename);
                     }
 
-                    final String start = parts[0];
-                    final String end = parts[1];
-
                     VttSubtitle subtitle = new VttSubtitle();
+                    final String start = parts[0];
+                    String end = parts[1];
+
+                    // Handle styles in VTT subtitles, for example:
+                    // 00:00:04.212 --> 00:00:06.131 position:50.00%,middle align:middle size:80.00% line:79.33%
+                    final String[] split = end.split(" ");
+                    if (split.length > 1) {
+                        end = split[0];
+                        for (int i = 1; i < split.length; i++) {
+                            final String style = split[i];
+                            final String[] pair = style.split(":");
+                            if (pair.length != 2) {
+                                throw new IllegalStateException("Invalid style '" + style + "' at line " + lineCounter + " for file " + filename);
+                            }
+                            subtitle.getStyles().put(pair[0], pair[1]);
+                        }
+                    }
+
                     subtitle.setStart(start);
                     subtitle.setEnd(end);
                     subtitle.setNumber(number++);
@@ -64,6 +79,8 @@ public class VttSubtitleReader implements SubtitleReader<VttSubtitleFile> {
                     }
                     file.getSubtitles().add(subtitle);
                 } else {
+                    // TODO: Implement NOTE and STYLE blocks
+                    // TODO: Remove this metadata as this isn't part of the WebVTT spec
                     if (!started && line.contains(":")) {
                         int index = line.indexOf(":");
                         String key = line.substring(0, index);
