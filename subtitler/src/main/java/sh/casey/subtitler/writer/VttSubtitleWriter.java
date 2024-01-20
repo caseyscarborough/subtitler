@@ -5,6 +5,7 @@ import sh.casey.subtitler.model.VttSubtitle;
 import sh.casey.subtitler.model.VttSubtitleFile;
 
 import java.io.Writer;
+import java.util.Map;
 
 public class VttSubtitleWriter extends BaseSubtitleWriter<VttSubtitleFile> {
     @Override
@@ -18,8 +19,16 @@ public class VttSubtitleWriter extends BaseSubtitleWriter<VttSubtitleFile> {
             sb.append(System.lineSeparator())
                 .append(sub.getStart())
                 .append(" --> ")
-                .append(sub.getEnd())
-                .append(System.lineSeparator())
+                .append(sub.getEnd());
+            if (!sub.getStyles().isEmpty()) {
+                for (Map.Entry<String, String> style : sub.getStyles().entrySet()) {
+                    sb.append(" ")
+                        .append(style.getKey())
+                        .append(":")
+                        .append(style.getValue());
+                }
+            }
+            sb.append(System.lineSeparator())
                 .append(sub.getLines().trim())
                 .append(System.lineSeparator());
         }

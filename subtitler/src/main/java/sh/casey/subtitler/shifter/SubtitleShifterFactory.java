@@ -13,6 +13,8 @@ public class SubtitleShifterFactory {
             return (SubtitleShifter<T>) new AssSubtitleShifter();
         } else if (type.equals(SubtitleType.SSA)) {
             return (SubtitleShifter<T>) new AssSubtitleShifter();
+        } else if (type.equals(SubtitleType.VTT)) {
+            return (SubtitleShifter<T>) new VttSubtitleShifter();
         } else {
             throw new IllegalStateException(type + " subtitle shifter has not yet been implemented.");
         }

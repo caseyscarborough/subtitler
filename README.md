@@ -17,12 +17,12 @@ It supports the following features for each subtitle type:
 
 |         | Reading | Writing | Renumbering | Shifting | Filtering | Condensing |
 |---------|---------|---------|-------------|----------|-----------|------------|
-| `.srt`  | ✅      | ✅      | ✅          | ✅       | ✅        | ✅         |
-| `.ass`  | ✅      | ✅      | ✅          | ✅       | ✅        | ✅         |
-| `.ttml` | ✅      |         |             |          |           |            |
-| `.dfxp` | ✅      |         |             |          |           |            |
-| `.vtt`  | ✅      |         |             |          |           |            |
-| `.lrc`  | ✅      | ✅      |             |          |           |            |
+| `.srt`  | ✅       | ✅       | ✅           | ✅        | ✅         | ✅          |
+| `.ass`  | ✅       | ✅       | ✅           | ✅        | ✅         | ✅          |
+| `.ttml` | ✅       |         |             |          |           |            |
+| `.dfxp` | ✅       |         |             |          |           |            |
+| `.vtt`  | ✅       | ✅       |             | ✅        |           |            |
+| `.lrc`  | ✅       | ✅      |             |          |           |            |
 
 Most of the functions can be performed by converting to another subtitle type first that is supported with the feature
 you are trying to use. For example, if you would like to shift a `.vtt` file, then convert it to `.srt` or `.ass` first.
