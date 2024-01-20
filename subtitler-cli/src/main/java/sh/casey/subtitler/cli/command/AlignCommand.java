@@ -98,7 +98,7 @@ public class AlignCommand extends BaseCommand {
                 // If it's closer to the end threshold of the next subtitle, we will skip this round since it will get
                 // aligned on the next round. This helps when the dialogue is quick with short subtitle lengths, preventing
                 // a "top" subtitle that overlaps two bottom subtitles from being shortened to just the first "bottom" subtitle.
-                log.trace("Skipping alignment with the end time of subtitle '{}' because it's closer to the end time of subtitle '{}'", b.getNumber(), nextB.getNumber());
+                log.trace("Skipping alignment for subtitle '{}' with the end time of subtitle '{}' because it's closer to the end time of subtitle '{}'", a.getNumber(), b.getNumber(), nextB.getNumber());
                 j++;
                 continue;
             }
