@@ -19,6 +19,8 @@ public class SubtitleConverterFactory {
             return (SubtitleConverter<F, T>) new AssToSrtSubtitleConverter();
         } else if (from == SubtitleType.VTT && to == SubtitleType.SRT) {
             return (SubtitleConverter<F, T>) new VttToSrtSubtitleConverter();
+        } else if (from == SubtitleType.LRC && to == SubtitleType.SRT) {
+            return (SubtitleConverter<F, T>) new LrcToSrtSubtitleConverter();
         } else {
             throw new IllegalStateException("Converter has not been implemented for converting from " + from + " to " + to + " subtitle format");
         }
